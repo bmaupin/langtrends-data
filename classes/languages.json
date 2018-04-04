@@ -1,0 +1,1625 @@
+{
+  "1C Enterprise": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/1C_Company"
+  },
+  "ABAP": {
+    "include": false
+  },
+  "ABNF": {
+    "include": false
+  },
+  "ActionScript": {
+    "include": true
+  },
+  "Ada": {
+    "include": true
+  },
+  "Adobe Font Metrics": {
+    "include": false
+  },
+  "Agda": {
+    "include": true
+  },
+  "AGS Script": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Adventure_Game_Studio"
+  },
+  "Alloy": {
+    "include": false
+  },
+  "Alpine Abuild": {
+    "include": false
+  },
+  "AMPL": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/AMPL"
+  },
+  "AngelScript": {
+    "include": false
+  },
+  "Ant Build System": {
+    "include": false,
+    "stackoverflowTag": "ant"
+  },
+  "ANTLR": {
+    "include": false
+  },
+  "ApacheConf": {
+    "include": false
+  },
+  "Apex": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Salesforce.com#Apex"
+  },
+  "API Blueprint": {
+    "include": false,
+    "stackoverflowTag": "apiblueprint"
+  },
+  "APL": {
+    "include": true
+  },
+  "Apollo Guidance Computer": {
+    "include": false
+  },
+  "AppleScript": {
+    "include": false
+  },
+  "Arc": {
+    "include": true,
+    "stackoverflowTag": "arc-lisp"
+  },
+  "Arduino": {
+    "include": false
+  },
+  "AsciiDoc": {
+    "include": false
+  },
+  "ASN.1": {
+    "include": false
+  },
+  "ASP": {
+    "include": false,
+    "stackoverflowTag": "asp.net"
+  },
+  "AspectJ": {
+    "include": false
+  },
+  "Assembly": {
+    "include": true
+  },
+  "ATS": {
+    "include": true
+  },
+  "Augeas": {
+    "include": false
+  },
+  "AutoHotkey": {
+    "include": false
+  },
+  "AutoIt": {
+    "include": false
+  },
+  "Awk": {
+    "include": true
+  },
+  "Ballerina": {
+    "include": true,
+    "stackoverflowTag": "ballerinalang"
+  },
+  "Batchfile": {
+    "include": false,
+    "stackoverflowTag": "batch-file"
+  },
+  "Befunge": {
+    "include": false
+  },
+  "Bison": {
+    "include": false
+  },
+  "BitBake": {
+    "include": false
+  },
+  "Blade": {
+    "include": false
+  },
+  "BlitzBasic": {
+    "include": false
+  },
+  "BlitzMax": {
+    "include": false
+  },
+  "Bluespec": {
+    "include": false
+  },
+  "Boo": {
+    "include": true
+  },
+  "Brainfuck": {
+    "include": false
+  },
+  "Brightscript": {
+    "include": false
+  },
+  "Bro": {
+    "include": false
+  },
+  "C": {
+    "include": true
+  },
+  "C#": {
+    "include": true
+  },
+  "C++": {
+    "include": true
+  },
+  "C-ObjDump": {
+    "include": false
+  },
+  "C2hs Haskell": {
+    "include": false,
+    "stackoverflowTag": "c2hs"
+  },
+  "Cap'n Proto": {
+    "include": false
+  },
+  "CartoCSS": {
+    "include": false
+  },
+  "Ceylon": {
+    "include": true
+  },
+  "Chapel": {
+    "include": true
+  },
+  "Charity": {
+    "description": "Abandoned purely functional programming language based on category theory",
+    "extension": ".ch",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Charity_(programming_language)"
+  },
+  "ChucK": {
+    "include": false
+  },
+  "Cirru": {
+    "include": false
+  },
+  "Clarion": {
+    "include": false
+  },
+  "Clean": {
+    "include": true,
+    "stackoverflowTag": "clean-language"
+  },
+  "Click": {
+    "include": false
+  },
+  "CLIPS": {
+    "include": false
+  },
+  "Clojure": {
+    "include": true
+  },
+  "Closure Templates": {
+    "include": false
+  },
+  "CMake": {
+    "include": false
+  },
+  "COBOL": {
+    "include": true
+  },
+  "CoffeeScript": {
+    "include": true
+  },
+  "ColdFusion": {
+    "include": true
+  },
+  "ColdFusion CFC": {
+    "include": false,
+    "stackoverflowTag": "cfc"
+  },
+  "COLLADA": {
+    "include": false
+  },
+  "Common Lisp": {
+    "include": true
+  },
+  "Component Pascal": {
+    "include": true
+  },
+  "Cool": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Cool_(programming_language)"
+  },
+  "Coq": {
+    "include": true
+  },
+  "Cpp-ObjDump": {
+    "include": false
+  },
+  "Creole": {
+    "include": false
+  },
+  "Crystal": {
+    "include": true,
+    "stackoverflowTag": "crystal-lang"
+  },
+  "CSON": {
+    "include": false
+  },
+  "Csound": {
+    "include": false
+  },
+  "Csound Document": {
+    "include": false
+  },
+  "Csound Score": {
+    "include": false
+  },
+  "CSS": {
+    "include": false
+  },
+  "CSV": {
+    "include": false
+  },
+  "Cuda": {
+    "include": false
+  },
+  "CWeb": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/CWEB"
+  },
+  "Cycript": {
+    "include": false
+  },
+  "Cython": {
+    "include": false
+  },
+  "D": {
+    "include": true
+  },
+  "D-ObjDump": {
+    "include": false
+  },
+  "Darcs Patch": {
+    "include": false,
+    "stackoverflowTag": "darcs"
+  },
+  "Dart": {
+    "include": true
+  },
+  "DataWeave": {
+    "include": false
+  },
+  "desktop": {
+    "include": false
+  },
+  "Diff": {
+    "include": false
+  },
+  "DIGITAL Command Language": {
+    "include": false,
+    "stackoverflowTag": "dcl"
+  },
+  "DM": {
+    "include": false
+  },
+  "DNS Zone": {
+    "include": false
+  },
+  "Dockerfile": {
+    "include": false
+  },
+  "Dogescript": {
+    "include": false
+  },
+  "DTrace": {
+    "include": false
+  },
+  "Dylan": {
+    "include": true
+  },
+  "E": {
+    "include": true
+  },
+  "Eagle": {
+    "include": false
+  },
+  "Easybuild": {
+    "include": false
+  },
+  "EBNF": {
+    "include": false
+  },
+  "eC": {
+    "description": "Ecere C",
+    "include": true,
+    "url": "http://ec-lang.org/"
+  },
+  "Ecere Projects": {
+    "include": false
+  },
+  "ECL": {
+    "include": false,
+    "url": "https://github.com/hpcc-systems/ecl-ml ??"
+  },
+  "ECLiPSe": {
+    "include": false,
+    "url": "http://eclipseclp.org/",
+    "stackoverflowTag": "eclipse-clp"
+  },
+  "edn": {
+    "include": false
+  },
+  "Edje Data Collection": {
+    "description": "Data file containing instructions for Enlightenment window manager's Edje Compiler",
+    "extension": ".edc",
+    "include": false,
+    "type": "domain-specific language",
+    "url": "https://docs.enlightenment.org/auto/edcref.html"
+  },
+  "Eiffel": {
+    "include": true
+  },
+  "EJS": {
+    "include": false
+  },
+  "Elixir": {
+    "include": true
+  },
+  "Elm": {
+    "include": true
+  },
+  "Emacs Lisp": {
+    "include": false,
+    "stackoverflowTag": "elisp"
+  },
+  "EmberScript": {
+    "description": "CoffeeScript derived language that has first-class support for the Ember.js runtime",
+    "include": true,
+    "url": "http://emberscript.com/"
+  },
+  "EQ": {
+    "description": "Also known as Eqela. Superseded by Sling",
+    "extension": ".eq",
+    "include": false,
+    "url": "http://eqdn.tech/eq/"
+  },
+  "Erlang": {
+    "include": true
+  },
+  "F#": {
+    "include": true
+  },
+  "Factor": {
+    "include": true,
+    "stackoverflowTag": "factor-lang"
+  },
+  "Fancy": {
+    "include": true,
+    "url": "http://www.fancy-lang.org/"
+  },
+  "Fantom": {
+    "include": true
+  },
+  "Filebench WML": {
+    "include": false
+  },
+  "Filterscript": {
+    "extension": ".fs",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/RenderScript"
+  },
+  "fish": {
+    "include": false,
+    "url": "https://esolangs.org/wiki/Fish"
+  },
+  "FLUX": {
+    "desription": "Reshade .fx file?",
+    "include": false
+  },
+  "Formatted": {
+    "include": false,
+    "url": "https://github.com/github/linguist/tree/master/samples/Formatted"
+  },
+  "Forth": {
+    "include": true
+  },
+  "Fortran": {
+    "include": true
+  },
+  "FreeMarker": {
+    "include": false
+  },
+  "Frege": {
+    "include": true
+  },
+  "G-code": {
+    "include": false
+  },
+  "Game Maker Language": {
+    "include": false,
+    "stackoverflowTag": "game-maker"
+  },
+  "GAMS": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/General_Algebraic_Modeling_System",
+    "stackoverflowTag": "gams-math"
+  },
+  "GAP": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/GAP_(computer_algebra_system)",
+    "stackoverflowTag": "gap-system"
+  },
+  "GCC Machine Description": {
+    "include": false
+  },
+  "GDB": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/GNU_Debugger"
+  },
+  "GDScript": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Godot_(game_engine)"
+  },
+  "Genie": {
+    "include": true
+  },
+  "Genshi": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Genshi_(templating_language)"
+  },
+  "Gentoo Ebuild": {
+    "include": false
+  },
+  "Gentoo Eclass": {
+    "include": false
+  },
+  "Gerber Image": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Gerber_format"
+  },
+  "Gettext Catalog": {
+    "include": false,
+    "stackoverflowTag": "gettext"
+  },
+  "Gherkin": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Cucumber_(software)"
+  },
+  "GLSL": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/OpenGL_Shading_Language"
+  },
+  "Glyph": {
+    "description": "Pointwise's scripting language",
+    "extension": ".glf",
+    "include": false
+  },
+  "GN": {
+    "description": "Generate Ninja",
+    "extension": ".gn",
+    "include": false,
+    "url": "https://chromium.googlesource.com/chromium/src/tools/gn/+/HEAD/docs/language.md"
+  },
+  "Gnuplot": {
+    "include": false
+  },
+  "Go": {
+    "include": true
+  },
+  "Golo": {
+    "description": "A lightweight dynamic language for the JVM",
+    "include": true,
+    "url": "http://golo-lang.org/"
+  },
+  "Gosu": {
+    "include": true
+  },
+  "Grace": {
+    "description": "A modern programming language designed to be used in teaching novices how to program in an object-oriented style",
+    "include": false,
+    "type": "educational programming language",
+    "url": "http://gracelang.org"
+  },
+  "Gradle": {
+    "include": false
+  },
+  "Grammatical Framework": {
+    "include": false,
+    "stackoverflowTag": "gf"
+  },
+  "Graph Modeling Language": {
+    "include": false,
+    "stackoverflowTag": "graph-modelling-language"
+  },
+  "GraphQL": {
+    "include": false
+  },
+  "Graphviz (DOT)": {
+    "include": false,
+    "stackoverflowTag": "graphviz"
+  },
+  "Groovy": {
+    "include": true
+  },
+  "Groovy Server Pages": {
+    "include": false,
+    "stackoverflowTag": "gsp"
+  },
+  "Hack": {
+    "include": true,
+    "stackoverflowTag": "hacklang"
+  },
+  "Haml": {
+    "include": false
+  },
+  "Handlebars": {
+    "include": false
+  },
+  "Harbour": {
+    "description": "Cross-platform, multi-threading, object-oriented, scriptable programming language, backwards compatible with xBase languages",
+    "include": true,
+    "url": "https://harbour.github.io/"
+  },
+  "Haskell": {
+    "include": true
+  },
+  "Haxe": {
+    "include": true
+  },
+  "HCL": {
+    "include": false,
+    "url": "https://github.com/hashicorp/hcl"
+  },
+  "HLSL": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/High-Level_Shading_Language"
+  },
+  "HTML": {
+    "include": false
+  },
+  "HTML+Django": {
+    "include": false
+  },
+  "HTML+ECR": {
+    "include": false
+  },
+  "HTML+EEX": {
+    "include": false
+  },
+  "HTML+ERB": {
+    "include": false
+  },
+  "HTML+PHP": {
+    "include": false
+  },
+  "HTTP": {
+    "include": false,
+    "url": "httpspec??"
+  },
+  "Hy": {
+    "include": true
+  },
+  "HyPhy": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/HYPHY_(software)"
+  },
+  "IDL": {
+    "include": true
+  },
+  "Idris": {
+    "include": true
+  },
+  "IGOR Pro": {
+    "include": false,
+    "stackoverflowTag": "igor"
+  },
+  "Inform 7": {
+    "include": false,
+    "stackoverflowTag": "inform7"
+  },
+  "INI": {
+    "include": false
+  },
+  "Inno Setup": {
+    "include": false
+  },
+  "Io": {
+    "include": true
+  },
+  "Ioke": {
+    "include": true
+  },
+  "IRC log": {
+    "include": false
+  },
+  "Isabelle": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Isabelle_(proof_assistant)"
+  },
+  "Isabelle ROOT": {
+    "description": "Isabelle Session ROOT specification file",
+    "include": false,
+    "url": "https://isabelle.in.tum.de/doc/system.pdf"
+  },
+  "J": {
+    "include": true
+  },
+  "Jasmin": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Jasmin_(software)"
+  },
+  "Java": {
+    "include": true
+  },
+  "Java Server Pages": {
+    "include": false,
+    "stackoverflowTag": "jsp"
+  },
+  "JavaScript": {
+    "include": true
+  },
+  "JFlex": {
+    "include": false
+  },
+  "Jison": {
+    "include": false
+  },
+  "Jison Lex": {
+    "include": false
+  },
+  "Jolie": {
+    "include": true
+  },
+  "JSON": {
+    "include": false
+  },
+  "JSON5": {
+    "include": false
+  },
+  "JSONiq": {
+    "include": false
+  },
+  "JSONLD": {
+    "include": false,
+    "stackoverflowTag": "json-ld"
+  },
+  "JSX": {
+    "include": false
+  },
+  "Julia": {
+    "include": true,
+    "stackoverflowTag": "julia-lang"
+  },
+  "Jupyter Notebook": {
+    "include": false
+  },
+  "KiCad Layout": {
+    "include": false
+  },
+  "KiCad Legacy Layout": {
+    "include": false
+  },
+  "KiCad Schematic": {
+    "include": false
+  },
+  "Kit": {
+    "include": false,
+    "url": "https://codekitapp.com/help/kit/"
+  },
+  "Kotlin": {
+    "include": true
+  },
+  "KRL": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/KUKA_Robot_Language"
+  },
+  "LabVIEW": {
+    "include": false
+  },
+  "Lasso": {
+    "include": true
+  },
+  "Latte": {
+    "include": false,
+    "url": "https://latte.nette.org/en/ ??"
+  },
+  "Lean": {
+    "include": false,
+    "url": "https://leanprover.github.io/"
+  },
+  "Less": {
+    "include": false
+  },
+  "Lex": {
+    "include": false
+  },
+  "LFE": {
+    "include": true
+  },
+  "LilyPond": {
+    "include": false
+  },
+  "Limbo": {
+    "description": "A concurrent programming language for the Inferno operating system",
+    "include": false,
+    "type": "domain-specific language",
+    "url": "http://limbo.cat-v.org/"
+  },
+  "Linker Script": {
+    "include": false
+  },
+  "Linux Kernel Module": {
+    "include": false
+  },
+  "Liquid": {
+    "include": false,
+    "url": "https://shopify.github.io/liquid/"
+  },
+  "Literate Agda": {
+    "include": false
+  },
+  "Literate CoffeeScript": {
+    "include": false
+  },
+  "Literate Haskell": {
+    "include": false
+  },
+  "LiveScript": {
+    "include": true
+  },
+  "LLVM": {
+    "include": false
+  },
+  "Logos": {
+    "include": false,
+    "url": "http://iphonedevwiki.net/index.php/Logos"
+  },
+  "Logtalk": {
+    "include": true
+  },
+  "LOLCODE": {
+    "include": false
+  },
+  "LookML": {
+    "include": false
+  },
+  "LoomScript": {
+    "include": false
+  },
+  "LSL": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Linden_Scripting_Language",
+    "stackoverflowTag": "linden-scripting-language"
+  },
+  "Lua": {
+    "include": true
+  },
+  "M": {
+    "include": true
+  },
+  "M4": {
+    "include": false
+  },
+  "M4Sugar": {
+    "include": false
+  },
+  "Makefile": {
+    "include": false
+  },
+  "Mako": {
+    "include": false,
+    "url": "http://www.makotemplates.org/"
+  },
+  "Markdown": {
+    "include": false
+  },
+  "Marko": {
+    "include": false,
+    "url": "https://markojs.com/"
+  },
+  "Mask": {
+    "include": false,
+    "url": "https://github.com/atmajs/MaskJS"
+  },
+  "Mathematica": {
+    "include": false,
+    "stackoverflowTag": "wolfram-mathematica",
+    "type": "domain-specific language"
+  },
+  "Matlab": {
+    "include": false
+  },
+  "Maven POM": {
+    "include": false
+  },
+  "Max": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Max_(software)"
+  },
+  "MAXScript": {
+    "description": "Scripting language for Autodesk 3ds Max and Autodesk 3ds Max Design",
+    "include": false,
+    "url": "http://docs.autodesk.com/3DSMAX/14/ENU/MAXScript%20Help%202012/"
+  },
+  "MediaWiki": {
+    "include": false
+  },
+  "Mercury": {
+    "include": true
+  },
+  "Meson": {
+    "include": false,
+    "url": "http://mesonbuild.com"
+  },
+  "Metal": {
+    "description": "This is just C with the Metal API",
+    "include": false,
+    "url": "https://developer.apple.com/metal/"
+  },
+  "MiniD": {
+    "description": "Small, lightweight extension lanugage superseded by Croc",
+    "include": false
+  },
+  "Mirah": {
+    "include": true
+  },
+  "Modelica": {
+    "include": false,
+    "type": "modeling language"
+  },
+  "Modula-2": {
+    "include": true
+  },
+  "Module Management System": {
+    "description": "HPE Module Management System for OpenVMS",
+    "include": false
+  },
+  "Monkey": {
+    "include": false,
+    "type": "video game programming language"
+  },
+  "Moocode": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/MOO"
+  },
+  "MoonScript": {
+    "include": true
+  },
+  "MQL4": {
+    "include": false
+  },
+  "MQL5": {
+    "include": false
+  },
+  "MTML": {
+    "description": "Movable Type Markup Language",
+    "include": false,
+    "type": "markup language"
+  },
+  "MUF": {
+    "description": "Multi-User Forth",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/MUF_(programming_language)"
+  },
+  "mupad": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/MuPAD"
+  },
+  "Myghty": {
+    "include": false,
+    "url": "https://pythonhosted.org/Myghty/"
+  },
+  "NCL": {
+    "include": false,
+    "url": "https://www.ncl.ucar.edu/overview.shtml"
+  },
+  "Nearley": {
+    "include": false,
+    "url": "https://nearley.js.org/"
+  },
+  "Nemerle": {
+    "include": true
+  },
+  "nesC": {
+    "include": false
+  },
+  "NetLinx": {
+    "include": false
+  },
+  "NetLinx+ERB": {
+    "include": false
+  },
+  "NetLogo": {
+    "include": false
+  },
+  "NewLisp": {
+    "include": true
+  },
+  "Nginx": {
+    "include": false
+  },
+  "Nim": {
+    "include": true
+  },
+  "Ninja": {
+    "include": false,
+    "url": "https://ninja-build.org/"
+  },
+  "Nit": {
+    "include": true,
+    "url": "https://nitlanguage.org/"
+  },
+  "Nix": {
+    "include": false,
+    "url": "https://nixos.org/"
+  },
+  "NL": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Nl_(format)"
+  },
+  "NSIS": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Nullsoft_Scriptable_Install_System"
+  },
+  "Nu": {
+    "include": false
+  },
+  "NumPy": {
+    "include": false
+  },
+  "ObjDump": {
+    "include": false
+  },
+  "Objective-C": {
+    "include": true
+  },
+  "Objective-C++": {
+    "include": true
+  },
+  "Objective-J": {
+    "description": "Pretty much exclusive to Cappucino",
+    "include": false,
+    "url": "http://www.cappuccino-project.org/learn/objective-j.html"
+  },
+  "OCaml": {
+    "include": true
+  },
+  "Omgrofl": {
+    "include": false
+  },
+  "ooc": {
+    "description": "Small programming language that compiles to C99",
+    "include": true,
+    "url": "https://ooc-lang.org/"
+  },
+  "Opa": {
+    "include": true
+  },
+  "Opal": {
+    "include": true
+  },
+  "OpenCL": {
+    "include": false
+  },
+  "OpenEdge ABL": {
+    "include": false,
+    "stackoverflowTag": "openedge"
+  },
+  "OpenRC runscript": {
+    "include": false
+  },
+  "OpenSCAD": {
+    "include": false
+  },
+  "OpenType Feature File": {
+    "include": false
+  },
+  "Org": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Org-mode"
+  },
+  "Ox": {
+    "include": false
+  },
+  "Oxygene": {
+    "include": true
+  },
+  "Oz": {
+    "include": true
+  },
+  "P4": {
+    "include": false
+  },
+  "Pan": {
+    "include": false
+  },
+  "Papyrus": {
+    "include": false,
+    "url": "https://www.creationkit.com/fallout4/index.php?title=Papyrus_Introduction"
+  },
+  "Parrot": {
+    "include": false
+  },
+  "Parrot Assembly": {
+    "include": false
+  },
+  "Parrot Internal Representation": {
+    "include": false
+  },
+  "Pascal": {
+    "include": true
+  },
+  "PAWN": {
+    "include": false,
+    "url": "https://www.compuphase.com/pawn/"
+  },
+  "Pep8": {
+    "description": "Pep/8 simulator assembly language",
+    "include": false,
+    "type": "hardware-specific programming language"
+  },
+  "Perl": {
+    "include": true
+  },
+  "Perl 6": {
+    "include": false
+  },
+  "PHP": {
+    "include": true
+  },
+  "Pic": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Pic_language"
+  },
+  "Pickle": {
+    "description": "Python Pickle data dump",
+    "include": false,
+    "type": "data"
+  },
+  "PicoLisp": {
+    "include": true
+  },
+  "PigLatin": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Pig_(programming_tool)",
+    "stackoverflowTag": "apache-pig"
+  },
+  "Pike": {
+    "include": true
+  },
+  "PLpgSQL": {
+    "include": false
+  },
+  "PLSQL": {
+    "include": false
+  },
+  "Pod": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Plain_Old_Documentation"
+  },
+  "PogoScript": {
+    "include": true
+  },
+  "Pony": {
+    "include": true
+  },
+  "PostScript": {
+    "include": false
+  },
+  "POV-Ray SDL": {
+    "include": false,
+    "stackoverflowTag": "povray"
+  },
+  "PowerBuilder": {
+    "description": "AKA PowerScript",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/PowerBuilder"
+  },
+  "PowerShell": {
+    "include": false,
+    "type": "domain-specific language"
+  },
+  "Processing": {
+    "include": false
+  },
+  "Prolog": {
+    "include": true
+  },
+  "Propeller Spin": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Parallax_Propeller"
+  },
+  "Protocol Buffer": {
+    "include": false,
+    "stackoverflowTag": "protocol-buffers"
+  },
+  "Public Key": {
+    "include": false
+  },
+  "Pug": {
+    "include": false,
+    "url": "https://github.com/pugjs/pug"
+  },
+  "Puppet": {
+    "include": false
+  },
+  "Pure Data": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Pure_Data"
+  },
+  "PureBasic": {
+    "description": "Commercially distributed procedural programming language based on BASIC",
+    "include": true,
+    "url": "http://www.purebasic.com/"
+  },
+  "PureScript": {
+    "include": true
+  },
+  "Python": {
+    "include": true
+  },
+  "Python console": {
+    "include": false
+  },
+  "Python traceback": {
+    "include": false
+  },
+  "QMake": {
+    "include": false
+  },
+  "QML": {
+    "include": false
+  },
+  "R": {
+    "include": true
+  },
+  "Racket": {
+    "include": true
+  },
+  "Ragel": {
+    "include": false
+  },
+  "RAML": {
+    "include": false
+  },
+  "Rascal": {
+    "description": "RascalMPL",
+    "include": false
+  },
+  "Raw token data": {
+    "include": false
+  },
+  "RDoc": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/RDoc"
+  },
+  "REALbasic": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Xojo"
+  },
+  "Reason": {
+    "include": true
+  },
+  "Rebol": {
+    "include": true
+  },
+  "Red": {
+    "include": true
+  },
+  "Redcode": {
+    "include": false,
+    "url": "https://esolangs.org/wiki/Redcode"
+  },
+  "Regular Expression": {
+    "include": false
+  },
+  "Ren'Py": {
+    "include": false
+  },
+  "RenderScript": {
+    "include": false
+  },
+  "reStructuredText": {
+    "include": false
+  },
+  "REXX": {
+    "include": true
+  },
+  "RHTML": {
+    "include": false
+  },
+  "Ring": {
+    "include": true
+  },
+  "RMarkdown": {
+    "include": false
+  },
+  "RobotFramework": {
+    "include": false
+  },
+  "Roff": {
+    "include": false
+  },
+  "Rouge": {
+    "include": true
+  },
+  "RPM Spec": {
+    "include": false
+  },
+  "Ruby": {
+    "include": true
+  },
+  "RUNOFF": {
+    "include": false
+  },
+  "Rust": {
+    "include": true
+  },
+  "Sage": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/SageMath"
+  },
+  "SaltStack": {
+    "extension": ".sls",
+    "include": false,
+    "stackoverflowTag": "salt-stack",
+    "type": "domain-specific language"
+  },
+  "SAS": {
+    "include": false
+  },
+  "Sass": {
+    "include": false
+  },
+  "Scala": {
+    "include": true
+  },
+  "Scaml": {
+    "description": "Scala Markup Language",
+    "include": false,
+    "type": "markup language"
+  },
+  "Scheme": {
+    "include": true
+  },
+  "Scilab": {
+    "include": false
+  },
+  "SCSS": {
+    "include": false
+  },
+  "Self": {
+    "include": true
+  },
+  "ShaderLab": {
+    "description": "Shading Language used in Unity",
+    "include": false,
+    "type": "domain-specific language"
+  },
+  "Shell": {
+    "include": false,
+    "type": "domain-specific language"
+  },
+  "ShellSession": {
+    "include": false
+  },
+  "Shen": {
+    "include": true
+  },
+  "Slash": {
+    "include": true
+  },
+  "Slim": {
+    "description": "Ruby templating language",
+    "include": false,
+    "url": "http://slim-lang.com/"
+  },
+  "Smali": {
+    "description": "Disassembled Dalvik bytecode",
+    "include": false,
+    "type": "domain-specific language"
+  },
+  "Smalltalk": {
+    "include": true
+  },
+  "Smarty": {
+    "description": "PHP templating language",
+    "include": false,
+    "url": "https://www.smarty.net"
+  },
+  "SMT": {
+    "description": "SMT-LIB",
+    "include": false,
+    "url": "http://smtlib.cs.uiowa.edu/"
+  },
+  "SourcePawn": {
+    "include": false,
+    "url": "https://wiki.alliedmods.net/Introduction_to_sourcepawn"
+  },
+  "SPARQL": {
+    "include": false
+  },
+  "Spline Font Database": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/FontForge"
+  },
+  "SQF": {
+    "description": "Used for ArmA video games",
+    "include": false,
+    "url": "https://community.bistudio.com/wiki/SQF_syntax"
+  },
+  "SQL": {
+    "include": false
+  },
+  "SQLPL": {
+    "include": false,
+    "stackoverflowTag": "db2"
+  },
+  "Squirrel": {
+    "include": true,
+    "url": "http://www.squirrel-lang.org/"
+  },
+  "SRecode Template": {
+    "include": false,
+    "url": "http://cedet.sourceforge.net/srecode.shtml"
+  },
+  "Stan": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Stan_(software)"
+  },
+  "Standard ML": {
+    "include": true,
+    "stackoverflowTag": "sml"
+  },
+  "Stata": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Stata"
+  },
+  "STON": {
+    "description": "Smalltalk Object Notation",
+    "include": false,
+    "url": "https://github.com/svenvc/ston"
+  },
+  "Stylus": {
+    "include": false
+  },
+  "Sublime Text Config": {
+    "include": false
+  },
+  "SubRip Text": {
+    "include": false
+  },
+  "SuperCollider": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/SuperCollider"
+  },
+  "SVG": {
+    "include": false
+  },
+  "Swift": {
+    "include": true
+  },
+  "SystemVerilog": {
+    "include": false,
+    "stackoverflowTag": "system-verilog"
+  },
+  "Tcl": {
+    "include": true
+  },
+  "Tcsh": {
+    "include": false
+  },
+  "Tea": {
+    "description": "High level scripting language for the Java environment",
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/Tea_(programming_language)"
+  },
+  "Terra": {
+    "description": "Low-level system programming language that is embedded in and meta-programmed by the Lua programming language",
+    "include": true,
+    "url": "http://terralang.org/"
+  },
+  "TeX": {
+    "include": false
+  },
+  "Text": {
+    "description": "Plain text",
+    "include": false
+  },
+  "Textile": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Textile_(markup_language)"
+  },
+  "Thrift": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Apache_Thrift"
+  },
+  "TI Program": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/TI-BASIC ??"
+  },
+  "TLA": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/TLA%2B"
+  },
+  "TOML": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/TOML"
+  },
+  "Turing": {
+    "include": true
+  },
+  "Turtle": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Turtle_(syntax)"
+  },
+  "Twig": {
+    "description": "PHP template language",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Twig_(template_engine)"
+  },
+  "TXL": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/TXL_(programming_language)"
+  },
+  "Type Language": {
+    "include": false,
+    "url": "https://core.telegram.org/mtproto/TL"
+  },
+  "TypeScript": {
+    "include": true
+  },
+  "Unified Parallel C": {
+    "include": false
+  },
+  "Unity3D Asset": {
+    "include": false
+  },
+  "Unix Assembly": {
+    "include": false
+  },
+  "Uno": {
+    "include": false,
+    "url": "https://www.fusetools.com/docs/uno/uno-lang"
+  },
+  "UnrealScript": {
+    "include": false
+  },
+  "UrWeb": {
+    "include": true
+  },
+  "Vala": {
+    "include": true
+  },
+  "VCL": {
+    "description": "Varnish Configuration Language",
+    "include": false,
+    "url": "https://varnish-cache.org/docs/trunk/users-guide/vcl.html"
+  },
+  "Verilog": {
+    "include": false
+  },
+  "VHDL": {
+    "include": false
+  },
+  "Vim script": {
+    "include": false,
+    "stackoverflowTag": "vim"
+  },
+  "Visual Basic": {
+    "include": true,
+    "stackoverflowTag": "vb.net"
+  },
+  "Volt": {
+    "include": true
+  },
+  "Vue": {
+    "description": "Vue template file",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Vue.js"
+  },
+  "Wavefront Material": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Wavefront_.obj_file#Material_template_library"
+  },
+  "Wavefront Object": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Wavefront_.obj_file"
+  },
+  "wdl": {
+    "description": "Workflow Description Language",
+    "include": false,
+    "url": "https://software.broadinstitute.org/wdl/"
+  },
+  "Web Ontology Language": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Web_Ontology_Language",
+    "stackoverflowTag": "owl"
+  },
+  "WebAssembly": {
+    "include": false
+  },
+  "WebIDL": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Web_IDL"
+  },
+  "wisp": {
+    "description": "Homoiconic JS dialect with a clojure syntax, s-expressions and macros",
+    "include": true,
+    "url": "https://gozala.github.io/wisp/"
+  },
+  "World of Warcraft Addon Data": {
+    "include": false
+  },
+  "X10": {
+    "include": true
+  },
+  "xBase": {
+    "include": false
+  },
+  "XC": {
+    "description": "Specific to XCore processors",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/XC_(programming_language)"
+  },
+  "XCompose": {
+    "description": "X Window System Compose Key file",
+    "extension": ".XCompose",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Compose_key#X_Window_System"
+  },
+  "XML": {
+    "include": false
+  },
+  "Xojo": {
+    "include": false
+  },
+  "XPages": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/XPages"
+  },
+  "XPM": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/X_PixMap"
+  },
+  "XProc": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/XProc"
+  },
+  "XQuery": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/XQuery"
+  },
+  "XS": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/XS_(Perl)"
+  },
+  "XSLT": {
+    "include": false
+  },
+  "Xtend": {
+    "include": true
+  },
+  "Yacc": {
+    "include": false
+  },
+  "YAML": {
+    "include": false
+  },
+  "YANG": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/YANG"
+  },
+  "Zephir": {
+    "description": "DSL for PHP extensions",
+    "include": false,
+    "url": "https://zephir-lang.com/"
+  },
+  "Zimpl": {
+    "include": false,
+    "url": "http://zimpl.zib.de/"
+  }
+}
