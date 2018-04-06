@@ -77,7 +77,7 @@ module.exports = class DataPopulator {
 
       // Tell the app we're ready after the most recent year's scores are populated
       } else if (currentDate <= ONE_YEAR_AGO) {
-        if (typeof this._cb !== 'undefined' || this._cb !== null) {
+        if (typeof this._cb !== 'undefined' && this._cb !== null) {
           process.nextTick(this._cb);
         }
         // TODO
