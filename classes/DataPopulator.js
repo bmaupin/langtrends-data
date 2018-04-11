@@ -188,18 +188,24 @@ module.exports = class DataPopulator {
     return githubScore + stackoverflowScore;
   }
 
-  _getStackoverflowTag(languageName) {
+  async _getStackoverflowTag(languageName) {
+    let language = await this._getLanguageByName(languageName);
+
+    // This will be undefined for the memory connectory, null for PostgreSQL. Go figure
+    if (typeof language.stackoverflowTag === 'undefined' || language.stackoverflowTag === null) {
+      return languageName;
+    } else {
+      return language.stackoverflowTag;
+    }
+  }
+
+  _getLanguageByName(languageName) {
     return new Promise((resolve, reject) => {
       this._app.models.Language.findOne({where: {name: languageName}}, (err, language) => {
         if (err) throw err;
 
         if (language !== null) {
-          // This will be undefined for the memory connectory, null for PostgresQL. Go figure
-          if (typeof language.stackoverflowTag === 'undefined' || language.stackoverflowTag === null) {
-            resolve(languageName);
-          } else {
-            resolve(language.stackoverflowTag);
-          }
+          resolve(language);
         } else {
           reject(`Language ${languageName} not found`);
         }
@@ -229,31 +235,25 @@ module.exports = class DataPopulator {
   }
 
   _addScore(date, languageName, points) {
-    return new Promise((resolve, reject) => {
-      this._app.models.Language.findOne({where: {name: languageName}}, (err, language) => {
-        if (err) reject(err);
+    return new Promise(async (resolve, reject) => {
+      let language = await this._getLanguageByName(languageName);
 
-        if (language !== null) {
-          // Do an upsert because we don't want duplicate scores per date/language
-          this._app.models.Score.upsertWithWhere(
-            {
-              date: date,
-              languageId: language.id,
-            },
-            {
-              date: date,
-              language: language,
-              points: points,
-            },
-            (err, score) => {
-              if (err) reject(err);
-            }
-          );
-        } else {
-          reject(`Language ${languageName} not found`);
+      // Do an upsert because we don't want duplicate scores per date/language
+      this._app.models.Score.upsertWithWhere(
+        {
+          date: date,
+          languageId: language.id,
+        },
+        {
+          date: date,
+          language: language,
+          points: points,
+        },
+        (err, score) => {
+          if (err) reject(err);
+          resolve();
         }
-        resolve();
-      });
+      );
     });
   }
 
@@ -297,31 +297,25 @@ module.exports = class DataPopulator {
   }
 
   _populateScore(date, languageName) {
-    return new Promise((resolve, reject) => {
-      this._app.models.Language.findOne({where: {name: languageName}}, (err, language) => {
-        if (err) throw err;
+    return new Promise(async (resolve, reject) => {
+      let language = await this._getLanguageByName(languageName);
 
-        if (language !== null) {
-          this._app.models.Score.findOne(
-            {
-              where: {
-                date: date,
-                languageId: language.id,
-              },
-            },
-            async (err, score) => {
-              if (err) reject(err);
-              if (score === null) {
-                let points = await this._getScore(date, languageName);
-                await this._addScore(date, languageName, points);
-              }
-              resolve();
-            }
-          );
-        } else {
-          reject(`Language ${languageName} not found`);
+      this._app.models.Score.findOne(
+        {
+          where: {
+            date: date,
+            languageId: language.id,
+          },
+        },
+        async (err, score) => {
+          if (err) reject(err);
+          if (score === null) {
+            let points = await this._getScore(date, languageName);
+            await this._addScore(date, languageName, points);
+          }
+          resolve();
         }
-      });
+      );
     });
   }
 };
