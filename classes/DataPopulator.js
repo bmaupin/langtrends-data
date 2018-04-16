@@ -73,7 +73,6 @@ module.exports = class DataPopulator {
 
       if (currentDate <= OLDEST_DATE) {
         break;
-
       } else if (currentDate <= ONE_YEAR_AGO) {
         // TODO
         break;
@@ -124,7 +123,12 @@ module.exports = class DataPopulator {
   _getTopLanguagesFromApi(numberOfLanguages, date) {
     return new Promise(async (resolve, reject) => {
       let promises = [];
-      let scores = await this._getAllScores(date);
+      let scores = {};
+      try {
+        scores = await this._getAllScores(date);
+      } catch (error) {
+        reject(error);
+      }
       let topLanguages = DataPopulator._getTopItems(scores, numberOfLanguages);
 
       for (let i = 0; i < topLanguages.length; i++) {
@@ -158,9 +162,11 @@ module.exports = class DataPopulator {
       for (let i = 0; i < languages.length; i++) {
         let languageName = languages[i].name;
         promises.push(
-          this._getScore(date, languageName).then((score, reason) => {
+          this._getScoreFromApi(date, languageName).then((score, reason) => {
             if (reason) reject(reason);
             scores[languageName] = score;
+          }).catch((error) => {
+            reject(error);
           })
         );
       }
@@ -172,7 +178,7 @@ module.exports = class DataPopulator {
     });
   }
 
-  async _getScore(date, languageName) {
+  async _getScoreFromApi(date, languageName) {
     let githubScore = await this._github.getScore(languageName, date);
     let stackoverflowTag = await this._getStackoverflowTag(languageName);
     let stackoverflowScore = await this._stackoverflow.getScore(stackoverflowTag, date);
@@ -291,10 +297,18 @@ module.exports = class DataPopulator {
     });
   }
 
-  _populateScore(date, languageName) {
-    return new Promise(async (resolve, reject) => {
-      let language = await this._getLanguageByName(languageName);
+  async _populateScore(date, languageName) {
+    let language = await this._getLanguageByName(languageName);
+    let score = await this._getScoreFromDb(date, language);
 
+    if (score === null) {
+      let points = await this._getScoreFromApi(date, languageName);
+      await this._addScore(date, languageName, points);
+    }
+  }
+
+  _getScoreFromDb(date, language) {
+    return new Promise((resolve, reject) => {
       this._app.models.Score.findOne(
         {
           where: {
@@ -302,13 +316,9 @@ module.exports = class DataPopulator {
             languageId: language.id,
           },
         },
-        async (err, score) => {
+        (err, score) => {
           if (err) reject(err);
-          if (score === null) {
-            let points = await this._getScore(date, languageName);
-            await this._addScore(date, languageName, points);
-          }
-          resolve();
+          resolve(score);
         }
       );
     });
