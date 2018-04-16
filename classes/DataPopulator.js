@@ -5,9 +5,8 @@ const languages = require('./languages.json');
 const Stackoverflow = require('./Stackoverflow');
 
 module.exports = class DataPopulator {
-  constructor(app, cb) {
+  constructor(app) {
     this._app = app;
-    this._cb = cb;
     this._github = new Github();
     this._stackoverflow = new Stackoverflow();
 
@@ -75,11 +74,7 @@ module.exports = class DataPopulator {
       if (currentDate <= OLDEST_DATE) {
         break;
 
-      // Tell the app we're ready after the most recent year's scores are populated
       } else if (currentDate <= ONE_YEAR_AGO) {
-        if (typeof this._cb !== 'undefined' && this._cb !== null) {
-          process.nextTick(this._cb);
-        }
         // TODO
         break;
       }
