@@ -13,7 +13,7 @@ module.exports = class CodingSite {
       let request = https.request(options, function(response) {
         // Reject on bad status code
         if (response.statusCode < 200 || response.statusCode >= 300) {
-          return reject(new Error('statusCode=' + response.statusCode));
+          reject(new Error('statusCode=' + response.statusCode));
         }
         let body = [];
         response.on('data', function(chunk) {
