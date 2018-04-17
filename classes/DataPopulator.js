@@ -104,18 +104,13 @@ module.exports = class DataPopulator {
     return await this._getTopLanguagesFromDb(numberOfLanguages, date);
   }
 
-  _getLanguageByName(languageName) {
-    return new Promise((resolve, reject) => {
-      this._app.models.Language.findOne({where: {name: languageName}}, (err, language) => {
-        if (err) throw err;
+  async _populateAllScores(date) {
+    let languages = await this._getAllLanguages();
 
-        if (language !== null) {
-          resolve(language);
-        } else {
-          reject(`Language ${languageName} not found`);
-        }
-      });
-    });
+    // Do this in batches to avoid going over the Stackoverflow API limits
+    while (languages.length !== 0) {
+      await this._populateScores(date, languages.splice(0, Stackoverflow.MAX_REQUESTS_PER_SECOND));
+    }
   }
 
   _getAllLanguages() {
@@ -127,7 +122,7 @@ module.exports = class DataPopulator {
           reject('Languages must be populated before scores can be populated');
         }
 
-        resolve(languages.map(language => language.name));
+        resolve(languages);
       });
     });
   }
@@ -150,19 +145,10 @@ module.exports = class DataPopulator {
           }
 
           // Apparently score.language is a function
-          resolve(scores.map(score => score.language().name));
+          resolve(scores.map(score => score.language()));
         }
       );
     });
-  }
-
-  async _populateAllScores(date) {
-    let languages = await this._getAllLanguages();
-
-    // Do this in batches to avoid going over the Stackoverflow API limits
-    while (languages.length !== 0) {
-      await this._populateScores(date, languages.splice(0, Stackoverflow.MAX_REQUESTS_PER_SECOND));
-    }
   }
 
   _populateScores(date, languages) {
@@ -180,13 +166,12 @@ module.exports = class DataPopulator {
     });
   }
 
-  async _populateScore(date, languageName) {
-    let language = await this._getLanguageByName(languageName);
+  async _populateScore(date, language) {
     let score = await this._getScoreFromDb(date, language);
 
     if (score === null) {
-      let points = await this._getScoreFromApi(date, languageName);
-      await this._addScore(date, languageName, points);
+      let points = await this._getScoreFromApi(date, language);
+      await this._addScore(date, language, points);
     }
   }
 
@@ -207,32 +192,28 @@ module.exports = class DataPopulator {
     });
   }
 
-  async _getScoreFromApi(date, languageName) {
-    let githubScore = await this._github.getScore(languageName, date);
-    let stackoverflowTag = await this._getStackoverflowTag(languageName);
+  async _getScoreFromApi(date, language) {
+    let githubScore = await this._github.getScore(language.name, date);
+    let stackoverflowTag = this._getStackoverflowTag(language);
     let stackoverflowScore = await this._stackoverflow.getScore(stackoverflowTag, date);
     if (stackoverflowScore === 0) {
-      console.log(`WARNING: stackoverflow tag not found for ${languageName}`);
+      console.log(`WARNING: stackoverflow tag not found for ${language.name}`);
     }
 
     return githubScore + stackoverflowScore;
   }
 
-  async _getStackoverflowTag(languageName) {
-    let language = await this._getLanguageByName(languageName);
-
+  _getStackoverflowTag(language) {
     // This will be undefined for the memory connectory, null for PostgreSQL. Go figure
     if (typeof language.stackoverflowTag === 'undefined' || language.stackoverflowTag === null) {
-      return languageName;
+      return language.name;
     } else {
       return language.stackoverflowTag;
     }
   }
 
-  _addScore(date, languageName, points) {
-    return new Promise(async (resolve, reject) => {
-      let language = await this._getLanguageByName(languageName);
-
+  _addScore(date, language, points) {
+    return new Promise((resolve, reject) => {
       // Do an upsert because we don't want duplicate scores per date/language
       this._app.models.Score.upsertWithWhere(
         {
