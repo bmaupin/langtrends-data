@@ -99,105 +99,9 @@ module.exports = class DataPopulator {
   }
 
   async _getTopLanguages(numberOfLanguages, date) {
-    let scoreCount = await this._getScoreCount(date);
-    let topLanguages = [];
+    await this._populateAllScores(date);
 
-    if (scoreCount < numberOfLanguages) {
-      topLanguages = await this._getTopLanguagesFromApi(numberOfLanguages, date);
-    } else {
-      topLanguages = await this._getTopLanguagesFromDb(numberOfLanguages, date);
-    }
-
-    return topLanguages;
-  }
-
-  _getScoreCount(date) {
-    return new Promise((resolve, reject) => {
-      this._app.models.Score.count({date: date}, (err, count) => {
-        if (err) reject(err);
-        resolve(count);
-      });
-    });
-  }
-
-  _getTopLanguagesFromApi(numberOfLanguages, date) {
-    return new Promise(async (resolve, reject) => {
-      let promises = [];
-      let scores = {};
-      try {
-        scores = await this._getAllScores(date);
-      } catch (error) {
-        reject(error);
-      }
-      let topLanguages = DataPopulator._getTopItems(scores, numberOfLanguages);
-
-      for (let i = 0; i < topLanguages.length; i++) {
-        let languageName = topLanguages[i];
-        promises.push(this._addScore(date, languageName, scores[languageName]));
-      }
-
-      Promise.all(promises).then(
-        values => { resolve(topLanguages); },
-        reason => { reject(reason); }
-      );
-    });
-  }
-
-  async _getAllScores(date) {
-    let languages = await this._getAllLanguages();
-    let scores = {};
-
-    while (languages.length !== 0) {
-      Object.assign(scores, await this._getScores(date, languages.splice(0, Stackoverflow.MAX_REQUESTS_PER_SECOND)));
-    }
-
-    return scores;
-  }
-
-  _getScores(date, languages) {
-    return new Promise((resolve, reject) => {
-      let promises = [];
-      let scores = {};
-
-      for (let i = 0; i < languages.length; i++) {
-        let languageName = languages[i].name;
-        promises.push(
-          this._getScoreFromApi(date, languageName).then((score, reason) => {
-            if (reason) reject(reason);
-            scores[languageName] = score;
-          }).catch((error) => {
-            reject(error);
-          })
-        );
-      }
-
-      Promise.all(promises).then(
-        values => { resolve(scores); },
-        reason => { reject(reason); }
-      );
-    });
-  }
-
-  async _getScoreFromApi(date, languageName) {
-    let githubScore = await this._github.getScore(languageName, date);
-    let stackoverflowTag = await this._getStackoverflowTag(languageName);
-    let stackoverflowScore = await this._stackoverflow.getScore(stackoverflowTag, date);
-    if (stackoverflowScore === 0) {
-      console.log(`WARNING: stackoverflow tag not found for ${languageName}`);
-    }
-
-    return githubScore + stackoverflowScore;
-  }
-
-  async _getStackoverflowTag(languageName) {
-    let language = await this._getLanguageByName(languageName);
-
-    // This will be undefined for the memory connectory, null for PostgreSQL. Go figure
-    if (typeof language.stackoverflowTag === 'undefined' || language.stackoverflowTag === null) {
-      return languageName;
-    } else {
-      return language.stackoverflowTag;
-    }
+    return await this._getTopLanguagesFromDb(numberOfLanguages, date);
   }
 
   _getLanguageByName(languageName) {
@@ -223,38 +127,8 @@ module.exports = class DataPopulator {
           reject('Languages must be populated before scores can be populated');
         }
 
-        resolve(languages);
+        resolve(languages.map(language => language.name));
       });
-    });
-  }
-
-  static _getTopItems(obj, numberOfItems) {
-    // https://stackoverflow.com/a/39442287/399105
-    let sortedKeys = Object.keys(obj).sort((a, b) => obj[b] - obj[a]);
-
-    return sortedKeys.splice(0, numberOfItems);
-  }
-
-  _addScore(date, languageName, points) {
-    return new Promise(async (resolve, reject) => {
-      let language = await this._getLanguageByName(languageName);
-
-      // Do an upsert because we don't want duplicate scores per date/language
-      this._app.models.Score.upsertWithWhere(
-        {
-          date: date,
-          languageId: language.id,
-        },
-        {
-          date: date,
-          language: language,
-          points: points,
-        },
-        (err, score) => {
-          if (err) reject(err);
-          resolve();
-        }
-      );
     });
   }
 
@@ -280,6 +154,15 @@ module.exports = class DataPopulator {
         }
       );
     });
+  }
+
+  async _populateAllScores(date) {
+    let languages = await this._getAllLanguages();
+
+    // Do this in batches to avoid going over the Stackoverflow API limits
+    while (languages.length !== 0) {
+      await this._populateScores(date, languages.splice(0, Stackoverflow.MAX_REQUESTS_PER_SECOND));
+    }
   }
 
   _populateScores(date, languages) {
@@ -319,6 +202,51 @@ module.exports = class DataPopulator {
         (err, score) => {
           if (err) reject(err);
           resolve(score);
+        }
+      );
+    });
+  }
+
+  async _getScoreFromApi(date, languageName) {
+    let githubScore = await this._github.getScore(languageName, date);
+    let stackoverflowTag = await this._getStackoverflowTag(languageName);
+    let stackoverflowScore = await this._stackoverflow.getScore(stackoverflowTag, date);
+    if (stackoverflowScore === 0) {
+      console.log(`WARNING: stackoverflow tag not found for ${languageName}`);
+    }
+
+    return githubScore + stackoverflowScore;
+  }
+
+  async _getStackoverflowTag(languageName) {
+    let language = await this._getLanguageByName(languageName);
+
+    // This will be undefined for the memory connectory, null for PostgreSQL. Go figure
+    if (typeof language.stackoverflowTag === 'undefined' || language.stackoverflowTag === null) {
+      return languageName;
+    } else {
+      return language.stackoverflowTag;
+    }
+  }
+
+  _addScore(date, languageName, points) {
+    return new Promise(async (resolve, reject) => {
+      let language = await this._getLanguageByName(languageName);
+
+      // Do an upsert because we don't want duplicate scores per date/language
+      this._app.models.Score.upsertWithWhere(
+        {
+          date: date,
+          languageId: language.id,
+        },
+        {
+          date: date,
+          language: language,
+          points: points,
+        },
+        (err, score) => {
+          if (err) reject(err);
+          resolve();
         }
       );
     });
