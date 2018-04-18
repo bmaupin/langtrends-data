@@ -14,8 +14,11 @@ class Stackoverflow extends CodingSite {
     let body = await this._callApi(url);
 
     if (body.quota_remaining < 1000) {
-      // TODO: find and use a proper logging framework
       console.log(`WARNING: StackOverflow API daily quota remaining: ${body.quota_remaining}`);
+    }
+
+    if (body.quota_remaining === 0) {
+      throw new Error('Stackoverflow API daily limit exceeded');
     }
 
     /* TODO: handle API limitations (https://stackapps.com/a/3057/41977)
