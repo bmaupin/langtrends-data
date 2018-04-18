@@ -54,31 +54,25 @@ module.exports = class DataPopulator {
     });
   }
 
-  async populateTopScores() {
+  async populateAllScores() {
     const OLDEST_DATE = new Date(Date.UTC(2007, 9)); // 2007-10-01 00:00:00 UTC
-    const NUM_LANGUAGES = 10;
     let currentDate = DataPopulator._getFirstDayOfMonthUTC();
     const ONE_YEAR_AGO = DataPopulator._subtractOneYearUTC(currentDate);
 
-    let topLanguages = await this._getTopLanguages(NUM_LANGUAGES, currentDate);
-
-    // TODO
-    console.log(topLanguages);
-
     while (true) {
-      currentDate = DataPopulator._subtractOneMonthUTC(currentDate);
-
       // TODO
       console.log(currentDate);
 
-      if (currentDate <= OLDEST_DATE) {
+      if (currentDate < OLDEST_DATE) {
         break;
+
+      // TODO remove this
       } else if (currentDate <= ONE_YEAR_AGO) {
-        // TODO
         break;
       }
+      await this._populateAllScores(currentDate);
 
-      await this._populateScores(currentDate, topLanguages);
+      currentDate = DataPopulator._subtractOneMonthUTC(currentDate);
     }
   }
 
@@ -96,12 +90,6 @@ module.exports = class DataPopulator {
     let newDate = new Date(date);
     newDate.setUTCFullYear(newDate.getUTCFullYear() - 1);
     return newDate;
-  }
-
-  async _getTopLanguages(numberOfLanguages, date) {
-    await this._populateAllScores(date);
-
-    return await this._getTopLanguagesFromDb(numberOfLanguages, date);
   }
 
   async _populateAllScores(date) {
@@ -124,30 +112,6 @@ module.exports = class DataPopulator {
 
         resolve(languages);
       });
-    });
-  }
-
-  _getTopLanguagesFromDb(numberOfLanguages, date) {
-    return new Promise((resolve, reject) => {
-      this._app.models.Score.find(
-        {
-          fields: {languageId: true},
-          include: 'language',
-          limit: numberOfLanguages,
-          order: 'points DESC',
-          where: {date: date},
-        },
-        (err, scores) => {
-          if (err) throw err;
-
-          if (scores === null) {
-            reject(`No scores found for date: ${date}`);
-          }
-
-          // Apparently score.language is a function
-          resolve(scores.map(score => score.language()));
-        }
-      );
     });
   }
 
