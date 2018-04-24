@@ -47,8 +47,18 @@ class Stackoverflow extends CodingSite {
 
   async _callApi(url) {
     const options = new URL(url);
+    let bodyJson = '';
 
-    let bodyJson = await CodingSite._httpsRequest(options);
+    try {
+      bodyJson = await CodingSite._httpsRequest(options);
+    } catch (error) {
+      if (error.message === 'statusCode=400') {
+        throw new Error('Stackoverflow API daily limit exceeded');
+      } else {
+        throw (error);
+      }
+    }
+
     return JSON.parse(bodyJson);
   }
 
