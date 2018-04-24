@@ -4,6 +4,8 @@ const Github = require('./Github');
 const languages = require('./languages.json');
 const Stackoverflow = require('./Stackoverflow');
 
+const MAX_CONCURRENT_REQUESTS = 10;
+
 module.exports = class DataPopulator {
   constructor(app) {
     this._app = app;
@@ -95,9 +97,9 @@ module.exports = class DataPopulator {
   async _populateAllScores(date) {
     let languages = await this._getAllLanguages();
 
-    // Do this in batches to avoid going over the Stackoverflow API limits
+    // Do this in batches to avoid going over API limits
     while (languages.length !== 0) {
-      await this._populateScores(date, languages.splice(0, Stackoverflow.MAX_REQUESTS_PER_SECOND));
+      await this._populateScores(date, languages.splice(0, MAX_CONCURRENT_REQUESTS));
     }
   }
 
