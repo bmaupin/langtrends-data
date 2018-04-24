@@ -36,12 +36,19 @@ module.exports = class Github extends CodingSite {
     let postData = this._buildPostData(date, languageName);
     let body = await this._callApi(API_URL, postData);
 
+    // Start warning when we have less than 10% of our limit remaining
+    if (body.data.rateLimit.remaining < 500) {
+      console.log(`WARNING: Github API hourly quota remaining: ${body.data.rateLimit.remaining}`);
+    } else if (body.data.rateLimit.remaining <= 0) {
+      throw new Error('Github API hourly limit exceeded');
+    }
+
     return body.data.search.repositoryCount;
   }
 
   _buildPostData(date, languageName) {
     let postData = `{"query": "{ search(query: \\"language:${Github._encodeLanguageName(languageName)} ` +
-      `created:<${Github._encodeDate(date)}\\", type: REPOSITORY) { repositoryCount }}"}`;
+      `created:<${Github._encodeDate(date)}\\", type: REPOSITORY) { repositoryCount } rateLimit { remaining }}"}`;
 
     return postData;
   }

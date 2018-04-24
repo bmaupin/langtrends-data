@@ -13,18 +13,14 @@ class Stackoverflow extends CodingSite {
     let url = this._buildUrl(date, languageName);
     let body = await this._callApi(url);
 
+    // Start warning when we have less than 10% of our limit remaining
     if (body.quota_remaining < 1000) {
       console.log(`WARNING: StackOverflow API daily quota remaining: ${body.quota_remaining}`);
-    }
-
-    if (body.quota_remaining === 0) {
+    } else if (body.quota_remaining <= 0) {
       throw new Error('Stackoverflow API daily limit exceeded');
     }
 
-    /* TODO: handle API limitations (https://stackapps.com/a/3057/41977)
-     *  - Don't make more than 30 requests/second
-     *  - Handle backoff field
-     */
+    // TODO: handle backoff field (https://stackapps.com/a/3057/41977)
     if (body.hasOwnProperty('backoff')) {
       throw new Error(`StackOverflow API backoff field not handled: ${body.backoff}`);
     }
