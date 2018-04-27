@@ -13,17 +13,7 @@ class Stackoverflow extends CodingSite {
     let url = this._buildUrl(date, languageName);
     let body = await this._callApi(url);
 
-    // Start warning when we have less than 10% of our limit remaining
-    if (body.quota_remaining < 1000) {
-      console.log(`WARNING: StackOverflow API daily quota remaining: ${body.quota_remaining}`);
-    } else if (body.quota_remaining <= 0) {
-      throw new Error('Stackoverflow API daily limit exceeded');
-    }
-
-    // TODO: handle backoff field (https://stackapps.com/a/3057/41977)
-    if (body.hasOwnProperty('backoff')) {
-      throw new Error(`StackOverflow API backoff field not handled: ${body.backoff}`);
-    }
+    Stackoverflow._handleApiLimits(body);
 
     return body.total;
   }
@@ -45,6 +35,15 @@ class Stackoverflow extends CodingSite {
     return encodeURIComponent(languageName.toLowerCase().replace(/ /g, '-'));
   }
 
+  _addApiKey(url) {
+    const KEY_PARAMETER = '&key=';
+    if (typeof this._apiKey !== 'undefined') {
+      url = `${url}${KEY_PARAMETER}${this._apiKey}`;
+    }
+
+    return url;
+  }
+
   async _callApi(url) {
     const options = new URL(url);
     let bodyJson = '';
@@ -62,13 +61,18 @@ class Stackoverflow extends CodingSite {
     return JSON.parse(bodyJson);
   }
 
-  _addApiKey(url) {
-    const KEY_PARAMETER = '&key=';
-    if (typeof this._apiKey !== 'undefined') {
-      url = `${url}${KEY_PARAMETER}${this._apiKey}`;
+  static _handleApiLimits(body) {
+    // Start warning when we have less than 10% of our limit remaining
+    if (body.quota_remaining < 1000) {
+      console.log(`WARNING: StackOverflow API daily quota remaining: ${body.quota_remaining}`);
+    } else if (body.quota_remaining <= 0) {
+      throw new Error('Stackoverflow API daily limit exceeded');
     }
 
-    return url;
+    // TODO: handle backoff field (https://stackapps.com/a/3057/41977)
+    if (body.hasOwnProperty('backoff')) {
+      throw new Error(`StackOverflow API backoff field not handled: ${body.backoff}`);
+    }
   }
 };
 

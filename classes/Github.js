@@ -30,18 +30,13 @@ module.exports = class Github extends CodingSite {
   async getScore(languageName, date) {
     // API key can't be null for the GraphQL API (https://platform.github.community/t/anonymous-access/2093)
     if (typeof this._apiKey === 'undefined') {
-      throw new Error('apiKey cannot be null');
+      throw new Error('Github API key cannot be null');
     }
 
     let postData = this._buildPostData(date, languageName);
     let body = await this._callApi(API_URL, postData);
 
-    // Start warning when we have less than 10% of our limit remaining
-    if (body.data.rateLimit.remaining < 500) {
-      console.log(`WARNING: Github API hourly quota remaining: ${body.data.rateLimit.remaining}`);
-    } else if (body.data.rateLimit.remaining <= 0) {
-      throw new Error('Github API hourly limit exceeded');
-    }
+    Github._handleApiLimits(body);
 
     return body.data.search.repositoryCount;
   }
@@ -78,5 +73,14 @@ module.exports = class Github extends CodingSite {
 
     let bodyJson = await CodingSite._httpsRequest(options, postData);
     return JSON.parse(bodyJson);
+  }
+
+  static _handleApiLimits(body) {
+    // Start warning when we have less than 10% of our limit remaining
+    if (body.data.rateLimit.remaining < 500) {
+      console.log(`WARNING: Github API hourly quota remaining: ${body.data.rateLimit.remaining}`);
+    } else if (body.data.rateLimit.remaining <= 0) {
+      throw new Error('Github API hourly limit exceeded');
+    }
   }
 };
