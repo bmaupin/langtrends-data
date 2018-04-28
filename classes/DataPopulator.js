@@ -9,6 +9,7 @@ const MAX_CONCURRENT_REQUESTS = 10;
 module.exports = class DataPopulator {
   constructor(app) {
     this._app = app;
+    this._firstDayOfMonth = DataPopulator._getFirstDayOfMonthUTC();
     this._github = new Github();
     this._stackoverflow = new Stackoverflow();
 
@@ -58,7 +59,8 @@ module.exports = class DataPopulator {
 
   async populateAllScores() {
     const OLDEST_DATE = new Date(Date.UTC(2007, 9)); // 2007-10-01 00:00:00 UTC
-    let currentDate = DataPopulator._getFirstDayOfMonthUTC();
+    let currentDate = new Date(this._firstDayOfMonth);
+    // TODO: remove this
     const ONE_YEAR_AGO = DataPopulator._subtractOneYearUTC(currentDate);
 
     while (true) {
@@ -162,7 +164,8 @@ module.exports = class DataPopulator {
     let githubScore = await this._github.getScore(language.name, date);
     let stackoverflowTag = this._getStackoverflowTag(language);
     let stackoverflowScore = await this._stackoverflow.getScore(stackoverflowTag, date);
-    if (stackoverflowScore === 0) {
+    // Only log these for the first date, because for older dates it may just be that the tag count is actually 0
+    if (date === this._firstDayOfMonth && stackoverflowScore === 0) {
       console.log(`WARNING: stackoverflow tag not found for ${language.name}`);
     }
 
