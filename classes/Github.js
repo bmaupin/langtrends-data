@@ -76,6 +76,10 @@ module.exports = class Github extends CodingSite {
   }
 
   static _handleApiLimits(body) {
+    if (body.data === null && body.hasOwnProperty('errors')) {
+      throw new Error(`Github API error (${body.errors[0].message})`);
+    }
+
     // Start warning when we have less than 10% of our limit remaining
     if (body.data.rateLimit.remaining < 500) {
       console.log(`WARNING: Github API hourly quota remaining: ${body.data.rateLimit.remaining}`);
