@@ -3,6 +3,7 @@
 const CodingSite = require('./CodingSite');
 const jsdom = require('jsdom');
 const {JSDOM} = jsdom;
+const settings = require('./settings.json');
 const {URL} = require('url');
 
 const API_URL = 'https://api.github.com/graphql';
@@ -80,8 +81,7 @@ module.exports = class Github extends CodingSite {
       throw new Error(`Github API error (${body.errors[0].message})`);
     }
 
-    // Start warning when we have less than 10% of our limit remaining
-    if (body.data.rateLimit.remaining < 500) {
+    if (body.data.rateLimit.remaining <= settings.MAX_CONCURRENT_REQUESTS) {
       console.log(`WARNING: Github API hourly quota remaining: ${body.data.rateLimit.remaining}`);
     } else if (body.data.rateLimit.remaining <= 0) {
       throw new Error('Github API hourly limit exceeded');

@@ -2,9 +2,8 @@
 
 const Github = require('./Github');
 const languages = require('./languages.json');
+const settings = require('./settings.json');
 const Stackoverflow = require('./Stackoverflow');
-
-const MAX_CONCURRENT_REQUESTS = 10;
 
 module.exports = class DataPopulator {
   constructor(app) {
@@ -90,6 +89,7 @@ module.exports = class DataPopulator {
     return newDate;
   }
 
+  // TODO: remove this
   static _subtractOneYearUTC(date) {
     let newDate = new Date(date);
     newDate.setUTCFullYear(newDate.getUTCFullYear() - 1);
@@ -101,7 +101,7 @@ module.exports = class DataPopulator {
 
     // Do this in batches to avoid going over API limits
     while (languages.length !== 0) {
-      await this._populateScores(date, languages.splice(0, MAX_CONCURRENT_REQUESTS));
+      await this._populateScores(date, languages.splice(0, settings.MAX_CONCURRENT_REQUESTS));
     }
   }
 

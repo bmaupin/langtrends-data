@@ -2,6 +2,7 @@
 
 const CodingSite = require('./CodingSite');
 const {URL} = require('url');
+const settings = require('./settings.json');
 const util = require('util');
 
 // Uses a custom filter that only returns backoff, quota_remaining, and total
@@ -62,8 +63,7 @@ class Stackoverflow extends CodingSite {
   }
 
   static _handleApiLimits(body) {
-    // Start warning when we have less than 10% of our limit remaining
-    if (body.quota_remaining < 1000) {
+    if (body.quota_remaining <= settings.MAX_CONCURRENT_REQUESTS) {
       console.log(`WARNING: StackOverflow API daily quota remaining: ${body.quota_remaining}`);
     } else if (body.quota_remaining <= 0) {
       throw new Error('Stackoverflow API daily limit exceeded');
