@@ -59,8 +59,6 @@ module.exports = class DataPopulator {
   async populateAllScores() {
     const OLDEST_DATE = new Date(Date.UTC(2007, 9)); // 2007-10-01 00:00:00 UTC
     let currentDate = new Date(this._firstDayOfMonth);
-    // TODO: remove this
-    const ONE_YEAR_AGO = DataPopulator._subtractOneYearUTC(currentDate);
 
     while (true) {
       // TODO
@@ -68,13 +66,9 @@ module.exports = class DataPopulator {
 
       if (currentDate < OLDEST_DATE) {
         break;
-
-      // TODO remove this
-      } else if (currentDate <= ONE_YEAR_AGO) {
-        break;
       }
-      await this._populateAllScores(currentDate);
 
+      await this._populateAllScores(currentDate);
       currentDate = DataPopulator._subtractOneMonthUTC(currentDate);
     }
   }
@@ -86,13 +80,6 @@ module.exports = class DataPopulator {
   static _subtractOneMonthUTC(date) {
     let newDate = new Date(date);
     newDate.setUTCMonth(newDate.getUTCMonth() - 1);
-    return newDate;
-  }
-
-  // TODO: remove this
-  static _subtractOneYearUTC(date) {
-    let newDate = new Date(date);
-    newDate.setUTCFullYear(newDate.getUTCFullYear() - 1);
     return newDate;
   }
 
