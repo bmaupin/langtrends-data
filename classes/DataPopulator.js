@@ -58,18 +58,21 @@ module.exports = class DataPopulator {
 
   async populateAllScores() {
     const OLDEST_DATE = new Date(Date.UTC(2007, 9)); // 2007-10-01 00:00:00 UTC
+    const OLD_SCORE_COUNT = await this._getScoreCount();
     let currentDate = new Date(this._firstDayOfMonth);
 
     while (true) {
-      // TODO
-      console.log(currentDate);
-
       if (currentDate < OLDEST_DATE) {
         break;
       }
 
       await this._populateAllScores(currentDate);
       currentDate = DataPopulator._subtractOneMonthUTC(currentDate);
+    }
+
+    const POPULATED_SCORE_COUNT = await this._getScoreCount() - OLD_SCORE_COUNT;
+    if (POPULATED_SCORE_COUNT !== 0) {
+      console.log(`INFO: Successfully populated ${POPULATED_SCORE_COUNT} scores`);
     }
   }
 
@@ -184,6 +187,17 @@ module.exports = class DataPopulator {
         (err, score) => {
           if (err) reject(err);
           resolve();
+        }
+      );
+    });
+  }
+
+  _getScoreCount() {
+    return new Promise((resolve, reject) => {
+      this._app.models.Score.count(
+        (err, count) => {
+          if (err) reject(err);
+          resolve(count);
         }
       );
     });
