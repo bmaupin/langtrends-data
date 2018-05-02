@@ -225,8 +225,17 @@
   "Common Lisp": {
     "include": true
   },
+  "Common Workflow Language": {
+    "description": "A specification for describing analysis workflows",
+    "include": false,
+    "url": "https://www.commonwl.org/"
+  },
   "Component Pascal": {
     "include": true
+  },
+  "CoNLL-U": {
+    "include": false,
+    "url": "http://universaldependencies.org/docs/format.html"
   },
   "Cool": {
     "include": false,
@@ -596,8 +605,13 @@
     "include": false
   },
   "HTTP": {
+    "description": "httpspec??",
+    "include": false
+  },
+  "HXML": {
+    "description": "Haxe compiler arguments file",
     "include": false,
-    "url": "httpspec??"
+    "url": "https://haxe.org/manual/compiler-usage-hxml.html"
   },
   "Hy": {
     "include": true
@@ -938,6 +952,12 @@
   "NewLisp": {
     "include": true
   },
+  "Nextflow": {
+    "description": "A programming DSL that eases writing computational pipelines with complex data",
+    "include": false,
+    "type": "domain-specific language",
+    "url": "https://www.nextflow.io"
+  },
   "Nginx": {
     "include": false
   },
@@ -1106,6 +1126,11 @@
   "Pony": {
     "include": true
   },
+  "PostCSS": {
+    "include": false,
+    "type": "markup language",
+    "url": "http://postcss.org/"
+  },
   "PostScript": {
     "include": false
   },
@@ -1246,6 +1271,12 @@
   "Rouge": {
     "include": true
   },
+  "RPC": {
+    "description": "XDR/RPCGEN",
+    "extension": ".x",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/RPCGEN#RPC_Language"
+  },
   "RPM Spec": {
     "include": false
   },
@@ -1291,6 +1322,11 @@
   "SCSS": {
     "include": false
   },
+  "sed": {
+    "description": "Language for the sed Unix utility",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Sed"
+  },
   "Self": {
     "include": true
   },
@@ -1334,6 +1370,11 @@
     "description": "SMT-LIB",
     "include": false,
     "url": "http://smtlib.cs.uiowa.edu/"
+  },
+  "Solidity": {
+    "description": "A contract-oriented programming language for writing smart contracts",
+    "include": false,
+    "type": "domain-specific language"
   },
   "SourcePawn": {
     "include": false,
@@ -1391,6 +1432,11 @@
   },
   "SubRip Text": {
     "include": false
+  },
+  "SugarSS": {
+    "description": "Indent-based CSS syntax for PostCSS",
+    "include": false,
+    "url": "https://github.com/postcss/sugarss"
   },
   "SuperCollider": {
     "include": false,
@@ -1612,6 +1658,10 @@
   "YANG": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/YANG"
+  },
+  "YARA": {
+    "include": false,
+    "url": "https://virustotal.github.io/yara/"
   },
   "Zephir": {
     "description": "DSL for PHP extensions",
