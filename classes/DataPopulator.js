@@ -57,7 +57,8 @@ module.exports = class DataPopulator {
   }
 
   async populateAllScores() {
-    const OLDEST_DATE = new Date(Date.UTC(2007, 9)); // 2007-10-01 00:00:00 UTC
+    // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
+    const OLDEST_DATE = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
     const OLD_SCORE_COUNT = await this._getScoreCount();
     let currentDate = new Date(this._firstDayOfMonth);
 
