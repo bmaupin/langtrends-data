@@ -20,7 +20,45 @@ module.exports = class DataPopulator {
     }
   }
 
-  async populateAllLanguages() {
+  async populateUsers() {
+    if (await this._getUser(settings.POPCON_API_USER_EMAIL) === null &&
+      process.env.hasOwnProperty('POPCON_API_PASSWORD')) {
+      await this._createUser(settings.POPCON_API_USER_EMAIL, process.env.POPCON_API_PASSWORD);
+    }
+  }
+
+  _getUser(email) {
+    return new Promise((resolve, reject) => {
+      this._app.models.User.findOne(
+        {
+          where: {
+            email: email,
+          },
+        },
+        (err, user) => {
+          if (err) reject(err);
+          resolve(user);
+        }
+      );
+    });
+  }
+
+  _createUser(email, password) {
+    return new Promise((resolve, reject) => {
+      this._app.models.User.create(
+        {
+          email: email,
+          password: password,
+        },
+        (err, user) => {
+          if (err) reject(err);
+          resolve(user);
+        }
+      );
+    });
+  }
+
+  async populateLanguages() {
     let languagesFromGithub = await Github.getLanguageNames();
 
     for (let i = 0; i < languagesFromGithub.length; i++) {
@@ -56,7 +94,7 @@ module.exports = class DataPopulator {
     });
   }
 
-  async populateAllScores() {
+  async populateScores() {
     // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
     const OLDEST_DATE = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
     const OLD_SCORE_COUNT = await this._getScoreCount();
