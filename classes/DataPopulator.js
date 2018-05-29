@@ -21,10 +21,17 @@ module.exports = class DataPopulator {
   }
 
   async populateUsers() {
-    if (await this._getUser(settings.POPCON_API_USER_EMAIL) === null &&
-      process.env.hasOwnProperty('POPCON_API_PASSWORD')) {
-      await this._createUser(settings.POPCON_API_USER_EMAIL, process.env.POPCON_API_PASSWORD);
+    let user = await this._getUser(settings.POPCON_API_USER_EMAIL);
+    if (user === null && process.env.hasOwnProperty('POPCON_API_PASSWORD')) {
+      user = await this._createUser(settings.POPCON_API_USER_EMAIL, process.env.POPCON_API_PASSWORD);
     }
+
+    let accessToken = await this._getAccessToken(user.id);
+    if (accessToken === null && process.env.hasOwnProperty('POPCON_API_PASSWORD')) {
+      accessToken = await this._logInUser(settings.POPCON_API_USER_EMAIL, process.env.POPCON_API_PASSWORD);
+    }
+
+    console.log(`INFO: user access token is ${accessToken.id}`);
   }
 
   _getUser(email) {
@@ -55,6 +62,37 @@ module.exports = class DataPopulator {
           resolve(user);
         }
       );
+    });
+  }
+
+  _getAccessToken(userId) {
+    return new Promise((resolve, reject) => {
+      this._app.models.AccessToken.findOne(
+        {
+          where: {
+            userId: userId,
+          },
+        },
+        (err, accessToken) => {
+          if (err) reject(err);
+          resolve(accessToken);
+        }
+      );
+    });
+  }
+
+  _logInUser(email, password) {
+    return new Promise((resolve, reject) => {
+      this._app.models.User.login(
+        {
+          email: email,
+          password: password,
+        },
+        (err, accessToken) => {
+          if (err) reject(err);
+          resolve(accessToken);
+        }
+      )
     });
   }
 
