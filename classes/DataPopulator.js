@@ -28,10 +28,8 @@ module.exports = class DataPopulator {
 
     let accessToken = await this._getAccessToken(user.id);
     if (accessToken === null && process.env.hasOwnProperty('POPCON_API_PASSWORD')) {
-      accessToken = await this._logInUser(settings.POPCON_API_USER_EMAIL, process.env.POPCON_API_PASSWORD);
+      await this._logInUser(settings.POPCON_API_USER_EMAIL, process.env.POPCON_API_PASSWORD);
     }
-
-    console.log(`INFO: user access token is ${accessToken.id}`);
   }
 
   _getUser(email) {
