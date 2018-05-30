@@ -87,12 +87,13 @@ module.exports = class DataPopulator {
         {
           email: email,
           password: password,
+          ttl: -1,
         },
         (err, accessToken) => {
           if (err) reject(err);
           resolve(accessToken);
         }
-      )
+      );
     });
   }
 
