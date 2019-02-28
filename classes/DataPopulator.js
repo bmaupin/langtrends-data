@@ -28,7 +28,8 @@ module.exports = class DataPopulator {
 
     let accessToken = await this._getAccessToken(user.id);
     if (accessToken === null && process.env.hasOwnProperty('LOOPBACK_API_PASSWORD')) {
-      await this._logInUser(settings.LOOPBACK_API_USER_EMAIL, process.env.LOOPBACK_API_PASSWORD);
+      accessToken = await this._logInUser(settings.LOOPBACK_API_USER_EMAIL, process.env.LOOPBACK_API_PASSWORD);
+      console.log(`INFO: User access token is ${accessToken.id}`);
     }
   }
 
