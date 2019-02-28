@@ -53,7 +53,7 @@ class Stackoverflow extends CodingSite {
       bodyJson = await CodingSite._httpsRequest(options);
     } catch (error) {
       if (error.message === 'statusCode=400') {
-        throw new Error('Stackoverflow API daily limit exceeded');
+        throw new Error('Stackoverflow API daily limit exceeded or API key incorrect');
       } else {
         throw (error);
       }
