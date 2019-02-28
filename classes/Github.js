@@ -77,7 +77,7 @@ module.exports = class Github extends CodingSite {
   }
 
   static _handleApiLimits(body) {
-    if (body.data === null && body.hasOwnProperty('errors')) {
+    if (!body.data && body.hasOwnProperty('errors')) {
       throw new Error(`Github API error (${body.errors[0].message})`);
     }
 
