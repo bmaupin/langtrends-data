@@ -138,18 +138,21 @@ module.exports = class DataPopulator {
     const OLD_SCORE_COUNT = await this._getScoreCount();
     let currentDate = new Date(this._firstDayOfMonth);
 
-    while (true) {
-      if (currentDate < OLDEST_DATE) {
-        break;
+    try {
+      while (true) {
+        if (currentDate < OLDEST_DATE) {
+          break;
+        }
+
+        await this._populateAllScores(currentDate);
+        currentDate = DataPopulator._subtractOneMonthUTC(currentDate);
       }
-
-      await this._populateAllScores(currentDate);
-      currentDate = DataPopulator._subtractOneMonthUTC(currentDate);
-    }
-
-    const POPULATED_SCORE_COUNT = await this._getScoreCount() - OLD_SCORE_COUNT;
-    if (POPULATED_SCORE_COUNT !== 0) {
-      console.log(`INFO: Successfully populated ${POPULATED_SCORE_COUNT} scores`);
+    // Log the populated score count even if there are errors
+    } finally {
+      const POPULATED_SCORE_COUNT = await this._getScoreCount() - OLD_SCORE_COUNT;
+      if (POPULATED_SCORE_COUNT !== 0) {
+        console.log(`INFO: Successfully populated ${POPULATED_SCORE_COUNT} scores`);
+      }
     }
   }
 
