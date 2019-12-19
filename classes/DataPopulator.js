@@ -97,10 +97,11 @@ module.exports = class DataPopulator {
   }
 
   async populateLanguages() {
-    let languagesFromGithub = await Github.getLanguageNames();
+    // Store languagesFromGithub in a class field because we'll need it later when populating scores
+    this._languagesFromGithub = await Github.getLanguageNames();
 
-    for (let i = 0; i < languagesFromGithub.length; i++) {
-      let languageName = languagesFromGithub[i];
+    for (let i = 0; i < this._languagesFromGithub.length; i++) {
+      let languageName = this._languagesFromGithub[i];
 
       if (languages.hasOwnProperty(languageName)) {
         if (languages[languageName].include === true) {
@@ -194,7 +195,20 @@ module.exports = class DataPopulator {
       let promises = [];
 
       for (let i = 0; i < languages.length; i++) {
-        promises.push(this._populateScore(date, languages[i]));
+        // When GitHub renames a language, the old name will be in the database and will end up getting sent to the
+        // GitHub API. Unfortunately, instead of returning a score of 0 the language filter won't match and it will
+        // return the total score (repository count) for all languages. So we need to prevent this from happening by
+        // skipping these scores from getting stored in the database. When this does happen, renaming the language in
+        // languages.json should correct the problem. Optionally the language can be first renamed in the database to
+        // prevent the old data from having to be re-fetched.
+        if (!this._languagesFromGithub.includes(languages[i].name)) {
+          // Only log this for the first date to prevent from spamming the logs
+          if (date.toISOString() === this._firstDayOfMonth.toISOString()) {
+            console.log(`WARNING: Language in database not found in GitHub: ${languages[i].name}`);
+          }
+        } else {
+          promises.push(this._populateScore(date, languages[i]));
+        }
       }
 
       Promise.all(promises).then(
