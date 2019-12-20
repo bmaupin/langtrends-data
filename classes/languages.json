@@ -1555,7 +1555,7 @@
     "include": false,
     "stackoverflowTag": "vim"
   },
-  "Visual Basic": {
+  "Visual Basic .NET": {
     "include": true,
     "stackoverflowTag": "vb.net"
   },
