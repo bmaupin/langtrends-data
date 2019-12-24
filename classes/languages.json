@@ -1229,7 +1229,8 @@
     "include": true
   },
   "Rebol": {
-    "include": true
+    "description": "NOTE: See https://github.com/bmaupin/langtrends-api/issues/6",
+    "include": false
   },
   "Red": {
     "include": true
