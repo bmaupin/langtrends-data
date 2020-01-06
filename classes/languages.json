@@ -1669,6 +1669,10 @@
     "include": false,
     "url": "https://zephir-lang.com/"
   },
+  "Zig": {
+    "include": true,
+    "url": "https://ziglang.org/"
+  },
   "Zimpl": {
     "include": false,
     "url": "http://zimpl.zib.de/"
