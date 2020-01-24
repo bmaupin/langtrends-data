@@ -5,10 +5,10 @@ module.exports = class CodingSite {
     this._apiKey = newApiKey;
   }
 
-  static async _handleApiError(errorCode, secondsToWait, options, postData) {
+  async _retryOnError(errorCode, secondsToWait, options, postData) {
     console.log(`WARNING: ${options.hostname} returned error code ${errorCode}; retrying in ${secondsToWait} seconds`);
     await CodingSite._waitSeconds(secondsToWait);
-    return await CodingSite._httpsRequest(options, postData);
+    return await this._httpsRequest(options, postData);
   }
 
   // Based on https://stackoverflow.com/a/39027151/399105

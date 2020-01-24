@@ -74,21 +74,22 @@ module.exports = class Github extends CodingSite {
       path: optionsUrl.pathname,
     };
 
-    let bodyJson = await Github._httpsRequest(options, postData);
+    let bodyJson = await this._httpsRequest(options, postData);
     return JSON.parse(bodyJson);
   }
 
   // Based on https://stackoverflow.com/a/38543075/399105
-  static _httpsRequest(options, postData) {
-    return new Promise(function(resolve, reject) {
-      let request = https.request(options, async function(response) {
+  _httpsRequest(options, postData) {
+    return new Promise((resolve, reject) => {
+      let request = https.request(options, async (response) => {
         // https://developer.github.com/v3/guides/best-practices-for-integrators/#dealing-with-abuse-rate-limits
         if (response.statusCode === 403 && response.headers.hasOwnProperty('retry-after')) {
-          resolve(await CodingSite._handleApiError(
+          resolve(await this._retryOnError(
             response.statusCode,
             Number(response.headers['retry-after']),
             options,
-            postData));
+            postData)
+          );
         } else if (response.statusCode < 200 || response.statusCode >= 300) {
           reject(new Error('statusCode=' + response.statusCode));
         }
