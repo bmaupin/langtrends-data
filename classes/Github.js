@@ -1,10 +1,12 @@
 'use strict';
 
-const CodingSite = require('./CodingSite');
+const https = require('https');
 const jsdom = require('jsdom');
 const {JSDOM} = jsdom;
-const settings = require('./settings.json');
 const {URL} = require('url');
+
+const CodingSite = require('./CodingSite');
+const settings = require('./settings.json');
 
 const API_URL = 'https://api.github.com/graphql';
 
@@ -72,8 +74,41 @@ module.exports = class Github extends CodingSite {
       path: optionsUrl.pathname,
     };
 
-    let bodyJson = await CodingSite._httpsRequest(options, postData);
+    let bodyJson = await Github._httpsRequest(options, postData);
     return JSON.parse(bodyJson);
+  }
+
+  // Based on https://stackoverflow.com/a/38543075/399105
+  static _httpsRequest(options, postData) {
+    return new Promise(function(resolve, reject) {
+      let request = https.request(options, async function(response) {
+        // https://developer.github.com/v3/guides/best-practices-for-integrators/#dealing-with-abuse-rate-limits
+        if (response.statusCode === 403 && response.headers.hasOwnProperty('retry-after')) {
+          resolve(await CodingSite._handle403Error(Number(response.headers['retry-after']), options, postData));
+        } else if (response.statusCode < 200 || response.statusCode >= 300) {
+          reject(new Error('statusCode=' + response.statusCode));
+        }
+
+        let body = [];
+        response.on('data', function(chunk) {
+          body.push(chunk);
+        });
+
+        response.on('end', function() {
+          resolve(Buffer.concat(body).toString());
+        });
+      });
+
+      request.on('error', function(err) {
+        // Use the original message and code but our stack trace since the original stack trace won't point back to here
+        reject(new Error(`${err.message} (${err.code})`));
+      });
+
+      if (postData) {
+        request.write(postData);
+      }
+      request.end();
+    });
   }
 
   static _handleApiLimits(body) {

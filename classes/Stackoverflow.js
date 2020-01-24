@@ -1,9 +1,12 @@
 'use strict';
 
-const CodingSite = require('./CodingSite');
+const https = require('https');
 const {URL} = require('url');
-const settings = require('./settings.json');
 const util = require('util');
+const zlib = require('zlib');
+
+const CodingSite = require('./CodingSite');
+const settings = require('./settings.json');
 
 // Uses a custom filter that only returns backoff, quota_remaining, and total
 // (https://api.stackexchange.com/docs/create-filter#unsafe=false&filter=!.UE8F0bVg4M-_Ii4&run=true)
@@ -50,7 +53,7 @@ class Stackoverflow extends CodingSite {
     let bodyJson = '';
 
     try {
-      bodyJson = await CodingSite._httpsRequest(options);
+      bodyJson = await Stackoverflow._httpsRequest(options);
     } catch (error) {
       if (error.message === 'statusCode=400') {
         throw new Error('Stackoverflow API daily limit exceeded or API key incorrect');
@@ -60,6 +63,46 @@ class Stackoverflow extends CodingSite {
     }
 
     return JSON.parse(bodyJson);
+  }
+
+  // Based on https://stackoverflow.com/a/38543075/399105
+  static _httpsRequest(options) {
+    return new Promise(function(resolve, reject) {
+      let request = https.request(options, async function(response) {
+        if (response.statusCode < 200 || response.statusCode >= 300) {
+          reject(new Error('statusCode=' + response.statusCode));
+        }
+
+        let body = [];
+        response.on('data', function(chunk) {
+          body.push(chunk);
+        });
+
+        response.on('end', function() {
+          try {
+            switch (response.headers['content-encoding']) {
+              case 'gzip':
+                zlib.gunzip(Buffer.concat(body), (error, uncompressedData) => {
+                  resolve(uncompressedData.toString());
+                });
+                break;
+              default:
+                resolve(Buffer.concat(body).toString());
+                break;
+            }
+          } catch (e) {
+            reject(e);
+          }
+        });
+      });
+
+      request.on('error', function(err) {
+        // Use the original message and code but our stack trace since the original stack trace won't point back to here
+        reject(new Error(`${err.message} (${err.code})`));
+      });
+
+      request.end();
+    });
   }
 
   static _handleApiLimits(body) {
