@@ -33,67 +33,43 @@ module.exports = class DataPopulator {
     }
   }
 
-  _getUser(email) {
-    return new Promise((resolve, reject) => {
-      this._app.models.User.findOne(
-        {
-          where: {
-            email: email,
-          },
-        },
-        (err, user) => {
-          if (err) reject(err);
-          resolve(user);
-        }
-      );
-    });
-  }
-
-  _createUser(email, password) {
-    return new Promise((resolve, reject) => {
-      this._app.models.User.create(
-        {
+  async _getUser(email) {
+    return await this._app.models.User.findOne(
+      {
+        where: {
           email: email,
-          password: password,
         },
-        (err, user) => {
-          if (err) reject(err);
-          resolve(user);
-        }
-      );
-    });
+      }
+    );
   }
 
-  _getAccessToken(userId) {
-    return new Promise((resolve, reject) => {
-      this._app.models.AccessToken.findOne(
-        {
-          where: {
-            userId: userId,
-          },
-        },
-        (err, accessToken) => {
-          if (err) reject(err);
-          resolve(accessToken);
-        }
-      );
-    });
+  async _createUser(email, password) {
+    return await this._app.models.User.create(
+      {
+        email: email,
+        password: password,
+      }
+    );
   }
 
-  _logInUser(email, password) {
-    return new Promise((resolve, reject) => {
-      this._app.models.User.login(
-        {
-          email: email,
-          password: password,
-          ttl: -1,
+  async _getAccessToken(userId) {
+    return await this._app.models.AccessToken.findOne(
+      {
+        where: {
+          userId: userId,
         },
-        (err, accessToken) => {
-          if (err) reject(err);
-          resolve(accessToken);
-        }
-      );
-    });
+      }
+    );
+  }
+
+  async _logInUser(email, password) {
+    return await this._app.models.User.login(
+      {
+        email: email,
+        password: password,
+        ttl: -1,
+      }
+    );
   }
 
   async populateLanguages() {
@@ -113,24 +89,18 @@ module.exports = class DataPopulator {
     }
   }
 
-  _addLanguage(languageName, stackoverflowTag) {
-    return new Promise((resolve, reject) => {
-      // Do an upsert in case stackoverflowTag changes
-      this._app.models.Language.upsertWithWhere(
-        {name: languageName},
-        {
-          name: languageName,
-          stackoverflowTag: stackoverflowTag,
-        },
-        // Oddly enough this only works if the validations are ignored
-        // https://github.com/strongloop/loopback-component-passport/issues/123#issue-131073519
-        {validate: false},
-        (err, language) => {
-          if (err) reject(err);
-          resolve();
-        }
-      );
-    });
+  async _addLanguage(languageName, stackoverflowTag) {
+    // Do an upsert in case stackoverflowTag changes
+    return await this._app.models.Language.upsertWithWhere(
+      {name: languageName},
+      {
+        name: languageName,
+        stackoverflowTag: stackoverflowTag,
+      },
+      // Oddly enough this only works if the validations are ignored
+      // https://github.com/strongloop/loopback-component-passport/issues/123#issue-131073519
+      {validate: false}
+    );
   }
 
   async populateScores() {
@@ -168,7 +138,11 @@ module.exports = class DataPopulator {
   }
 
   async _populateAllScores(date) {
-    let languages = await this._getAllLanguages();
+    let languages = await this._app.models.Language.all();
+
+    if (languages === null) {
+      throw new Error('Languages must be populated before scores can be populated');
+    }
 
     // Do this in batches to avoid going over API limits
     while (languages.length !== 0) {
@@ -176,46 +150,27 @@ module.exports = class DataPopulator {
     }
   }
 
-  _getAllLanguages() {
-    return new Promise((resolve, reject) => {
-      this._app.models.Language.all((err, languages) => {
-        if (err) throw err;
+  async _populateScores(date, languages) {
+    let promises = [];
 
-        if (languages === null) {
-          reject('Languages must be populated before scores can be populated');
+    for (let i = 0; i < languages.length; i++) {
+      // When GitHub renames a language, the old name will be in the database and will end up getting sent to the
+      // GitHub API. Unfortunately, instead of returning a score of 0 the language filter won't match and it will
+      // return the total score (repository count) for all languages. So we need to prevent this from happening by
+      // skipping these scores from getting stored in the database. When this does happen, renaming the language in
+      // languages.json should correct the problem. Optionally the language can be first renamed in the database to
+      // prevent the old data from having to be re-fetched.
+      if (!this._languagesFromGithub.includes(languages[i].name)) {
+        // Only log this for the first date to prevent from spamming the logs
+        if (date.toISOString() === this._firstDayOfMonth.toISOString()) {
+          console.log(`WARNING: Language in database not found in GitHub: ${languages[i].name}`);
         }
-
-        resolve(languages);
-      });
-    });
-  }
-
-  _populateScores(date, languages) {
-    return new Promise((resolve, reject) => {
-      let promises = [];
-
-      for (let i = 0; i < languages.length; i++) {
-        // When GitHub renames a language, the old name will be in the database and will end up getting sent to the
-        // GitHub API. Unfortunately, instead of returning a score of 0 the language filter won't match and it will
-        // return the total score (repository count) for all languages. So we need to prevent this from happening by
-        // skipping these scores from getting stored in the database. When this does happen, renaming the language in
-        // languages.json should correct the problem. Optionally the language can be first renamed in the database to
-        // prevent the old data from having to be re-fetched.
-        if (!this._languagesFromGithub.includes(languages[i].name)) {
-          // Only log this for the first date to prevent from spamming the logs
-          if (date.toISOString() === this._firstDayOfMonth.toISOString()) {
-            console.log(`WARNING: Language in database not found in GitHub: ${languages[i].name}`);
-          }
-        } else {
-          promises.push(this._populateScore(date, languages[i]));
-        }
+      } else {
+        promises.push(this._populateScore(date, languages[i]));
       }
+    }
 
-      Promise.all(promises).then(
-        values => { resolve(); },
-        reason => { reject(reason); }
-      );
-    });
+    await Promise.all(promises);
   }
 
   async _populateScore(date, language) {
@@ -227,21 +182,15 @@ module.exports = class DataPopulator {
     }
   }
 
-  _getScoreFromDb(date, language) {
-    return new Promise((resolve, reject) => {
-      this._app.models.Score.findOne(
-        {
-          where: {
-            date: date,
-            languageId: language.id,
-          },
+  async _getScoreFromDb(date, language) {
+    return await this._app.models.Score.findOne(
+      {
+        where: {
+          date: date,
+          languageId: language.id,
         },
-        (err, score) => {
-          if (err) reject(err);
-          resolve(score);
-        }
-      );
-    });
+      }
+    );
   }
 
   async _getScoreFromApi(date, language) {
@@ -265,35 +214,22 @@ module.exports = class DataPopulator {
     }
   }
 
-  _addScore(date, language, points) {
-    return new Promise((resolve, reject) => {
-      // Do an upsert because we don't want duplicate scores per date/language
-      this._app.models.Score.upsertWithWhere(
-        {
-          date: date,
-          languageId: language.id,
-        },
-        {
-          date: date,
-          language: language,
-          points: points,
-        },
-        (err, score) => {
-          if (err) reject(err);
-          resolve();
-        }
-      );
-    });
+  async _addScore(date, language, points) {
+    // Do an upsert because we don't want duplicate scores per date/language
+    await this._app.models.Score.upsertWithWhere(
+      {
+        date: date,
+        languageId: language.id,
+      },
+      {
+        date: date,
+        language: language,
+        points: points,
+      }
+    );
   }
 
-  _getScoreCount() {
-    return new Promise((resolve, reject) => {
-      this._app.models.Score.count(
-        (err, count) => {
-          if (err) reject(err);
-          resolve(count);
-        }
-      );
-    });
+  async _getScoreCount() {
+    return await this._app.models.Score.count();
   }
 };
