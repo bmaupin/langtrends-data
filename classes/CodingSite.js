@@ -43,7 +43,8 @@ module.exports = class CodingSite {
       });
 
       request.on('error', function(err) {
-        reject(err);
+        // Use the original message and code but our stack trace since the original stack trace won't point back to here
+        reject(new Error(`${err.message} (${err.code})`));
       });
 
       if (postData) {
