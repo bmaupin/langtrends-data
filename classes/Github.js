@@ -84,7 +84,11 @@ module.exports = class Github extends CodingSite {
       let request = https.request(options, async function(response) {
         // https://developer.github.com/v3/guides/best-practices-for-integrators/#dealing-with-abuse-rate-limits
         if (response.statusCode === 403 && response.headers.hasOwnProperty('retry-after')) {
-          resolve(await CodingSite._handle403Error(Number(response.headers['retry-after']), options, postData));
+          resolve(await CodingSite._handleApiError(
+            response.statusCode,
+            Number(response.headers['retry-after']),
+            options,
+            postData));
         } else if (response.statusCode < 200 || response.statusCode >= 300) {
           reject(new Error('statusCode=' + response.statusCode));
         }

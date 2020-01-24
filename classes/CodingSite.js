@@ -5,8 +5,8 @@ module.exports = class CodingSite {
     this._apiKey = newApiKey;
   }
 
-  static async _handle403Error(secondsToWait, options, postData) {
-    console.log(`WARNING: API returned 403 error; retrying in ${secondsToWait} seconds`);
+  static async _handleApiError(errorCode, secondsToWait, options, postData) {
+    console.log(`WARNING: ${options.hostname} returned error code ${errorCode}; retrying in ${secondsToWait} seconds`);
     await CodingSite._waitSeconds(secondsToWait);
     return await CodingSite._httpsRequest(options, postData);
   }
