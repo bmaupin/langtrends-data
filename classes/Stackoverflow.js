@@ -5,14 +5,17 @@ const {URL} = require('url');
 const util = require('util');
 const zlib = require('zlib');
 
-const CodingSite = require('./CodingSite');
 const settings = require('./settings.json');
 
 // Uses a custom filter that only returns backoff, quota_remaining, and total
 // (https://api.stackexchange.com/docs/create-filter#unsafe=false&filter=!.UE8F0bVg4M-_Ii4&run=true)
 const API_URL = 'https://api.stackexchange.com/2.2/search?todate=%s&site=stackoverflow&tagged=%s&filter=!.UE8F0bVg4M-_Ii4';
 
-class Stackoverflow extends CodingSite {
+class Stackoverflow {
+  set apiKey(newApiKey) {
+    this._apiKey = newApiKey;
+  }
+
   async getScore(languageName, date) {
     let url = this._buildUrl(date, languageName);
     let body = await this._callApi(url);
