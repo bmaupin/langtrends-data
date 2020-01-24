@@ -11,8 +11,6 @@ const settings = require('./settings.json');
 // Uses a custom filter that only returns backoff, quota_remaining, and total
 // (https://api.stackexchange.com/docs/create-filter#unsafe=false&filter=!.UE8F0bVg4M-_Ii4&run=true)
 const API_URL = 'https://api.stackexchange.com/2.2/search?todate=%s&site=stackoverflow&tagged=%s&filter=!.UE8F0bVg4M-_Ii4';
-// Number of seconds to wait before making another API call if there's an error
-const SECONDS_TO_WAIT_ON_ERROR = 60;
 
 class Stackoverflow extends CodingSite {
   async getScore(languageName, date) {
@@ -60,16 +58,12 @@ class Stackoverflow extends CodingSite {
   _httpsRequest(options) {
     return new Promise((resolve, reject) => {
       let request = https.request(options, async (response) => {
-        // Stackoverflow might throw a 503 if it feels there are too many requests
-        if (response.statusCode === 503) {
-          resolve(await this._retryOnError(
-            response.statusCode,
-            SECONDS_TO_WAIT_ON_ERROR,
-            options)
-          );
-        } else if (response.statusCode < 200 || response.statusCode >= 300) {
+        if (response.statusCode < 200 || response.statusCode >= 300) {
           if (response.statusCode === 400) {
             console.warn('WARNING: Stackoverflow API daily limit exceeded or API key incorrect');
+          } else if (response.statusCode === 503) {
+            // Stackoverflow might throw a 503 if it feels there are too many requests
+            console.warn('WARNING: Stackoverflow API returned 503; reduce MAX_CONCURRENT_REQUESTS');
           }
           reject(new Error('statusCode=' + response.statusCode));
         }
@@ -79,7 +73,7 @@ class Stackoverflow extends CodingSite {
           body.push(chunk);
         });
 
-        response.on('end', async () => {
+        response.on('end', () => {
           switch (response.headers['content-encoding']) {
             case 'gzip':
               zlib.gunzip(Buffer.concat(body), (error, uncompressedData) => {
@@ -87,30 +81,22 @@ class Stackoverflow extends CodingSite {
               });
               break;
             default:
-              resolve(await this._retryOnError(
-                `response.headers['content-encoding']: ${response.headers['content-encoding']}`,
-                SECONDS_TO_WAIT_ON_ERROR,
-                options)
-              );
+              // If we get here it's likely due to another issue, normally a 503 error due to too many requests
+              reject(new Error(`Incorrect content encoding: ${response.headers['content-encoding']}`));
               break;
           }
         });
       });
 
-      request.on('error', async (err) => {
+      request.on('error', (err) => {
         // Stackoverflow might close the connection for any outstanding requests and return a 503 for new ones if it
         // feels there are too many requests
         if (err.code === 'ECONNRESET') {
-          resolve(await this._retryOnError(
-            err.code,
-            SECONDS_TO_WAIT_ON_ERROR,
-            options)
-          );
-        } else {
-          // Use the original message and code but our stack trace since the original stack trace won't point back to
-          // here
-          reject(new Error(`${err.message} (${err.code})`));
+          console.warn('WARNING: Stackoverflow API closed connection; reduce MAX_CONCURRENT_REQUESTS');
         }
+        // Use the original message and code but our stack trace since the original stack trace won't point back to
+        // here
+        reject(new Error(`${err.message} (${err.code})`));
       });
 
       request.end();
