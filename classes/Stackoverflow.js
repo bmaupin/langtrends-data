@@ -52,18 +52,7 @@ class Stackoverflow extends CodingSite {
 
   async _callApi(url) {
     const options = new URL(url);
-    let bodyJson = '';
-
-    try {
-      bodyJson = await this._httpsRequest(options);
-    } catch (error) {
-      if (error.message === 'statusCode=400') {
-        throw new Error('Stackoverflow API daily limit exceeded or API key incorrect');
-      } else {
-        throw (error);
-      }
-    }
-
+    let bodyJson = await this._httpsRequest(options);
     return JSON.parse(bodyJson);
   }
 
@@ -79,6 +68,9 @@ class Stackoverflow extends CodingSite {
             options)
           );
         } else if (response.statusCode < 200 || response.statusCode >= 300) {
+          if (response.statusCode === 400) {
+            console.warn('WARNING: Stackoverflow API daily limit exceeded or API key incorrect');
+          }
           reject(new Error('statusCode=' + response.statusCode));
         }
 
