@@ -157,16 +157,22 @@ module.exports = class DataPopulator {
       );
     }
 
-    // Do this in batches to avoid going over API limits
-    while (languages.length !== 0) {
-      await this._populateScores(
-        date,
-        languages.splice(0, settings.MAX_CONCURRENT_REQUESTS)
-      );
-    }
+    // Use a transaction when populating the scores for a particular date; if the scores are only partially populated
+    // for a given date, then the UI will not only be innacurate but it will cache the innaccurate data for up to a
+    // month
+    await this._app.dataSources.db.transaction(async models => {
+      // Do this in batches to avoid going over API limits
+      while (languages.length !== 0) {
+        await this._populateScores(
+          date,
+          languages.splice(0, settings.MAX_CONCURRENT_REQUESTS),
+          models
+        );
+      }
+    });
   }
 
-  async _populateScores(date, languages) {
+  async _populateScores(date, languages, models) {
     let promises = [];
 
     for (let i = 0; i < languages.length; i++) {
@@ -184,19 +190,19 @@ module.exports = class DataPopulator {
           );
         }
       } else {
-        promises.push(this._populateScore(date, languages[i]));
+        promises.push(this._populateScore(date, languages[i], models));
       }
     }
 
     await Promise.all(promises);
   }
 
-  async _populateScore(date, language) {
+  async _populateScore(date, language, models) {
     let score = await this._getScoreFromDb(date, language);
 
     if (score === null) {
       let points = await this._getScoreFromApi(date, language);
-      await this._addScore(date, language, points);
+      await this._addScore(date, language, points, models);
     }
   }
 
@@ -236,9 +242,9 @@ module.exports = class DataPopulator {
     }
   }
 
-  async _addScore(date, language, points) {
+  async _addScore(date, language, points, models) {
     // Do an upsert because we don't want duplicate scores per date/language
-    await this._app.models.Score.upsertWithWhere(
+    await models.Score.upsertWithWhere(
       {
         date: date,
         languageId: language.id,
