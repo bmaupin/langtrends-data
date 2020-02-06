@@ -23,53 +23,54 @@ module.exports = class DataPopulator {
   async populateUsers() {
     let user = await this._getUser(settings.LOOPBACK_API_USER_EMAIL);
     if (user === null && process.env.hasOwnProperty('LOOPBACK_API_PASSWORD')) {
-      user = await this._createUser(settings.LOOPBACK_API_USER_EMAIL, process.env.LOOPBACK_API_PASSWORD);
+      user = await this._createUser(
+        settings.LOOPBACK_API_USER_EMAIL,
+        process.env.LOOPBACK_API_PASSWORD
+      );
     }
 
     let accessToken = await this._getAccessToken(user.id);
-    if (accessToken === null && process.env.hasOwnProperty('LOOPBACK_API_PASSWORD')) {
-      accessToken = await this._logInUser(settings.LOOPBACK_API_USER_EMAIL, process.env.LOOPBACK_API_PASSWORD);
+    if (
+      accessToken === null &&
+      process.env.hasOwnProperty('LOOPBACK_API_PASSWORD')
+    ) {
+      accessToken = await this._logInUser(
+        settings.LOOPBACK_API_USER_EMAIL,
+        process.env.LOOPBACK_API_PASSWORD
+      );
       console.log(`INFO: User access token is ${accessToken.id}`);
     }
   }
 
   async _getUser(email) {
-    return await this._app.models.User.findOne(
-      {
-        where: {
-          email: email,
-        },
-      }
-    );
+    return await this._app.models.User.findOne({
+      where: {
+        email: email,
+      },
+    });
   }
 
   async _createUser(email, password) {
-    return await this._app.models.User.create(
-      {
-        email: email,
-        password: password,
-      }
-    );
+    return await this._app.models.User.create({
+      email: email,
+      password: password,
+    });
   }
 
   async _getAccessToken(userId) {
-    return await this._app.models.AccessToken.findOne(
-      {
-        where: {
-          userId: userId,
-        },
-      }
-    );
+    return await this._app.models.AccessToken.findOne({
+      where: {
+        userId: userId,
+      },
+    });
   }
 
   async _logInUser(email, password) {
-    return await this._app.models.User.login(
-      {
-        email: email,
-        password: password,
-        ttl: -1,
-      }
-    );
+    return await this._app.models.User.login({
+      email: email,
+      password: password,
+      ttl: -1,
+    });
   }
 
   async populateLanguages() {
@@ -81,10 +82,15 @@ module.exports = class DataPopulator {
 
       if (languages.hasOwnProperty(languageName)) {
         if (languages[languageName].include === true) {
-          await this._addLanguage(languageName, languages[languageName].stackoverflowTag);
+          await this._addLanguage(
+            languageName,
+            languages[languageName].stackoverflowTag
+          );
         }
       } else {
-        console.log(`DEBUG: Language from Github not found in languages.json: ${languageName}`);
+        console.log(
+          `DEBUG: Language from Github not found in languages.json: ${languageName}`
+        );
       }
     }
   }
@@ -92,14 +98,14 @@ module.exports = class DataPopulator {
   async _addLanguage(languageName, stackoverflowTag) {
     // Do an upsert in case stackoverflowTag changes
     return await this._app.models.Language.upsertWithWhere(
-      {name: languageName},
+      { name: languageName },
       {
         name: languageName,
         stackoverflowTag: stackoverflowTag,
       },
       // Oddly enough this only works if the validations are ignored
       // https://github.com/strongloop/loopback-component-passport/issues/123#issue-131073519
-      {validate: false}
+      { validate: false }
     );
   }
 
@@ -118,17 +124,22 @@ module.exports = class DataPopulator {
         await this._populateAllScores(currentDate);
         currentDate = DataPopulator._subtractOneMonthUTC(currentDate);
       }
-    // Log the populated score count even if there are errors
+      // Log the populated score count even if there are errors
     } finally {
-      const POPULATED_SCORE_COUNT = await this._getScoreCount() - OLD_SCORE_COUNT;
+      const POPULATED_SCORE_COUNT =
+        (await this._getScoreCount()) - OLD_SCORE_COUNT;
       if (POPULATED_SCORE_COUNT !== 0) {
-        console.log(`INFO: Successfully populated ${POPULATED_SCORE_COUNT} scores`);
+        console.log(
+          `INFO: Successfully populated ${POPULATED_SCORE_COUNT} scores`
+        );
       }
     }
   }
 
   static _getFirstDayOfMonthUTC() {
-    return new Date(Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth()));
+    return new Date(
+      Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth())
+    );
   }
 
   static _subtractOneMonthUTC(date) {
@@ -141,12 +152,17 @@ module.exports = class DataPopulator {
     let languages = await this._app.models.Language.all();
 
     if (languages === null) {
-      throw new Error('Languages must be populated before scores can be populated');
+      throw new Error(
+        'Languages must be populated before scores can be populated'
+      );
     }
 
     // Do this in batches to avoid going over API limits
     while (languages.length !== 0) {
-      await this._populateScores(date, languages.splice(0, settings.MAX_CONCURRENT_REQUESTS));
+      await this._populateScores(
+        date,
+        languages.splice(0, settings.MAX_CONCURRENT_REQUESTS)
+      );
     }
   }
 
@@ -163,7 +179,9 @@ module.exports = class DataPopulator {
       if (!this._languagesFromGithub.includes(languages[i].name)) {
         // Only log this for the first date to prevent from spamming the logs
         if (date.toISOString() === this._firstDayOfMonth.toISOString()) {
-          console.log(`WARNING: Language in database not found in GitHub: ${languages[i].name}`);
+          console.log(
+            `WARNING: Language in database not found in GitHub: ${languages[i].name}`
+          );
         }
       } else {
         promises.push(this._populateScore(date, languages[i]));
@@ -183,20 +201,21 @@ module.exports = class DataPopulator {
   }
 
   async _getScoreFromDb(date, language) {
-    return await this._app.models.Score.findOne(
-      {
-        where: {
-          date: date,
-          languageId: language.id,
-        },
-      }
-    );
+    return await this._app.models.Score.findOne({
+      where: {
+        date: date,
+        languageId: language.id,
+      },
+    });
   }
 
   async _getScoreFromApi(date, language) {
     let githubScore = await this._github.getScore(language.name, date);
     let stackoverflowTag = this._getStackoverflowTag(language);
-    let stackoverflowScore = await this._stackoverflow.getScore(stackoverflowTag, date);
+    let stackoverflowScore = await this._stackoverflow.getScore(
+      stackoverflowTag,
+      date
+    );
     // Only log these for the first date, because for older dates it may just be that the tag count is actually 0
     if (date === this._firstDayOfMonth && stackoverflowScore === 0) {
       console.log(`WARNING: stackoverflow tag not found for ${language.name}`);
@@ -207,7 +226,10 @@ module.exports = class DataPopulator {
 
   _getStackoverflowTag(language) {
     // This will be undefined for the memory connectory, null for PostgreSQL. Go figure
-    if (typeof language.stackoverflowTag === 'undefined' || language.stackoverflowTag === null) {
+    if (
+      typeof language.stackoverflowTag === 'undefined' ||
+      language.stackoverflowTag === null
+    ) {
       return language.name;
     } else {
       return language.stackoverflowTag;
