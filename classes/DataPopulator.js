@@ -220,7 +220,10 @@ module.exports = class DataPopulator {
       date
     );
     // Only log these for the first date, because for older dates it may just be that the tag count is actually 0
-    if (date === this._firstDayOfMonth && stackoverflowScore === 0) {
+    if (
+      date.toISOString() === this._firstDayOfMonth.toISOString() &&
+      stackoverflowScore === 0
+    ) {
       console.log(`WARNING: stackoverflow tag not found for ${language.name}`);
     }
 
