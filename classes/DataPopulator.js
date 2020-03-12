@@ -126,13 +126,10 @@ module.exports = class DataPopulator {
       }
       // Log the populated score count even if there are errors
     } finally {
-      const POPULATED_SCORE_COUNT =
-        (await this._getScoreCount()) - OLD_SCORE_COUNT;
-      if (POPULATED_SCORE_COUNT !== 0) {
-        console.log(
-          `INFO: Successfully populated ${POPULATED_SCORE_COUNT} scores`
-        );
-      }
+      console.log(
+        `INFO: Successfully populated ${(await this._getScoreCount()) -
+          OLD_SCORE_COUNT} scores`
+      );
     }
   }
 
