@@ -843,7 +843,7 @@
     "stackoverflowTag": "wolfram-mathematica",
     "type": "domain-specific language"
   },
-  "Matlab": {
+  "MATLAB": {
     "include": false
   },
   "Maven POM": {
