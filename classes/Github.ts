@@ -2,8 +2,8 @@
 
 const https = require('https');
 const jsdom = require('jsdom');
-const {JSDOM} = jsdom;
-const {URL} = require('url');
+const { JSDOM } = jsdom;
+const { URL } = require('url');
 
 const settings = require('./settings.json');
 
@@ -48,8 +48,13 @@ module.exports = class Github {
   }
 
   _buildPostData(date, languageName) {
-    let postData = `{"query": "{ search(query: \\"language:${Github._encodeLanguageName(languageName)} ` +
-      `created:<${Github._encodeDate(date)}\\", type: REPOSITORY) { repositoryCount } rateLimit { remaining }}"}`;
+    let postData =
+      `{"query": "{ search(query: \\"language:${Github._encodeLanguageName(
+        languageName
+      )} ` +
+      `created:<${Github._encodeDate(
+        date
+      )}\\", type: REPOSITORY) { repositoryCount } rateLimit { remaining }}"}`;
 
     return postData;
   }
@@ -68,7 +73,7 @@ module.exports = class Github {
     const optionsUrl = new URL(url);
     const options = {
       headers: {
-        'Authorization': `bearer ${this._apiKey}`,
+        Authorization: `bearer ${this._apiKey}`,
         // For whatever reason, user agent is required by the Github API
         'User-Agent': 'node.js',
       },
@@ -86,28 +91,33 @@ module.exports = class Github {
     return new Promise((resolve, reject) => {
       let request = https.request(options, async (response) => {
         // https://developer.github.com/v3/guides/best-practices-for-integrators/#dealing-with-abuse-rate-limits
-        if (response.statusCode === 403 && response.headers.hasOwnProperty('retry-after')) {
-          resolve(await this._retryOnError(
-            response.statusCode,
-            Number(response.headers['retry-after']),
-            options,
-            postData)
+        if (
+          response.statusCode === 403 &&
+          response.headers.hasOwnProperty('retry-after')
+        ) {
+          resolve(
+            await this._retryOnError(
+              response.statusCode,
+              Number(response.headers['retry-after']),
+              options,
+              postData
+            )
           );
         } else if (response.statusCode < 200 || response.statusCode >= 300) {
           reject(new Error('statusCode=' + response.statusCode));
         }
 
         let body = [];
-        response.on('data', function(chunk) {
+        response.on('data', function (chunk) {
           body.push(chunk);
         });
 
-        response.on('end', function() {
+        response.on('end', function () {
           resolve(Buffer.concat(body).toString());
         });
       });
 
-      request.on('error', function(err) {
+      request.on('error', function (err) {
         // Use the original message and code but our stack trace since the original stack trace won't point back to here
         reject(new Error(`${err.message} (${err.code})`));
       });
@@ -120,14 +130,16 @@ module.exports = class Github {
   }
 
   async _retryOnError(errorCode, secondsToWait, options, postData) {
-    console.log(`WARNING: ${options.hostname} returned error code ${errorCode}; retrying in ${secondsToWait} seconds`);
+    console.log(
+      `WARNING: ${options.hostname} returned error code ${errorCode}; retrying in ${secondsToWait} seconds`
+    );
     await Github._waitSeconds(secondsToWait);
     return await this._httpsRequest(options, postData);
   }
 
   // Based on https://stackoverflow.com/a/39027151/399105
   static _waitSeconds(numSeconds) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       setTimeout(resolve, numSeconds * 1000);
     });
   }
@@ -138,7 +150,9 @@ module.exports = class Github {
     }
 
     if (body.data.rateLimit.remaining <= settings.MAX_CONCURRENT_REQUESTS) {
-      console.log(`WARNING: Github API hourly quota remaining: ${body.data.rateLimit.remaining}`);
+      console.log(
+        `WARNING: Github API hourly quota remaining: ${body.data.rateLimit.remaining}`
+      );
     } else if (body.data.rateLimit.remaining <= 0) {
       throw new Error('Github API hourly limit exceeded');
     }

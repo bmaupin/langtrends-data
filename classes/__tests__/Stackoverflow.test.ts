@@ -7,5 +7,7 @@ test('Test getScore', async () => {
   if (process.env.hasOwnProperty('STACKOVERFLOW_API_KEY')) {
     stackoverflow.apiKey = process.env.STACKOVERFLOW_API_KEY;
   }
-  expect(await stackoverflow.getScore('JavaScript', new Date('2017-01-01'))).toBeGreaterThan(1000000);
+  expect(
+    await stackoverflow.getScore('JavaScript', new Date('2017-01-01'))
+  ).toBeGreaterThan(1000000);
 });
