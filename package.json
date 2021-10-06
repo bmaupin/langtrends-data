@@ -1,0 +1,23 @@
+{
+  "name": "langtrends-data",
+  "version": "0.0.1",
+  "description": "[![forthebadge](http://forthebadge.com/images/badges/as-seen-on-tv.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/built-by-neckbeards.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/contains-technical-debt.svg)](http://forthebadge.com)",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmaupin/langtrends-data.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bmaupin/langtrends-data/issues"
+  },
+  "homepage": "https://github.com/bmaupin/langtrends-data#readme",
+  "dependencies": {
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}
