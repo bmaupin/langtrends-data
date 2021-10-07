@@ -1,30 +1,31 @@
 'use strict';
 
-const https = require('https');
-const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
-const { URL } = require('url');
+import https from 'https';
+import { JSDOM } from 'jsdom';
+import { URL } from 'url';
 
 const settings = require('./settings.json');
 
 const API_URL = 'https://api.github.com/graphql';
 
-module.exports = class Github {
-  set apiKey(newApiKey) {
+export default class GitHub {
+  _apiKey?: string;
+
+  set apiKey(newApiKey: string) {
     this._apiKey = newApiKey;
   }
 
-  static async getLanguageNames() {
+  static async getLanguageNames(): Promise<(string | null)[]> {
     const GITHUB_LANGUAGES_URL = 'https://github.com/search/advanced';
 
-    let dom = await JSDOM.fromURL(GITHUB_LANGUAGES_URL);
-    let languageNames = [];
+    const dom = await JSDOM.fromURL(GITHUB_LANGUAGES_URL);
+    const languageNames = [];
 
-    let select = dom.window.document.getElementById('search_language');
-    let optgroups = select.getElementsByTagName('optgroup');
+    const select = dom.window.document.getElementById('search_language');
+    const optgroups = select!.getElementsByTagName('optgroup');
 
     for (let i = 0; i < optgroups.length; i++) {
-      let options = optgroups[i].getElementsByTagName('option');
+      const options = optgroups[i].getElementsByTagName('option');
       for (let j = 0; j < options.length; j++) {
         languageNames.push(options[j].textContent);
       }
@@ -33,43 +34,43 @@ module.exports = class Github {
     return languageNames;
   }
 
-  async getScore(languageName, date) {
+  async getScore(languageName: string, date: Date): Promise<string> {
     // API key can't be null for the GraphQL API (https://platform.github.community/t/anonymous-access/2093)
     if (typeof this._apiKey === 'undefined') {
       throw new Error('Github API key cannot be null');
     }
 
-    let postData = this._buildPostData(date, languageName);
-    let body = await this._callApi(API_URL, postData);
+    const postData = this._buildPostData(date, languageName);
+    const body = await this._callApi(API_URL, postData);
 
-    Github._handleApiLimits(body);
+    GitHub._handleApiLimits(body);
 
     return body.data.search.repositoryCount;
   }
 
-  _buildPostData(date, languageName) {
-    let postData =
-      `{"query": "{ search(query: \\"language:${Github._encodeLanguageName(
+  _buildPostData(date: Date, languageName: string): string {
+    const postData =
+      `{"query": "{ search(query: \\"language:${GitHub._encodeLanguageName(
         languageName
       )} ` +
-      `created:<${Github._encodeDate(
+      `created:<${GitHub._encodeDate(
         date
       )}\\", type: REPOSITORY) { repositoryCount } rateLimit { remaining }}"}`;
 
     return postData;
   }
 
-  static _encodeLanguageName(languageName) {
+  static _encodeLanguageName(languageName: string): string {
     // Github API requires spaces in language names to be replaced with dashes
     return languageName.replace(/ /g, '-');
   }
 
-  static _encodeDate(date) {
+  static _encodeDate(date: Date): string {
     // Github API requires the date to be formatted as yyyy-MM-dd
     return date.toISOString().slice(0, 10);
   }
 
-  async _callApi(url, postData) {
+  async _callApi(url: string, postData: string) {
     const optionsUrl = new URL(url);
     const options = {
       headers: {
@@ -82,14 +83,17 @@ module.exports = class Github {
       path: optionsUrl.pathname,
     };
 
-    let bodyJson = await this._httpsRequest(options, postData);
+    const bodyJson = await this._httpsRequest(options, postData);
     return JSON.parse(bodyJson);
   }
 
   // Based on https://stackoverflow.com/a/38543075/399105
-  _httpsRequest(options, postData) {
+  _httpsRequest(
+    options: https.RequestOptions,
+    postData: string
+  ): Promise<string> {
     return new Promise((resolve, reject) => {
-      let request = https.request(options, async (response) => {
+      const request = https.request(options, async (response) => {
         // https://developer.github.com/v3/guides/best-practices-for-integrators/#dealing-with-abuse-rate-limits
         if (
           response.statusCode === 403 &&
@@ -103,11 +107,14 @@ module.exports = class Github {
               postData
             )
           );
-        } else if (response.statusCode < 200 || response.statusCode >= 300) {
+        } else if (
+          response.statusCode &&
+          (response.statusCode < 200 || response.statusCode >= 300)
+        ) {
           reject(new Error('statusCode=' + response.statusCode));
         }
 
-        let body = [];
+        const body = [] as Buffer[];
         response.on('data', function (chunk) {
           body.push(chunk);
         });
@@ -117,7 +124,7 @@ module.exports = class Github {
         });
       });
 
-      request.on('error', function (err) {
+      request.on('error', function (err: NodeJS.ErrnoException) {
         // Use the original message and code but our stack trace since the original stack trace won't point back to here
         reject(new Error(`${err.message} (${err.code})`));
       });
@@ -129,22 +136,27 @@ module.exports = class Github {
     });
   }
 
-  async _retryOnError(errorCode, secondsToWait, options, postData) {
+  async _retryOnError(
+    errorCode: number,
+    secondsToWait: number,
+    options: https.RequestOptions,
+    postData: string
+  ) {
     console.log(
       `WARNING: ${options.hostname} returned error code ${errorCode}; retrying in ${secondsToWait} seconds`
     );
-    await Github._waitSeconds(secondsToWait);
+    await GitHub._waitSeconds(secondsToWait);
     return await this._httpsRequest(options, postData);
   }
 
   // Based on https://stackoverflow.com/a/39027151/399105
-  static _waitSeconds(numSeconds) {
+  static _waitSeconds(numSeconds: number) {
     return new Promise((resolve) => {
       setTimeout(resolve, numSeconds * 1000);
     });
   }
 
-  static _handleApiLimits(body) {
+  static _handleApiLimits(body: any) {
     if (!body.data && body.hasOwnProperty('errors')) {
       throw new Error(`Github API error (${body.errors[0].message})`);
     }
@@ -157,4 +169,4 @@ module.exports = class Github {
       throw new Error('Github API hourly limit exceeded');
     }
   }
-};
+}
