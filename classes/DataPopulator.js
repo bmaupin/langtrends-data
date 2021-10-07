@@ -20,59 +20,6 @@ module.exports = class DataPopulator {
     }
   }
 
-  async populateUsers() {
-    let user = await this._getUser(settings.LOOPBACK_API_USER_EMAIL);
-    if (user === null && process.env.hasOwnProperty('LOOPBACK_API_PASSWORD')) {
-      user = await this._createUser(
-        settings.LOOPBACK_API_USER_EMAIL,
-        process.env.LOOPBACK_API_PASSWORD
-      );
-    }
-
-    let accessToken = await this._getAccessToken(user.id);
-    if (
-      accessToken === null &&
-      process.env.hasOwnProperty('LOOPBACK_API_PASSWORD')
-    ) {
-      accessToken = await this._logInUser(
-        settings.LOOPBACK_API_USER_EMAIL,
-        process.env.LOOPBACK_API_PASSWORD
-      );
-      console.log(`INFO: User access token is ${accessToken.id}`);
-    }
-  }
-
-  async _getUser(email) {
-    return await this._app.models.User.findOne({
-      where: {
-        email: email,
-      },
-    });
-  }
-
-  async _createUser(email, password) {
-    return await this._app.models.User.create({
-      email: email,
-      password: password,
-    });
-  }
-
-  async _getAccessToken(userId) {
-    return await this._app.models.AccessToken.findOne({
-      where: {
-        userId: userId,
-      },
-    });
-  }
-
-  async _logInUser(email, password) {
-    return await this._app.models.User.login({
-      email: email,
-      password: password,
-      ttl: -1,
-    });
-  }
-
   async populateLanguages() {
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
     this._languagesFromGithub = await Github.getLanguageNames();
