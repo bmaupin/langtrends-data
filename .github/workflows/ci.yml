@@ -31,3 +31,5 @@ jobs:
       - run: npm test
         env:
           GITHUB_API_KEY: ${{ secrets.GITHUB_TOKEN }}
+      - name: Send test coverage data to coveralls.io
+        run: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

@@ -4,7 +4,7 @@
   "description": "[![forthebadge](http://forthebadge.com/images/badges/as-seen-on-tv.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/built-by-neckbeards.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/contains-technical-debt.svg)](http://forthebadge.com)",
   "main": "index.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/jest": "^27.0.2",
     "@types/jsdom": "^16.2.13",
+    "coveralls": "^3.1.1",
     "dotenv": "^10.0.0",
     "jest": "^27.2.4",
     "ts-jest": "^27.0.5"
