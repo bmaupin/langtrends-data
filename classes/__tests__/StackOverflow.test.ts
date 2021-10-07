@@ -1,10 +1,12 @@
 'use strict';
 
-const Stackoverflow = require('../Stackoverflow');
+require('dotenv').config();
+
+import StackOverflow from '../StackOverflow';
 
 test('Test getScore', async () => {
-  let stackoverflow = new Stackoverflow();
-  if (process.env.hasOwnProperty('STACKOVERFLOW_API_KEY')) {
+  let stackoverflow = new StackOverflow();
+  if (process.env.STACKOVERFLOW_API_KEY) {
     stackoverflow.apiKey = process.env.STACKOVERFLOW_API_KEY;
   }
   expect(

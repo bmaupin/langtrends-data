@@ -1,23 +1,25 @@
 'use strict';
 
-const https = require('https');
-const { URL } = require('url');
-const util = require('util');
-const zlib = require('zlib');
+import https from 'https';
+import { URL } from 'url';
+import util from 'util';
+import zlib from 'zlib';
 
-const settings = require('./settings.json');
+import settings from './settings.json';
 
 // Uses a custom filter that only returns backoff, quota_remaining, and total
 // (https://api.stackexchange.com/docs/create-filter#unsafe=false&filter=!.UE8F0bVg4M-_Ii4&run=true)
 const API_URL =
   'https://api.stackexchange.com/2.2/search?todate=%s&site=stackoverflow&tagged=%s&filter=!.UE8F0bVg4M-_Ii4';
 
-class Stackoverflow {
-  set apiKey(newApiKey) {
+export default class Stackoverflow {
+  _apiKey?: string;
+
+  set apiKey(newApiKey: string) {
     this._apiKey = newApiKey;
   }
 
-  async getScore(languageName, date) {
+  async getScore(languageName: string, date: Date): Promise<string> {
     let url = this._buildUrl(date, languageName);
     let body = await this._callApi(url);
 
@@ -26,7 +28,7 @@ class Stackoverflow {
     return body.total;
   }
 
-  _buildUrl(date, languageName) {
+  _buildUrl(date: Date, languageName: string): string {
     let url = util.format(
       API_URL,
       Stackoverflow._encodeDate(date),
@@ -37,17 +39,17 @@ class Stackoverflow {
     return url;
   }
 
-  static _encodeDate(date) {
+  static _encodeDate(date: Date): number {
     // All dates in the API are in unix epoch time, which is the number of seconds since midnight UTC January 1st, 1970.
     // (https://api.stackexchange.com/docs/dates)
-    return Math.floor(date / 1000);
+    return Math.floor(Number(date) / 1000);
   }
 
-  static _encodeLanguageName(languageName) {
+  static _encodeLanguageName(languageName: string): string {
     return encodeURIComponent(languageName.toLowerCase().replace(/ /g, '-'));
   }
 
-  _addApiKey(url) {
+  _addApiKey(url: string): string {
     const KEY_PARAMETER = '&key=';
     if (typeof this._apiKey !== 'undefined') {
       url = `${url}${KEY_PARAMETER}${this._apiKey}`;
@@ -56,17 +58,20 @@ class Stackoverflow {
     return url;
   }
 
-  async _callApi(url) {
+  async _callApi(url: string) {
     const options = new URL(url);
-    let bodyJson = await this._httpsRequest(options);
+    const bodyJson = await this._httpsRequest(options);
     return JSON.parse(bodyJson);
   }
 
   // Based on https://stackoverflow.com/a/38543075/399105
-  _httpsRequest(options) {
+  _httpsRequest(options: https.RequestOptions): Promise<string> {
     return new Promise((resolve, reject) => {
-      let request = https.request(options, async (response) => {
-        if (response.statusCode < 200 || response.statusCode >= 300) {
+      const request = https.request(options, async (response) => {
+        if (
+          response.statusCode &&
+          (response.statusCode < 200 || response.statusCode >= 300)
+        ) {
           if (response.statusCode === 400) {
             console.warn(
               'WARNING: Stackoverflow API daily limit exceeded or API key incorrect'
@@ -80,7 +85,7 @@ class Stackoverflow {
           reject(new Error('statusCode=' + response.statusCode));
         }
 
-        let body = [];
+        const body = [] as Buffer[];
         response.on('data', function (chunk) {
           body.push(chunk);
         });
@@ -104,7 +109,7 @@ class Stackoverflow {
         });
       });
 
-      request.on('error', (err) => {
+      request.on('error', (err: NodeJS.ErrnoException) => {
         // Stackoverflow might close the connection for any outstanding requests and return a 503 for new ones if it
         // feels there are too many requests
         if (err.code === 'ECONNRESET') {
@@ -121,7 +126,7 @@ class Stackoverflow {
     });
   }
 
-  static _handleApiLimits(body) {
+  static _handleApiLimits(body: any) {
     if (body.quota_remaining <= settings.MAX_CONCURRENT_REQUESTS) {
       console.log(
         `WARNING: StackOverflow API daily quota remaining: ${body.quota_remaining}`
@@ -138,5 +143,3 @@ class Stackoverflow {
     }
   }
 }
-
-module.exports = Stackoverflow;
