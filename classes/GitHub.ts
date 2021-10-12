@@ -4,9 +4,21 @@ import https from 'https';
 import { JSDOM } from 'jsdom';
 import { URL } from 'url';
 
-const settings = require('./settings.json');
+import settings from './settings.json';
 
 const API_URL = 'https://api.github.com/graphql';
+
+interface GitHubData {
+  data: {
+    search: { repositoryCount: number };
+    rateLimit: { remaining: number };
+  };
+  errors?: [
+    {
+      message: string;
+    }
+  ];
+}
 
 export default class GitHub {
   _apiKey?: string;
@@ -34,7 +46,7 @@ export default class GitHub {
     return languageNames;
   }
 
-  async getScore(languageName: string, date: Date): Promise<string> {
+  async getScore(languageName: string, date: Date): Promise<number> {
     // API key can't be null for the GraphQL API (https://platform.github.community/t/anonymous-access/2093)
     if (typeof this._apiKey === 'undefined') {
       throw new Error('Github API key cannot be null');
@@ -156,8 +168,8 @@ export default class GitHub {
     });
   }
 
-  static _handleApiLimits(body: any) {
-    if (!body.data && body.hasOwnProperty('errors')) {
+  static _handleApiLimits(body: GitHubData) {
+    if (!body.data && body.errors) {
       throw new Error(`Github API error (${body.errors[0].message})`);
     }
 
