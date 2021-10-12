@@ -74,8 +74,9 @@ module.exports = class DataPopulator {
       // Log the populated score count even if there are errors
     } finally {
       console.log(
-        `INFO: Successfully populated ${(await this._getScoreCount()) -
-          OLD_SCORE_COUNT} scores`
+        `INFO: Successfully populated ${
+          (await this._getScoreCount()) - OLD_SCORE_COUNT
+        } scores`
       );
     }
   }
@@ -104,7 +105,7 @@ module.exports = class DataPopulator {
     // Use a transaction when populating the scores for a particular date; if the scores are only partially populated
     // for a given date, then the UI will not only be innacurate but it will cache the innaccurate data for up to a
     // month
-    await this._app.dataSources.db.transaction(async models => {
+    await this._app.dataSources.db.transaction(async (models) => {
       // Do this in batches to avoid going over API limits
       while (languages.length !== 0) {
         await this._populateScores(
