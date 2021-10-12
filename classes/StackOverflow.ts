@@ -12,6 +12,12 @@ import settings from './settings.json';
 const API_URL =
   'https://api.stackexchange.com/2.2/search?todate=%s&site=stackoverflow&tagged=%s&filter=!.UE8F0bVg4M-_Ii4';
 
+interface StackOverflowData {
+  backoff?: number;
+  quota_remaining: number;
+  total: number;
+}
+
 export default class Stackoverflow {
   _apiKey?: string;
 
@@ -19,7 +25,7 @@ export default class Stackoverflow {
     this._apiKey = newApiKey;
   }
 
-  async getScore(languageName: string, date: Date): Promise<string> {
+  async getScore(languageName: string, date: Date): Promise<number> {
     let url = this._buildUrl(date, languageName);
     let body = await this._callApi(url);
 
@@ -126,7 +132,7 @@ export default class Stackoverflow {
     });
   }
 
-  static _handleApiLimits(body: any) {
+  static _handleApiLimits(body: StackOverflowData) {
     if (body.quota_remaining <= settings.MAX_CONCURRENT_REQUESTS) {
       console.log(
         `WARNING: StackOverflow API daily quota remaining: ${body.quota_remaining}`

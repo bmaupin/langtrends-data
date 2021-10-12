@@ -5,7 +5,7 @@ require('dotenv').config();
 import StackOverflow from './StackOverflow';
 
 test('Test getScore', async () => {
-  let stackoverflow = new StackOverflow();
+  const stackoverflow = new StackOverflow();
   if (process.env.STACKOVERFLOW_API_KEY) {
     stackoverflow.apiKey = process.env.STACKOVERFLOW_API_KEY;
   }
