@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-import StackOverflow from '../StackOverflow';
+import StackOverflow from './StackOverflow';
 
 test('Test getScore', async () => {
   let stackoverflow = new StackOverflow();

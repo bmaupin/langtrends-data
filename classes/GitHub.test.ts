@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-import GitHub from '../GitHub';
+import GitHub from './GitHub';
 
 test('Test getLanguageNames', async () => {
   let languageNames = await GitHub.getLanguageNames();
