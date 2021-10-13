@@ -81,6 +81,7 @@ export default class DataPopulator {
     const OLD_SCORE_COUNT = await this._getScoreCount();
     let currentDate = new Date(this._firstDayOfMonth);
 
+    // Populate all scores starting with the current date and working backwards one month at a time
     try {
       while (true) {
         if (currentDate < OLDEST_DATE) {
@@ -121,22 +122,16 @@ export default class DataPopulator {
       );
     }
 
-    // Use a transaction when populating the scores for a particular date; if the scores are only partially populated
-    // for a given date, then the UI will not only be innacurate but it will cache the innaccurate data for up to a
-    // month
-    await this._app.dataSources.db.transaction(async (models: any) => {
-      // Do this in batches to avoid going over API limits
-      while (languages.length !== 0) {
-        await this._populateScores(
-          date,
-          languages.splice(0, settings.MAX_CONCURRENT_REQUESTS),
-          models
-        );
-      }
-    });
+    // Do this in batches to avoid going over API limits
+    while (languages.length !== 0) {
+      await this._populateScores(
+        date,
+        languages.splice(0, settings.MAX_CONCURRENT_REQUESTS)
+      );
+    }
   }
 
-  async _populateScores(date: Date, languages: any, models: any) {
+  async _populateScores(date: Date, languages: any) {
     let promises = [];
 
     for (let i = 0; i < languages.length; i++) {
@@ -157,19 +152,19 @@ export default class DataPopulator {
           );
         }
       } else {
-        promises.push(this._populateScore(date, languages[i], models));
+        promises.push(this._populateScore(date, languages[i]));
       }
     }
 
     await Promise.all(promises);
   }
 
-  async _populateScore(date: Date, language: any, models: any) {
+  async _populateScore(date: Date, language: any) {
     let score = await this._getScoreFromDb(date, language);
 
     if (score === null) {
       let points = await this._getScoreFromApi(date, language);
-      await this._addScore(date, language, points, models);
+      await this._addScore(date, language, points);
     }
   }
 
@@ -212,9 +207,9 @@ export default class DataPopulator {
     }
   }
 
-  async _addScore(date: Date, language: any, points: number, models: any) {
+  async _addScore(date: Date, language: any, points: number) {
     // Do an upsert because we don't want duplicate scores per date/language
-    await models.Score.upsertWithWhere(
+    await this._app.models.Score.upsertWithWhere(
       {
         date: date,
         languageId: language.id,
