@@ -1,5 +1,6 @@
 'use strict';
 
+import { Database } from 'sqlite';
 import GitHub from './GitHub';
 import languagesUntyped from './languages.json';
 import settings from './settings.json';
@@ -20,13 +21,14 @@ const languages = languagesUntyped as Language;
 export default class DataPopulator {
   // TODO: remove _app
   _app: any;
+  _db: Database;
   _firstDayOfMonth: Date;
   _github: GitHub;
   _languagesFromGithub?: (string | null)[];
   _stackoverflow: StackOverflow;
 
-  constructor(app: any) {
-    this._app = app;
+  constructor(db: Database) {
+    this._db = db;
     this._firstDayOfMonth = DataPopulator._getFirstDayOfMonthUTC();
     this._github = new GitHub();
     this._stackoverflow = new StackOverflow();
@@ -63,15 +65,13 @@ export default class DataPopulator {
 
   async _addLanguage(languageName: string, stackoverflowTag?: string) {
     // Do an upsert in case stackoverflowTag changes
-    return await this._app.models.Language.upsertWithWhere(
-      { name: languageName },
+    await this._db.run(
+      `INSERT INTO language(name, stackoverflowTag) VALUES($name, $stackoverflowTag)
+         ON CONFLICT(name) DO UPDATE SET stackoverflowTag = $stackoverflowTag;`,
       {
-        name: languageName,
-        stackoverflowTag: stackoverflowTag,
-      },
-      // Oddly enough this only works if the validations are ignored
-      // https://github.com/strongloop/loopback-component-passport/issues/123#issue-131073519
-      { validate: false }
+        $name: languageName,
+        $stackoverflowTag: stackoverflowTag,
+      }
     );
   }
 
@@ -230,4 +230,4 @@ export default class DataPopulator {
   async _getScoreCount(): Promise<number> {
     return await this._app.models.Score.count();
   }
-};
+}
