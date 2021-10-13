@@ -1,33 +1,52 @@
 'use strict';
 
-const Github = require('./Github');
-const languages = require('./languages.json');
-const settings = require('./settings.json');
-const Stackoverflow = require('./Stackoverflow');
+import GitHub from './GitHub';
+import languagesUntyped from './languages.json';
+import settings from './settings.json';
+import StackOverflow from './StackOverflow';
 
-module.exports = class DataPopulator {
-  constructor(app) {
+interface Language {
+  [key: string]: {
+    description?: string;
+    extension?: string;
+    include: Boolean;
+    stackoverflowTag?: string;
+    url?: string;
+  };
+}
+
+const languages = languagesUntyped as Language;
+
+export default class DataPopulator {
+  // TODO: remove _app
+  _app: any;
+  _firstDayOfMonth: Date;
+  _github: GitHub;
+  _languagesFromGithub?: (string | null)[];
+  _stackoverflow: StackOverflow;
+
+  constructor(app: any) {
     this._app = app;
     this._firstDayOfMonth = DataPopulator._getFirstDayOfMonthUTC();
-    this._github = new Github();
-    this._stackoverflow = new Stackoverflow();
+    this._github = new GitHub();
+    this._stackoverflow = new StackOverflow();
 
-    if (process.env.hasOwnProperty('GITHUB_API_KEY')) {
+    if (process.env.GITHUB_API_KEY) {
       this._github.apiKey = process.env.GITHUB_API_KEY;
     }
-    if (process.env.hasOwnProperty('STACKOVERFLOW_API_KEY')) {
+    if (process.env.STACKOVERFLOW_API_KEY) {
       this._stackoverflow.apiKey = process.env.STACKOVERFLOW_API_KEY;
     }
   }
 
   async populateLanguages() {
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
-    this._languagesFromGithub = await Github.getLanguageNames();
+    this._languagesFromGithub = await GitHub.getLanguageNames();
 
     for (let i = 0; i < this._languagesFromGithub.length; i++) {
       let languageName = this._languagesFromGithub[i];
 
-      if (languages.hasOwnProperty(languageName)) {
+      if (languageName && languages[languageName]) {
         if (languages[languageName].include === true) {
           await this._addLanguage(
             languageName,
@@ -42,7 +61,7 @@ module.exports = class DataPopulator {
     }
   }
 
-  async _addLanguage(languageName, stackoverflowTag) {
+  async _addLanguage(languageName: string, stackoverflowTag?: string) {
     // Do an upsert in case stackoverflowTag changes
     return await this._app.models.Language.upsertWithWhere(
       { name: languageName },
@@ -81,19 +100,19 @@ module.exports = class DataPopulator {
     }
   }
 
-  static _getFirstDayOfMonthUTC() {
+  static _getFirstDayOfMonthUTC(): Date {
     return new Date(
       Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth())
     );
   }
 
-  static _subtractOneMonthUTC(date) {
+  static _subtractOneMonthUTC(date: Date) {
     let newDate = new Date(date);
     newDate.setUTCMonth(newDate.getUTCMonth() - 1);
     return newDate;
   }
 
-  async _populateAllScores(date) {
+  async _populateAllScores(date: Date) {
     let languages = await this._app.models.Language.all();
 
     if (languages === null) {
@@ -105,7 +124,7 @@ module.exports = class DataPopulator {
     // Use a transaction when populating the scores for a particular date; if the scores are only partially populated
     // for a given date, then the UI will not only be innacurate but it will cache the innaccurate data for up to a
     // month
-    await this._app.dataSources.db.transaction(async (models) => {
+    await this._app.dataSources.db.transaction(async (models: any) => {
       // Do this in batches to avoid going over API limits
       while (languages.length !== 0) {
         await this._populateScores(
@@ -117,7 +136,7 @@ module.exports = class DataPopulator {
     });
   }
 
-  async _populateScores(date, languages, models) {
+  async _populateScores(date: Date, languages: any, models: any) {
     let promises = [];
 
     for (let i = 0; i < languages.length; i++) {
@@ -127,7 +146,10 @@ module.exports = class DataPopulator {
       // skipping these scores from getting stored in the database. When this does happen, renaming the language in
       // languages.json should correct the problem. Optionally the language can be first renamed in the database to
       // prevent the old data from having to be re-fetched.
-      if (!this._languagesFromGithub.includes(languages[i].name)) {
+      if (
+        this._languagesFromGithub &&
+        !this._languagesFromGithub.includes(languages[i].name)
+      ) {
         // Only log this for the first date to prevent from spamming the logs
         if (date.toISOString() === this._firstDayOfMonth.toISOString()) {
           console.log(
@@ -142,7 +164,7 @@ module.exports = class DataPopulator {
     await Promise.all(promises);
   }
 
-  async _populateScore(date, language, models) {
+  async _populateScore(date: Date, language: any, models: any) {
     let score = await this._getScoreFromDb(date, language);
 
     if (score === null) {
@@ -151,7 +173,7 @@ module.exports = class DataPopulator {
     }
   }
 
-  async _getScoreFromDb(date, language) {
+  async _getScoreFromDb(date: Date, language: any) {
     return await this._app.models.Score.findOne({
       where: {
         date: date,
@@ -160,7 +182,7 @@ module.exports = class DataPopulator {
     });
   }
 
-  async _getScoreFromApi(date, language) {
+  async _getScoreFromApi(date: Date, language: any): Promise<number> {
     let githubScore = await this._github.getScore(language.name, date);
     let stackoverflowTag = this._getStackoverflowTag(language);
     let stackoverflowScore = await this._stackoverflow.getScore(
@@ -178,7 +200,7 @@ module.exports = class DataPopulator {
     return githubScore + stackoverflowScore;
   }
 
-  _getStackoverflowTag(language) {
+  _getStackoverflowTag(language: any): string {
     // This will be undefined for the memory connectory, null for PostgreSQL. Go figure
     if (
       typeof language.stackoverflowTag === 'undefined' ||
@@ -190,7 +212,7 @@ module.exports = class DataPopulator {
     }
   }
 
-  async _addScore(date, language, points, models) {
+  async _addScore(date: Date, language: any, points: number, models: any) {
     // Do an upsert because we don't want duplicate scores per date/language
     await models.Score.upsertWithWhere(
       {
@@ -205,7 +227,7 @@ module.exports = class DataPopulator {
     );
   }
 
-  async _getScoreCount() {
+  async _getScoreCount(): Promise<number> {
     return await this._app.models.Score.count();
   }
 };
