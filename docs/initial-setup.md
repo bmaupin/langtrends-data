@@ -49,8 +49,76 @@ This repository was created from [https://github.com/bmaupin/langtrends-api](htt
 
       This replaces Postgres' `CREATE SEQUENCE` commands
 
+   1. Convert timestamps to strings
+
+      1. Convert `date timestamp with time zone NOT NULL,` to `date STRING NOT NULL`
+
+      1. `:%s/\ 00:00:00+00/T00:00:00.000Z/g`
+
    1. Convert the Postgres dump to SQLite
 
       ```
       sqlite3 langtrends.db -init langtrends-postgres-20211007.sql
+      ```
+
+   1. Convert timestamps from strings to integers
+
+      - This will save space while still allowing us to view the timestamps in the database (e.g. `select *, datetime(date, 'unixepoch') from score;`), which isn't so bad given we'd have to convert language IDs anyway (e.g. `select datetime(date, 'unixepoch') as datetime, name, points from score join language on languageid = language.id;`)
+
+      There's probably a better way to do this conversion ... 😅
+
+      ```typescript
+      const db = await open({
+        filename: 'langtrends.db',
+        driver: sqlite3.Database,
+      });
+      const testdb = await open({
+        filename: 'test.db',
+        driver: sqlite3.Database,
+      });
+
+      await testdb.run(`
+        CREATE TABLE language (
+          name TEXT NOT NULL UNIQUE,
+          stackoverflowtag TEXT,
+          id INTEGER NOT NULL PRIMARY KEY
+        );
+      `);
+
+      const languages = await db.all('SELECT * FROM language');
+      for (const language of languages) {
+        await testdb.run(
+          `INSERT INTO language (name, stackoverflowtag)
+            VALUES($name, $stackoverflowtag);`,
+          {
+            $name: language.name,
+            $stackoverflowtag: language.stackoverflowtag,
+          }
+        );
+      }
+
+      await testdb.run(`
+        CREATE TABLE score (
+          date INTEGER NOT NULL,
+          points INTEGER NOT NULL,
+          id INTEGER NOT NULL PRIMARY KEY,
+          languageid INTEGER
+        );
+      `);
+
+      const results = await db.all('SELECT * FROM score');
+      for (const result of results) {
+        await testdb.run(
+          `INSERT INTO score (date, points, languageid)
+            VALUES($date, $points, $languageid);`,
+          {
+            $date: Number(new Date(result.date)) / 1000,
+            $points: result.points,
+            $languageid: result.languageid,
+          }
+        );
+      }
+
+      await testdb.close();
+      await db.close();
       ```
