@@ -60,6 +60,9 @@ export default class DataPopulator {
     }
   }
 
+  /**
+   * Populate languages in the database
+   */
   async populateLanguages() {
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
     this._languagesFromGithub = await GitHub.getLanguageNames();
@@ -94,7 +97,11 @@ export default class DataPopulator {
     );
   }
 
-  async populateScores() {
+  /**
+   * Populate scores in the database
+   * @param numScores Number of scores to populate (used for testing)
+   */
+  async populateScores(numScores?: number) {
     // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
     const OLDEST_DATE = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
     const OLD_SCORE_COUNT = await this._getScoreCount();
@@ -107,7 +114,14 @@ export default class DataPopulator {
           break;
         }
 
-        await this._populateAllScores(currentDate);
+        if (
+          numScores &&
+          (await this._getScoreCount()) - OLD_SCORE_COUNT >= numScores
+        ) {
+          break;
+        }
+
+        await this._populateAllScores(currentDate, numScores);
         currentDate = DataPopulator._subtractOneMonthUTC(currentDate);
       }
       // Log the populated score count even if there are errors
@@ -132,8 +146,12 @@ export default class DataPopulator {
     return newDate;
   }
 
-  async _populateAllScores(date: Date) {
-    const languages = await this._getLanguages();
+  async _populateAllScores(date: Date, numScores?: number) {
+    let languages = await this._getLanguages();
+
+    if (numScores) {
+      languages = languages.splice(0, numScores);
+    }
 
     // Do this in batches to avoid going over API limits
     while (languages.length !== 0) {
