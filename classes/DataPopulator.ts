@@ -6,7 +6,9 @@ import languagesUntyped from './languages.json';
 import settings from './settings.json';
 import StackOverflow from './StackOverflow';
 
-interface Language {
+require('dotenv').config();
+
+interface LanguageFromJson {
   [key: string]: {
     description?: string;
     extension?: string;
@@ -16,11 +18,28 @@ interface Language {
   };
 }
 
-const languages = languagesUntyped as Language;
+interface Language {
+  id: number;
+  name: string;
+  stackoverflowtag: string | null;
+}
+
+interface Score {
+  date: number;
+  id: number;
+  languageid: number;
+  points: number;
+}
+
+const languages = languagesUntyped as LanguageFromJson;
+
+// Convert date into format we can store in the database
+const convertDateToInteger = (date: Date): number => {
+  return Number(date) / 1000;
+};
 
 export default class DataPopulator {
-  // TODO: remove _app
-  _app: any;
+  // TODO: replace all these underscores with "private"
   _db: Database;
   _firstDayOfMonth: Date;
   _github: GitHub;
@@ -46,7 +65,7 @@ export default class DataPopulator {
     this._languagesFromGithub = await GitHub.getLanguageNames();
 
     for (let i = 0; i < this._languagesFromGithub.length; i++) {
-      let languageName = this._languagesFromGithub[i];
+      const languageName = this._languagesFromGithub[i];
 
       if (languageName && languages[languageName]) {
         if (languages[languageName].include === true) {
@@ -66,11 +85,11 @@ export default class DataPopulator {
   async _addLanguage(languageName: string, stackoverflowTag?: string) {
     // Do an upsert in case stackoverflowTag changes
     await this._db.run(
-      `INSERT INTO language(name, stackoverflowTag) VALUES($name, $stackoverflowTag)
-         ON CONFLICT(name) DO UPDATE SET stackoverflowTag = $stackoverflowTag;`,
+      `INSERT INTO language(name, stackoverflowtag) VALUES($name, $stackoverflowtag)
+         ON CONFLICT(name) DO UPDATE SET stackoverflowtag = $stackoverflowtag;`,
       {
         $name: languageName,
-        $stackoverflowTag: stackoverflowTag,
+        $stackoverflowtag: stackoverflowTag,
       }
     );
   }
@@ -107,20 +126,14 @@ export default class DataPopulator {
     );
   }
 
-  static _subtractOneMonthUTC(date: Date) {
-    let newDate = new Date(date);
+  static _subtractOneMonthUTC(date: Date): Date {
+    const newDate = new Date(date);
     newDate.setUTCMonth(newDate.getUTCMonth() - 1);
     return newDate;
   }
 
   async _populateAllScores(date: Date) {
-    let languages = await this._app.models.Language.all();
-
-    if (languages === null) {
-      throw new Error(
-        'Languages must be populated before scores can be populated'
-      );
-    }
+    const languages = await this._getLanguages();
 
     // Do this in batches to avoid going over API limits
     while (languages.length !== 0) {
@@ -131,8 +144,12 @@ export default class DataPopulator {
     }
   }
 
-  async _populateScores(date: Date, languages: any) {
-    let promises = [];
+  async _getLanguages(): Promise<Language[]> {
+    return await this._db.all('SELECT * FROM language');
+  }
+
+  async _populateScores(date: Date, languages: Language[]) {
+    const promises = [];
 
     for (let i = 0; i < languages.length; i++) {
       // When GitHub renames a language, the old name will be in the database and will end up getting sent to the
@@ -159,28 +176,32 @@ export default class DataPopulator {
     await Promise.all(promises);
   }
 
-  async _populateScore(date: Date, language: any) {
-    let score = await this._getScoreFromDb(date, language);
+  async _populateScore(date: Date, language: Language) {
+    const score = await this._getScoreFromDb(date, language);
 
-    if (score === null) {
-      let points = await this._getScoreFromApi(date, language);
+    if (!score) {
+      const points = await this._getScoreFromApi(date, language);
       await this._addScore(date, language, points);
     }
   }
 
-  async _getScoreFromDb(date: Date, language: any) {
-    return await this._app.models.Score.findOne({
-      where: {
-        date: date,
-        languageId: language.id,
-      },
-    });
+  async _getScoreFromDb(
+    date: Date,
+    language: Language
+  ): Promise<Score | undefined> {
+    return await this._db.get(
+      `SELECT * FROM score WHERE date = $date AND languageId = $languageId`,
+      {
+        $date: convertDateToInteger(date),
+        $languageId: language.id,
+      }
+    );
   }
 
-  async _getScoreFromApi(date: Date, language: any): Promise<number> {
-    let githubScore = await this._github.getScore(language.name, date);
-    let stackoverflowTag = this._getStackoverflowTag(language);
-    let stackoverflowScore = await this._stackoverflow.getScore(
+  async _getScoreFromApi(date: Date, language: Language): Promise<number> {
+    const githubScore = await this._github.getScore(language.name, date);
+    const stackoverflowTag = this._getStackoverflowTag(language);
+    const stackoverflowScore = await this._stackoverflow.getScore(
       stackoverflowTag,
       date
     );
@@ -195,34 +216,33 @@ export default class DataPopulator {
     return githubScore + stackoverflowScore;
   }
 
-  _getStackoverflowTag(language: any): string {
-    // This will be undefined for the memory connectory, null for PostgreSQL. Go figure
-    if (
-      typeof language.stackoverflowTag === 'undefined' ||
-      language.stackoverflowTag === null
-    ) {
-      return language.name;
-    } else {
-      return language.stackoverflowTag;
-    }
+  _getStackoverflowTag(language: Language): string {
+    return language.stackoverflowtag || language.name;
   }
 
-  async _addScore(date: Date, language: any, points: number) {
-    // Do an upsert because we don't want duplicate scores per date/language
-    await this._app.models.Score.upsertWithWhere(
+  async _addScore(date: Date, language: Language, points: number) {
+    // Do an replace because we don't want duplicate scores per date/language
+    await this._db.run(
+      `
+      INSERT OR REPLACE INTO score (id, date, languageid, points)
+        VALUES(
+          (SELECT id FROM score WHERE date = $date AND languageid = $languageid),
+          $date,
+          $languageid,
+          $points
+        );
+    `,
       {
-        date: date,
-        languageId: language.id,
-      },
-      {
-        date: date,
-        language: language,
-        points: points,
+        $date: convertDateToInteger(date),
+        $languageid: language.id,
+        $points: points,
       }
     );
   }
 
   async _getScoreCount(): Promise<number> {
-    return await this._app.models.Score.count();
+    const result = await this._db.get('SELECT COUNT() AS count FROM score');
+
+    return result!.count;
   }
 }
