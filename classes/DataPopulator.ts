@@ -1,14 +1,18 @@
 'use strict';
 
+import { readFile, writeFile } from 'fs/promises';
 import { Database } from 'sqlite';
+
 import GitHub from './GitHub';
-import languagesUntyped from './languages.json';
+import _languagesMetadata from '../data/languages-metadata.json';
 import settings from './settings.json';
 import StackOverflow from './StackOverflow';
 
 require('dotenv').config();
 
-interface LanguageFromJson {
+const LANGUAGES_FILE = 'data/languages.json';
+
+interface LanguagesMetadata {
   [key: string]: {
     description?: string;
     extension?: string;
@@ -21,7 +25,7 @@ interface LanguageFromJson {
 interface Language {
   id: number;
   name: string;
-  stackoverflowtag: string | null;
+  stackoverflowTag?: string;
 }
 
 interface Score {
@@ -31,7 +35,7 @@ interface Score {
   points: number;
 }
 
-const languages = languagesUntyped as LanguageFromJson;
+const languagesMetadata = _languagesMetadata as LanguagesMetadata;
 
 // Convert date into format we can store in the database
 const convertDateToInteger = (date: Date): number => {
@@ -43,6 +47,7 @@ export default class DataPopulator {
   _db: Database;
   _firstDayOfMonth: Date;
   _github: GitHub;
+  private languages: Language[];
   _languagesFromGithub?: (string | null)[];
   _stackoverflow: StackOverflow;
 
@@ -50,6 +55,7 @@ export default class DataPopulator {
     this._db = db;
     this._firstDayOfMonth = DataPopulator._getFirstDayOfMonthUTC();
     this._github = new GitHub();
+    this.languages = [];
     this._stackoverflow = new StackOverflow();
 
     if (process.env.GITHUB_API_KEY) {
@@ -63,18 +69,20 @@ export default class DataPopulator {
   /**
    * Populate languages in the database
    */
-  async populateLanguages() {
+  public async populateLanguages() {
+    this.languages = JSON.parse(await readFile(LANGUAGES_FILE, 'utf8'));
+
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
     this._languagesFromGithub = await GitHub.getLanguageNames();
 
     for (let i = 0; i < this._languagesFromGithub.length; i++) {
       const languageName = this._languagesFromGithub[i];
 
-      if (languageName && languages[languageName]) {
-        if (languages[languageName].include === true) {
-          await this._addLanguage(
+      if (languageName && languagesMetadata[languageName]) {
+        if (languagesMetadata[languageName].include === true) {
+          await this.upsertLanguage(
             languageName,
-            languages[languageName].stackoverflowTag
+            languagesMetadata[languageName].stackoverflowTag
           );
         }
       } else {
@@ -83,18 +91,34 @@ export default class DataPopulator {
         );
       }
     }
+
+    await writeFile(LANGUAGES_FILE, JSON.stringify(this.languages));
   }
 
-  async _addLanguage(languageName: string, stackoverflowTag?: string) {
-    // Do an upsert in case stackoverflowTag changes
-    await this._db.run(
-      `INSERT INTO language(name, stackoverflowtag) VALUES($name, $stackoverflowtag)
-         ON CONFLICT(name) DO UPDATE SET stackoverflowtag = $stackoverflowtag;`,
-      {
-        $name: languageName,
-        $stackoverflowtag: stackoverflowTag,
-      }
+  /**
+   * Add language if it doesn't exist, otherwise update stackoverflowTag
+   * @param languageName - Name of the language (as returned by GitHub)
+   * @param stackoverflowTag - Optional StackOverflow tag
+   */
+  private async upsertLanguage(
+    languageName: string,
+    stackoverflowTag?: string
+  ) {
+    const language = this.languages.find(
+      (language) => language.name === languageName
     );
+
+    if (language) {
+      language.stackoverflowTag = stackoverflowTag;
+    } else {
+      // Languages are sorted ascending by ID
+      const highestId = this.languages[this.languages.length - 1].id;
+      this.languages.push({
+        id: highestId + 1,
+        name: languageName,
+        stackoverflowTag: stackoverflowTag,
+      });
+    }
   }
 
   /**
@@ -235,7 +259,7 @@ export default class DataPopulator {
   }
 
   _getStackoverflowTag(language: Language): string {
-    return language.stackoverflowtag || language.name;
+    return language.stackoverflowTag || language.name;
   }
 
   async _addScore(date: Date, language: Language, points: number) {
