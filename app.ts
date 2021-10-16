@@ -12,7 +12,9 @@ const main = async () => {
   });
 
   const dataPopulator = new DataPopulator(db);
+
   await dataPopulator.populateLanguages();
+  await dataPopulator.populateScores();
 
   await db.close();
 };
