@@ -34,7 +34,7 @@ beforeAll(async () => {
     );
   `);
 
-  dataPopulator = new DataPopulator(db, LANGUAGES_FILE);
+  dataPopulator = new DataPopulator(db);
 });
 
 afterAll(async () => {
@@ -43,7 +43,7 @@ afterAll(async () => {
 });
 
 test('Test populateLanguages', async () => {
-  await dataPopulator.populateLanguages();
+  await dataPopulator.populateLanguages(LANGUAGES_FILE);
   const languages = JSON.parse(
     await readFile(LANGUAGES_FILE, 'utf8')
   ) as Language[];

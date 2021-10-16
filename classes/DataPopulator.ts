@@ -46,16 +46,14 @@ export default class DataPopulator {
   _firstDayOfMonth: Date;
   _github: GitHub;
   private languages: Language[];
-  private languagesFile: string;
   _languagesFromGithub?: (string | null)[];
   _stackoverflow: StackOverflow;
 
-  constructor(db: Database, languagesFile: string) {
+  constructor(db: Database) {
     this._db = db;
     this._firstDayOfMonth = DataPopulator._getFirstDayOfMonthUTC();
     this._github = new GitHub();
     this.languages = [];
-    this.languagesFile = languagesFile;
     this._stackoverflow = new StackOverflow();
 
     if (process.env.GITHUB_API_KEY) {
@@ -69,8 +67,8 @@ export default class DataPopulator {
   /**
    * Populate languages in the data file
    */
-  public async populateLanguages() {
-    this.languages = await this.readDataFile(this.languagesFile);
+  public async populateLanguages(languagesFile: string) {
+    this.languages = await this.readDataFile(languagesFile);
 
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
     this._languagesFromGithub = await GitHub.getLanguageNames();
@@ -92,7 +90,7 @@ export default class DataPopulator {
       }
     }
 
-    await writeFile(this.languagesFile, JSON.stringify(this.languages));
+    await writeFile(languagesFile, JSON.stringify(this.languages));
   }
 
   /**
