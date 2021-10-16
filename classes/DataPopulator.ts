@@ -146,7 +146,6 @@ export default class DataPopulator {
 
     // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
     const OLDEST_DATE = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
-    // const OLDEST_DATE = new Date(Date.UTC(2021, 9)); // 2008-02-01 00:00:00 UTC
     const OLD_SCORE_COUNT = this.scores.length;
     let currentDate = new Date(this.firstDayOfMonth);
 
@@ -173,7 +172,7 @@ export default class DataPopulator {
       );
     }
 
-    await writeFile(scoresFile, JSON.stringify(this.scores));
+    await writeFile(scoresFile, JSON.stringify(this.scores, null, 2));
   }
 
   private static getFirstDayOfMonthUTC(): Date {
@@ -189,6 +188,13 @@ export default class DataPopulator {
   }
 
   private async populateAllScores(date: Date, numScores?: number) {
+    /*
+     * TODO: this.languages will be empty if populateLanguages hasn't been run yet
+     * Ideas:
+     * - Require languagesFile and scoresFile as part of constructor, that way we can run populateLanguages as needed
+     * - Always do the processing in memory and optionally allow the caller to provide a data file to pre-populate the data
+     *   - Then we could just run populateLanguages without needing a data file...
+     */
     let languages = this.languages;
 
     if (numScores) {

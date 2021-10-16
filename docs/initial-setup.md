@@ -68,6 +68,9 @@ This repository was created from [https://github.com/bmaupin/langtrends-api](htt
       There's probably a better way to do this conversion ... 😅
 
       ```typescript
+      import sqlite3 from 'sqlite3';
+      import { open } from 'sqlite';
+
       const db = await open({
         filename: 'langtrends.db',
         driver: sqlite3.Database,
@@ -120,5 +123,49 @@ This repository was created from [https://github.com/bmaupin/langtrends-api](htt
       }
 
       await testdb.close();
+      await db.close();
+      ```
+
+   1. Convert data from SQLite to JSON
+
+      SQLite ended up not working out as well as expected 😝
+
+      ```typescript
+      import { writeFile } from 'fs/promises';
+      import sqlite3 from 'sqlite3';
+      import { open } from 'sqlite';
+
+      const db = await open({
+        filename: 'langtrends.db',
+        driver: sqlite3.Database,
+      });
+
+      const languagesToExport = [];
+      const languagesFromDatabase = await db.all('SELECT * FROM language');
+      for (const language of languagesFromDatabase) {
+        // Order properties like we want them
+        languagesToExport.push({
+          id: language.id,
+          name: language.name,
+          stackoverflowTag: language.stackoverflowtag || undefined,
+        });
+      }
+      await writeFile('languages.json', JSON.stringify(languagesToExport));
+
+      const scoresToExport = [];
+      const scoresFromDatabase = await db.all(
+        'SELECT * FROM score ORDER BY date ASC, languageid ASC'
+      );
+      for (const score of scoresFromDatabase) {
+        // Remove ID since we don't need it
+        // Order properties like we want them
+        scoresToExport.push({
+          date: convertDateToDateString(convertIntegerToDate(score.date)),
+          languageId: score.languageid,
+          points: score.points,
+        });
+      }
+      await writeFile('scores.json', JSON.stringify(scoresToExport, null, 2));
+
       await db.close();
       ```
