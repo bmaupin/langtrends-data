@@ -10,8 +10,6 @@ import StackOverflow from './StackOverflow';
 
 require('dotenv').config();
 
-const LANGUAGES_FILE = 'data/languages.json';
-
 interface LanguagesMetadata {
   [key: string]: {
     description?: string;
@@ -22,7 +20,7 @@ interface LanguagesMetadata {
   };
 }
 
-interface Language {
+export interface Language {
   id: number;
   name: string;
   stackoverflowTag?: string;
@@ -48,14 +46,16 @@ export default class DataPopulator {
   _firstDayOfMonth: Date;
   _github: GitHub;
   private languages: Language[];
+  private languagesFile: string;
   _languagesFromGithub?: (string | null)[];
   _stackoverflow: StackOverflow;
 
-  constructor(db: Database) {
+  constructor(db: Database, languagesFile: string) {
     this._db = db;
     this._firstDayOfMonth = DataPopulator._getFirstDayOfMonthUTC();
     this._github = new GitHub();
     this.languages = [];
+    this.languagesFile = languagesFile;
     this._stackoverflow = new StackOverflow();
 
     if (process.env.GITHUB_API_KEY) {
@@ -67,10 +67,10 @@ export default class DataPopulator {
   }
 
   /**
-   * Populate languages in the database
+   * Populate languages in the data file
    */
   public async populateLanguages() {
-    this.languages = JSON.parse(await readFile(LANGUAGES_FILE, 'utf8'));
+    this.languages = await this.readDataFile(this.languagesFile);
 
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
     this._languagesFromGithub = await GitHub.getLanguageNames();
@@ -92,7 +92,20 @@ export default class DataPopulator {
       }
     }
 
-    await writeFile(LANGUAGES_FILE, JSON.stringify(this.languages));
+    await writeFile(this.languagesFile, JSON.stringify(this.languages));
+  }
+
+  /**
+   * Read the data file and return its contents
+   * @param pathToFile - Path to the data file
+   * @returns - Contents of the file or an empty array if the file doesn't exist
+   */
+  private async readDataFile(pathToFile: string): Promise<[]> {
+    try {
+      return JSON.parse(await readFile(pathToFile, 'utf8'));
+    } catch {
+      return [];
+    }
   }
 
   /**
@@ -112,7 +125,7 @@ export default class DataPopulator {
       language.stackoverflowTag = stackoverflowTag;
     } else {
       // Languages are sorted ascending by ID
-      const highestId = this.languages[this.languages.length - 1].id;
+      const highestId = this.languages[this.languages.length - 1]?.id || 0;
       this.languages.push({
         id: highestId + 1,
         name: languageName,
