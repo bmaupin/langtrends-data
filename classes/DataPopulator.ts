@@ -1,7 +1,6 @@
 'use strict';
 
 import { readFile, writeFile } from 'fs/promises';
-import { Database } from 'sqlite';
 
 import GitHub from './GitHub';
 import _languagesMetadata from '../data/languages-metadata.json';
@@ -26,55 +25,60 @@ export interface Language {
   stackoverflowTag?: string;
 }
 
-interface Score {
-  date: number;
-  id: number;
-  languageid: number;
+export interface Score {
+  date: string;
+  languageId: number;
   points: number;
 }
 
 const languagesMetadata = _languagesMetadata as LanguagesMetadata;
 
-// Convert date into format we can store in the database
-const convertDateToInteger = (date: Date): number => {
-  return Number(date) / 1000;
+/**
+ * Convert data into ISO 8601 formatted date string. This has the advantage of being human readable
+ * and should save on storage vs. storing the whole timestamp.
+ * @param date - Date
+ * @returns - Date string
+ */
+const convertDateToDateString = (date: Date): string => {
+  return date.toISOString().slice(0, 10);
 };
 
 export default class DataPopulator {
   // TODO: replace all these underscores with "private"
-  _db: Database;
-  _firstDayOfMonth: Date;
-  _github: GitHub;
+  private firstDayOfMonth: Date;
+  private github: GitHub;
   private languages: Language[];
-  _languagesFromGithub?: (string | null)[];
-  _stackoverflow: StackOverflow;
+  private languagesFromGithub?: (string | null)[];
+  private scores: Score[];
+  private stackoverflow: StackOverflow;
 
-  constructor(db: Database) {
-    this._db = db;
-    this._firstDayOfMonth = DataPopulator._getFirstDayOfMonthUTC();
-    this._github = new GitHub();
+  constructor() {
+    this.firstDayOfMonth = DataPopulator.getFirstDayOfMonthUTC();
+    this.github = new GitHub();
     this.languages = [];
-    this._stackoverflow = new StackOverflow();
+    this.scores = [];
+    this.stackoverflow = new StackOverflow();
 
     if (process.env.GITHUB_API_KEY) {
-      this._github.apiKey = process.env.GITHUB_API_KEY;
+      this.github.apiKey = process.env.GITHUB_API_KEY;
     }
     if (process.env.STACKOVERFLOW_API_KEY) {
-      this._stackoverflow.apiKey = process.env.STACKOVERFLOW_API_KEY;
+      this.stackoverflow.apiKey = process.env.STACKOVERFLOW_API_KEY;
     }
   }
 
   /**
    * Populate languages in the data file
+   * @param languagesFile - Path to the languages data file
    */
   public async populateLanguages(languagesFile: string) {
-    this.languages = await this.readDataFile(languagesFile);
+    this.languages = await DataPopulator.readDataFile(languagesFile);
 
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
-    this._languagesFromGithub = await GitHub.getLanguageNames();
+    this.languagesFromGithub = await GitHub.getLanguageNames();
 
-    for (let i = 0; i < this._languagesFromGithub.length; i++) {
-      const languageName = this._languagesFromGithub[i];
+    for (let i = 0; i < this.languagesFromGithub.length; i++) {
+      const languageName = this.languagesFromGithub[i];
 
       if (languageName && languagesMetadata[languageName]) {
         if (languagesMetadata[languageName].include === true) {
@@ -98,7 +102,7 @@ export default class DataPopulator {
    * @param pathToFile - Path to the data file
    * @returns - Contents of the file or an empty array if the file doesn't exist
    */
-  private async readDataFile(pathToFile: string): Promise<[]> {
+  private static async readDataFile(pathToFile: string): Promise<[]> {
     try {
       return JSON.parse(await readFile(pathToFile, 'utf8'));
     } catch {
@@ -133,14 +137,18 @@ export default class DataPopulator {
   }
 
   /**
-   * Populate scores in the database
-   * @param numScores Number of scores to populate (used for testing)
+   * Populate scores in the data file
+   * @param scoresFile - Path to the scores data file
+   * @param numScores - Number of scores to populate (used for testing)
    */
-  async populateScores(numScores?: number) {
+  public async populateScores(scoresFile: string, numScores?: number) {
+    this.scores = await DataPopulator.readDataFile(scoresFile);
+
     // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
     const OLDEST_DATE = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
-    const OLD_SCORE_COUNT = await this._getScoreCount();
-    let currentDate = new Date(this._firstDayOfMonth);
+    // const OLDEST_DATE = new Date(Date.UTC(2021, 9)); // 2008-02-01 00:00:00 UTC
+    const OLD_SCORE_COUNT = this.scores.length;
+    let currentDate = new Date(this.firstDayOfMonth);
 
     // Populate all scores starting with the current date and working backwards one month at a time
     try {
@@ -149,40 +157,39 @@ export default class DataPopulator {
           break;
         }
 
-        if (
-          numScores &&
-          (await this._getScoreCount()) - OLD_SCORE_COUNT >= numScores
-        ) {
+        if (numScores && this.scores.length - OLD_SCORE_COUNT >= numScores) {
           break;
         }
 
-        await this._populateAllScores(currentDate, numScores);
-        currentDate = DataPopulator._subtractOneMonthUTC(currentDate);
+        await this.populateAllScores(currentDate, numScores);
+        currentDate = DataPopulator.subtractOneMonthUTC(currentDate);
       }
       // Log the populated score count even if there are errors
     } finally {
       console.log(
         `INFO: Successfully populated ${
-          (await this._getScoreCount()) - OLD_SCORE_COUNT
+          this.scores.length - OLD_SCORE_COUNT
         } scores`
       );
     }
+
+    await writeFile(scoresFile, JSON.stringify(this.scores));
   }
 
-  static _getFirstDayOfMonthUTC(): Date {
+  private static getFirstDayOfMonthUTC(): Date {
     return new Date(
       Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth())
     );
   }
 
-  static _subtractOneMonthUTC(date: Date): Date {
+  private static subtractOneMonthUTC(date: Date): Date {
     const newDate = new Date(date);
     newDate.setUTCMonth(newDate.getUTCMonth() - 1);
     return newDate;
   }
 
-  async _populateAllScores(date: Date, numScores?: number) {
-    let languages = await this._getLanguages();
+  private async populateAllScores(date: Date, numScores?: number) {
+    let languages = this.languages;
 
     if (numScores) {
       languages = languages.splice(0, numScores);
@@ -190,77 +197,70 @@ export default class DataPopulator {
 
     // Do this in batches to avoid going over API limits
     while (languages.length !== 0) {
-      await this._populateScores(
+      await this.populateBatchOfScores(
         date,
         languages.splice(0, settings.MAX_CONCURRENT_REQUESTS)
       );
     }
   }
 
-  async _getLanguages(): Promise<Language[]> {
-    return await this._db.all('SELECT * FROM language');
-  }
-
-  async _populateScores(date: Date, languages: Language[]) {
+  private async populateBatchOfScores(date: Date, languages: Language[]) {
     const promises = [];
 
     for (let i = 0; i < languages.length; i++) {
-      // When GitHub renames a language, the old name will be in the database and will end up getting sent to the
+      // When GitHub renames a language, the old name will be in the data file and will end up getting sent to the
       // GitHub API. Unfortunately, instead of returning a score of 0 the language filter won't match and it will
       // return the total score (repository count) for all languages. So we need to prevent this from happening by
-      // skipping these scores from getting stored in the database. When this does happen, renaming the language in
-      // languages.json should correct the problem. Optionally the language can be first renamed in the database to
+      // skipping these scores from getting stored in the data file. When this does happen, renaming the language in
+      // languages.json should correct the problem. Optionally the language can be first renamed in the data file to
       // prevent the old data from having to be re-fetched.
       if (
-        this._languagesFromGithub &&
-        !this._languagesFromGithub.includes(languages[i].name)
+        this.languagesFromGithub &&
+        !this.languagesFromGithub.includes(languages[i].name)
       ) {
         // Only log this for the first date to prevent from spamming the logs
-        if (date.toISOString() === this._firstDayOfMonth.toISOString()) {
+        if (date.toISOString() === this.firstDayOfMonth.toISOString()) {
           console.log(
-            `WARNING: Language in database not found in GitHub: ${languages[i].name}`
+            `WARNING: Language in data file not found in GitHub: ${languages[i].name}`
           );
         }
       } else {
-        promises.push(this._populateScore(date, languages[i]));
+        promises.push(this.populateScore(date, languages[i]));
       }
     }
 
     await Promise.all(promises);
   }
 
-  async _populateScore(date: Date, language: Language) {
-    const score = await this._getScoreFromDb(date, language);
+  private async populateScore(date: Date, language: Language) {
+    const score = this.getScoreFromData(date, language);
 
     if (!score) {
-      const points = await this._getScoreFromApi(date, language);
-      await this._addScore(date, language, points);
+      const points = await this.getPointsFromApi(date, language);
+      await this.upsertScore(date, language, points);
     }
   }
 
-  async _getScoreFromDb(
-    date: Date,
-    language: Language
-  ): Promise<Score | undefined> {
-    return await this._db.get(
-      `SELECT * FROM score WHERE date = $date AND languageId = $languageId`,
-      {
-        $date: convertDateToInteger(date),
-        $languageId: language.id,
-      }
+  private getScoreFromData(date: Date, language: Language): Score | undefined {
+    return this.scores.find(
+      (score) =>
+        score.date === convertDateToDateString(date) &&
+        score.languageId === language.id
     );
   }
 
-  async _getScoreFromApi(date: Date, language: Language): Promise<number> {
-    const githubScore = await this._github.getScore(language.name, date);
-    const stackoverflowTag = this._getStackoverflowTag(language);
-    const stackoverflowScore = await this._stackoverflow.getScore(
-      stackoverflowTag,
+  private async getPointsFromApi(
+    date: Date,
+    language: Language
+  ): Promise<number> {
+    const githubScore = await this.github.getScore(language.name, date);
+    const stackoverflowScore = await this.stackoverflow.getScore(
+      language.stackoverflowTag || language.name,
       date
     );
     // Only log these for the first date, because for older dates it may just be that the tag count is actually 0
     if (
-      date.toISOString() === this._firstDayOfMonth.toISOString() &&
+      date.toISOString() === this.firstDayOfMonth.toISOString() &&
       stackoverflowScore === 0
     ) {
       console.log(`WARNING: stackoverflow tag not found for ${language.name}`);
@@ -269,33 +269,23 @@ export default class DataPopulator {
     return githubScore + stackoverflowScore;
   }
 
-  _getStackoverflowTag(language: Language): string {
-    return language.stackoverflowTag || language.name;
-  }
+  /**
+   * Add score if it doesn't exist, otherwise update points
+   * @param date - Score date
+   * @param language - Score language
+   * @param points - Score points
+   */
+  private async upsertScore(date: Date, language: Language, points: number) {
+    const score = this.getScoreFromData(date, language);
 
-  async _addScore(date: Date, language: Language, points: number) {
-    // Do an replace because we don't want duplicate scores per date/language
-    await this._db.run(
-      `
-      INSERT OR REPLACE INTO score (id, date, languageid, points)
-        VALUES(
-          (SELECT id FROM score WHERE date = $date AND languageid = $languageid),
-          $date,
-          $languageid,
-          $points
-        );
-    `,
-      {
-        $date: convertDateToInteger(date),
-        $languageid: language.id,
-        $points: points,
-      }
-    );
-  }
-
-  async _getScoreCount(): Promise<number> {
-    const result = await this._db.get('SELECT COUNT() AS count FROM score');
-
-    return result!.count;
+    if (score) {
+      score.points = points;
+    } else {
+      this.scores.push({
+        date: convertDateToDateString(date),
+        languageId: language.id,
+        points: points,
+      });
+    }
   }
 }
