@@ -19,6 +19,7 @@
   "homepage": "https://github.com/bmaupin/langtrends-data#readme",
   "dependencies": {
     "jsdom": "^17.0.0",
+    "node-fetch": "^2.6.5",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
   },

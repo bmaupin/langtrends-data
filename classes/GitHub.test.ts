@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config();
+import 'dotenv/config';
 
 import GitHub from './GitHub';
 

@@ -1,13 +1,14 @@
 'use strict';
 
 import { readFile, writeFile } from 'fs/promises';
+const fetch = require('node-fetch');
 
 import GitHub from './GitHub';
 import _languagesMetadata from '../data/languages-metadata.json';
 import settings from './settings.json';
 import StackOverflow from './StackOverflow';
 
-require('dotenv').config();
+import 'dotenv/config';
 
 interface LanguagesMetadata {
   [key: string]: {
@@ -137,16 +138,17 @@ export default class DataPopulator {
   }
 
   /**
-   * Populate scores in the data file
+   * Populate all scores in the data file
    * @param scoresFile - Path to the scores data file
    * @param numScores - Number of scores to populate (used for testing)
    */
-  public async populateScores(scoresFile: string, numScores?: number) {
+  public async populateAllScores(scoresFile: string, numScores?: number) {
     this.scores = await DataPopulator.readDataFile(scoresFile);
 
     // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
     const OLDEST_DATE = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
     const OLD_SCORE_COUNT = this.scores.length;
+    // Make a copy of this.firstDayOfMonth so we don't overwrite it
     let currentDate = new Date(this.firstDayOfMonth);
 
     // Populate all scores starting with the current date and working backwards one month at a time
@@ -160,8 +162,8 @@ export default class DataPopulator {
           break;
         }
 
-        await this.populateAllScores(currentDate, numScores);
-        currentDate = DataPopulator.subtractOneMonthUTC(currentDate);
+        await this.populateScoresForDate(currentDate, numScores);
+        currentDate = DataPopulator.subtractMonthsUTC(currentDate, 1);
       }
       // Log the populated score count even if there are errors
     } finally {
@@ -181,20 +183,15 @@ export default class DataPopulator {
     );
   }
 
-  private static subtractOneMonthUTC(date: Date): Date {
+  // Source: https://github.com/bmaupin/langtrends/blob/master/src/helpers/ApiHelper.js
+  private static subtractMonthsUTC(date: Date, monthsToSubtract: number): Date {
+    // Make a copy of the date object so we don't overwrite it
     const newDate = new Date(date);
-    newDate.setUTCMonth(newDate.getUTCMonth() - 1);
+    newDate.setUTCMonth(newDate.getUTCMonth() - monthsToSubtract);
     return newDate;
   }
 
-  private async populateAllScores(date: Date, numScores?: number) {
-    /*
-     * TODO: this.languages will be empty if populateLanguages hasn't been run yet
-     * Ideas:
-     * - Require languagesFile and scoresFile as part of constructor, that way we can run populateLanguages as needed
-     * - Always do the processing in memory and optionally allow the caller to provide a data file to pre-populate the data
-     *   - Then we could just run populateLanguages without needing a data file...
-     */
+  private async populateScoresForDate(date: Date, numScores?: number) {
     let languages = this.languages;
 
     if (numScores) {
@@ -293,5 +290,57 @@ export default class DataPopulator {
         points: points,
       });
     }
+  }
+
+  /**
+   * Populate a condensed list of scores designed to be consumed by the frontend
+   * @param condensedScoresFile - Path to the condensed scores data file
+   */
+  public async populateCondensedScores(condensedScoresFile: string) {
+    const condensedScores = [];
+    const condensedScoresDates = await this.generateCondensedScoresDates();
+
+    for (const score of this.scores) {
+      if (condensedScoresDates.includes(score.date)) {
+        condensedScores.push(score);
+      }
+    }
+
+    // Always overwrite the condensed scores file to clean out old dates
+    await writeFile(condensedScoresFile, JSON.stringify(condensedScores));
+  }
+
+  /**
+   * Generate list of dates of scores to include in condensed scores
+   * @returns List of dates
+   */
+  private async generateCondensedScoresDates(): Promise<string[]> {
+    // Get the number of the dates from the frontend
+    const response = await fetch(
+      'https://raw.githubusercontent.com/bmaupin/langtrends/master/src/settings.json'
+    );
+    const numberOfDates = (await response.json()).numberOfDates;
+
+    const condensedScoresDates = [] as string[];
+    const intervalsInMonths = [1, 3, 12];
+    for (const intervalInMonths of intervalsInMonths) {
+      // Make a copy of this.firstDayOfMonth so we don't overwrite it
+      let currentDate = new Date(this.firstDayOfMonth);
+
+      for (let i = 0; i < numberOfDates; i++) {
+        // Don't add duplicate months
+        if (
+          !condensedScoresDates.includes(convertDateToDateString(currentDate))
+        ) {
+          condensedScoresDates.push(convertDateToDateString(currentDate));
+        }
+        currentDate = DataPopulator.subtractMonthsUTC(
+          currentDate,
+          intervalInMonths
+        );
+      }
+    }
+
+    return condensedScoresDates;
   }
 }
