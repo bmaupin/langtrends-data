@@ -85,7 +85,7 @@ export default class Stackoverflow {
           } else if (response.statusCode === 503) {
             // Stackoverflow might throw a 503 if it feels there are too many requests
             console.warn(
-              'WARNING: Stackoverflow API returned 503; reduce MAX_CONCURRENT_REQUESTS'
+              'WARNING: Stackoverflow API returned 503; reduce maxConcurrentRequests'
             );
           }
           reject(new Error('statusCode=' + response.statusCode));
@@ -120,7 +120,7 @@ export default class Stackoverflow {
         // feels there are too many requests
         if (err.code === 'ECONNRESET') {
           console.warn(
-            'WARNING: Stackoverflow API closed connection; reduce MAX_CONCURRENT_REQUESTS'
+            'WARNING: Stackoverflow API closed connection; reduce maxConcurrentRequests'
           );
         }
         // Use the original message and code but our stack trace since the original stack trace won't point back to
@@ -133,7 +133,7 @@ export default class Stackoverflow {
   }
 
   static _handleApiLimits(body: StackOverflowData) {
-    if (body.quota_remaining <= settings.MAX_CONCURRENT_REQUESTS) {
+    if (body.quota_remaining <= settings.maxConcurrentRequests) {
       console.log(
         `WARNING: StackOverflow API daily quota remaining: ${body.quota_remaining}`
       );

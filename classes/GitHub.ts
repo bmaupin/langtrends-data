@@ -173,7 +173,7 @@ export default class GitHub {
       throw new Error(`Github API error (${body.errors[0].message})`);
     }
 
-    if (body.data.rateLimit.remaining <= settings.MAX_CONCURRENT_REQUESTS) {
+    if (body.data.rateLimit.remaining <= settings.maxConcurrentRequests) {
       console.log(
         `WARNING: Github API hourly quota remaining: ${body.data.rateLimit.remaining}`
       );

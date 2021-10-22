@@ -202,7 +202,7 @@ export default class DataPopulator {
     while (languages.length !== 0) {
       await this.populateBatchOfScores(
         date,
-        languages.splice(0, settings.MAX_CONCURRENT_REQUESTS)
+        languages.splice(0, settings.maxConcurrentRequests)
       );
     }
   }
