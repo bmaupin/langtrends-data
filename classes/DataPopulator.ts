@@ -319,7 +319,9 @@ export default class DataPopulator {
     const response = await fetch(
       'https://raw.githubusercontent.com/bmaupin/langtrends/master/src/settings.json'
     );
-    const numberOfDates = (await response.json()).numberOfDates;
+    // We need to get the number of dates shown in the chart plus one extra, since a given date's
+    // data is based on the difference between it and the previous date's data
+    const numberOfDates = (await response.json()).numberOfDates + 1;
 
     const condensedScoresDates = [] as string[];
     const intervalsInMonths = [1, 3, 12];
