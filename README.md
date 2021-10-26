@@ -3,3 +3,5 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bmaupin/langtrends-data/blob/master/LICENSE)
 
 ---
+
+Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/langtrends)
