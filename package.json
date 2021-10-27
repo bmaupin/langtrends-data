@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon serve.ts",
     "start": "ts-node .",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "update-languages": "ts-node update-languages.ts"
   },
   "repository": {
     "type": "git",
