@@ -1,0 +1,33 @@
+name: Update languages
+
+on:
+  schedule:
+    # Run every day except the first day of the month (when we'll update scores too)
+    - cron: '50 8 2-31 * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  update-languages:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          # Use the latest LTS version of Node (https://nodejs.org/)
+          node-version: 'lts/*'
+      - run: npm ci
+
+      - name: Update languages.json
+        run: npm run update-languages
+
+      - name: Push updated languages.json
+        run: |
+          # https://github.community/t/github-actions-bot-email-address/17204/5
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/languages.json
+          git commit -m "Update languages.json" || exit 0
+          git push
