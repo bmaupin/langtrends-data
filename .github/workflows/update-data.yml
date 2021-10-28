@@ -1,0 +1,33 @@
+name: Update data
+
+on:
+  schedule:
+    # Run the first day of the month at a (more or less) random time
+    - cron: '31 6 1 * *'
+
+  # Allows running this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          # Use the latest LTS version of Node (https://nodejs.org/)
+          node-version: 'lts/*'
+      - run: npm ci
+
+      - name: Update data
+        run: npm run update-data
+
+      - name: Push updated data
+        run: |
+          # https://github.community/t/github-actions-bot-email-address/17204/5
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data
+          git commit -m "Update data" || exit 0
+          git push

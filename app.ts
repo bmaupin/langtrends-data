@@ -1,12 +1,22 @@
 'use strict';
 
-import DataPopulator from './classes/DataPopulator';
+import { Server } from 'node-static';
+import http from 'http';
 
-const main = async () => {
-  const dataPopulator = new DataPopulator();
-  await dataPopulator.populateLanguages('data/languages.json');
-  await dataPopulator.populateAllScores('data/scores-full.json');
-  await dataPopulator.populateCondensedScores('data/scores.json');
-};
+const port = 4000;
 
-main();
+const file = new Server(__dirname + '/data', {
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  },
+});
+
+const server = http.createServer((req, res) => {
+  file.serve(req, res);
+});
+
+server.listen(port, () => {
+  console.log(`Listening at http://localhost:${port}`);
+});

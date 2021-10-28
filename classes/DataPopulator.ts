@@ -45,7 +45,6 @@ const convertDateToDateString = (date: Date): string => {
 };
 
 export default class DataPopulator {
-  // TODO: replace all these underscores with "private"
   private firstDayOfMonth: Date;
   private github: GitHub;
   private languages: Language[];
