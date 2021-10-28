@@ -67,6 +67,55 @@ export default class DataPopulator {
     }
   }
 
+  public async checkLanguages(languagesFile: string) {
+    this.languages = await DataPopulator.readDataFile(languagesFile);
+    const languagesFromGithub = await GitHub.getLanguageNames();
+
+    const languagesInDataNotInGitHub = [];
+    const languagesInGitHubNotInData = [];
+
+    for (const languageName of languagesFromGithub) {
+      if (languageName && languagesMetadata[languageName]) {
+        if (languagesMetadata[languageName].include === true) {
+          await this.upsertLanguage(
+            languageName,
+            languagesMetadata[languageName].stackoverflowTag
+          );
+        }
+      } else {
+        languagesInGitHubNotInData.push(languageName);
+      }
+    }
+
+    for (const languageName in languagesMetadata) {
+      if (!languagesFromGithub.includes(languageName)) {
+        languagesInDataNotInGitHub.push(languageName);
+      }
+    }
+
+    const errors = [];
+    if (languagesInGitHubNotInData.length !== 0) {
+      errors.push(
+        new Error(
+          `Languages from GitHub not found in data: ${languagesInGitHubNotInData.join(
+            ', '
+          )}`
+        )
+      );
+    }
+    if (languagesInDataNotInGitHub.length !== 0) {
+      errors.push(
+        new Error(
+          `Languages in data no longer in GitHub: ${languagesInDataNotInGitHub.join(
+            ', '
+          )}`
+        )
+      );
+    }
+
+    return errors;
+  }
+
   /**
    * Populate languages in the data file
    * @param languagesFile - Path to the languages data file
@@ -78,10 +127,8 @@ export default class DataPopulator {
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
     this.languagesFromGithub = await GitHub.getLanguageNames();
 
-    for (let i = 0; i < this.languagesFromGithub.length; i++) {
-      const languageName = this.languagesFromGithub[i];
-
-      if (numLanguages && i > numLanguages) {
+    for (const languageName of this.languagesFromGithub) {
+      if (numLanguages && this.languages.length >= numLanguages) {
         break;
       }
 
@@ -94,7 +141,15 @@ export default class DataPopulator {
         }
       } else {
         console.log(
-          `DEBUG: Language from Github not found in languages.json: ${languageName}`
+          `DEBUG: Language from GitHub not found in languages.json: ${languageName}`
+        );
+      }
+    }
+
+    for (const languageName in languagesMetadata) {
+      if (!this.languagesFromGithub.includes(languageName)) {
+        console.warn(
+          `WARNING: Language in languages-metadata.json no longer in GitHub: ${languageName}`
         );
       }
     }
