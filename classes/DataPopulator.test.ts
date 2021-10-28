@@ -4,9 +4,11 @@ import { readFile, rm } from 'fs/promises';
 
 import DataPopulator, { Language, Score } from './DataPopulator';
 
-const LANGUAGES_FILE = 'languages-test.json';
-const SCORES_FILE = 'scores-test.json';
 const CONDENSED_SCORES_FILE = 'scores-condensed-test.json';
+const LANGUAGES_FILE = 'languages-test.json';
+// Number of scores to populate for the tests
+const NUM_SCORES = 10;
+const SCORES_FILE = 'scores-test.json';
 
 let dataPopulator: DataPopulator;
 
@@ -21,18 +23,20 @@ afterAll(async () => {
 });
 
 test('Test populateLanguages', async () => {
-  await dataPopulator.populateLanguages(LANGUAGES_FILE);
+  // Populate only half the number of languages as scores to ensure they'll be spread across more than one date
+  const numLanguages = NUM_SCORES / 2;
+
+  await dataPopulator.populateLanguages(LANGUAGES_FILE, numLanguages);
   const languages = JSON.parse(
     await readFile(LANGUAGES_FILE, 'utf8')
   ) as Language[];
-  const language = languages.find((language) => language.name === 'TypeScript');
-  expect(language!.name).toEqual('TypeScript');
+  expect(languages.length).toBe(numLanguages);
 });
 
 test('Test populateAllScores', async () => {
-  await dataPopulator.populateAllScores(SCORES_FILE, 10);
+  await dataPopulator.populateAllScores(SCORES_FILE, NUM_SCORES);
   const scores = JSON.parse(await readFile(SCORES_FILE, 'utf8')) as Score[];
-  expect(scores.length).toEqual(10);
+  expect(scores.length).toEqual(NUM_SCORES);
   expect(scores[0].points).toBeGreaterThan(1000);
 
   // The latest score should be from this month
@@ -48,5 +52,5 @@ test('Test populateCondensedScores', async () => {
   const scores = JSON.parse(
     await readFile(CONDENSED_SCORES_FILE, 'utf8')
   ) as Score[];
-  expect(scores.length).toEqual(10);
+  expect(scores.length).toEqual(NUM_SCORES);
 });
