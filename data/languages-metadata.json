@@ -3,7 +3,14 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/1C_Company"
   },
+  "4D": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/4th_Dimension_(software)"
+  },
   "ABAP": {
+    "include": false
+  },
+  "ABAP CDS": {
     "include": false
   },
   "ABNF": {
@@ -25,11 +32,25 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Adventure_Game_Studio"
   },
+  "AIDL": {
+    "description": "Android Interface Definition Language",
+    "include": false,
+    "type": "interface description language"
+  },
+  "AL": {
+    "description": "Used to extend Microsoft Dynamics 365 Business Central",
+    "include": false,
+    "url": "https://marketplace.visualstudio.com/items?itemName=ms-dynamics-smb.al"
+  },
   "Alloy": {
     "include": false
   },
   "Alpine Abuild": {
     "include": false
+  },
+  "Altium Designer": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Altium_Designer"
   },
   "AMPL": {
     "include": false,
@@ -75,18 +96,34 @@
   "AsciiDoc": {
     "include": false
   },
+  "ASL": {
+    "description": "Advanced Configuration and Power Interface (ACPI) source language",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Advanced_Configuration_and_Power_Interface"
+  },
   "ASN.1": {
     "include": false
   },
   "ASP": {
-    "include": false,
-    "stackoverflowTag": "asp.net"
+    "include": false
+  },
+  "ASP.NET": {
+    "include": true
   },
   "AspectJ": {
     "include": false
   },
   "Assembly": {
     "include": true
+  },
+  "Astro": {
+    "description": "Astro static site generator template syntax",
+    "include": false,
+    "url": "https://github.com/snowpackjs/astro"
+  },
+  "Asymptote": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Asymptote_%28vector_graphics_language%29"
   },
   "ATS": {
     "include": true
@@ -100,19 +137,42 @@
   "AutoIt": {
     "include": false
   },
+  "Avro IDL": {
+    "include": false,
+    "type": "interface description language",
+    "url": "https://en.wikipedia.org/wiki/Apache_Avro#Avro_IDL"
+  },
   "Awk": {
     "include": true
   },
   "Ballerina": {
     "include": true,
-    "stackoverflowTag": "ballerinalang"
+    "stackoverflowTag": "ballerinalang",
+    "url": "https://en.wikipedia.org/wiki/Ballerina_(programming_language)"
+  },
+  "BASIC": {
+    "description": "BASIC is more of a family of languages than a specific language",
+    "include": false
   },
   "Batchfile": {
     "include": false,
     "stackoverflowTag": "batch-file"
   },
+  "Beef": {
+    "include": true,
+    "url": "https://www.beeflang.org/"
+  },
   "Befunge": {
     "include": false
+  },
+  "BibTeX": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/BibTeX"
+  },
+  "Bicep": {
+    "include": false,
+    "type": "domain-specific language",
+    "url": "https://github.com/azure/bicep"
   },
   "Bison": {
     "include": false
@@ -135,6 +195,11 @@
   "Boo": {
     "include": true
   },
+  "Boogie": {
+    "include": false,
+    "type": "intermediate verification language",
+    "url": "https://github.com/boogie-org/boogie/"
+  },
   "Brainfuck": {
     "include": false
   },
@@ -143,6 +208,10 @@
   },
   "Bro": {
     "include": false
+  },
+  "Browserslist": {
+    "include": false,
+    "url": "https://github.com/browserslist/browserslist"
   },
   "C": {
     "include": true
@@ -159,6 +228,11 @@
   "C2hs Haskell": {
     "include": false,
     "stackoverflowTag": "c2hs"
+  },
+  "Cabal Config": {
+    "description": "Used to store metadata about Haskell projects",
+    "include": false,
+    "url": "https://cabal.readthedocs.io/"
   },
   "Cap'n Proto": {
     "include": false
@@ -181,11 +255,21 @@
   "ChucK": {
     "include": false
   },
+  "CIL": {
+    "description": "SELinux Common Intermediate Language",
+    "include": false,
+    "type": "intermediate language",
+    "url": "https://github.com/SELinuxProject/cil"
+  },
   "Cirru": {
     "include": false
   },
   "Clarion": {
     "include": false
+  },
+  "Classic ASP": {
+    "include": true,
+    "stackoverflowTag": "asp-classic"
   },
   "Clean": {
     "include": true,
@@ -203,11 +287,24 @@
   "Closure Templates": {
     "include": false
   },
+  "Cloud Firestore Security Rules": {
+    "description": "Security rules for Google Firebase Cloud Firestore",
+    "include": false,
+    "url": "https://firebase.google.com/docs/firestore/security/get-started"
+  },
   "CMake": {
     "include": false
   },
   "COBOL": {
     "include": true
+  },
+  "CODEOWNERS": {
+    "include": false,
+    "url": "https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners"
+  },
+  "CodeQL": {
+    "include": false,
+    "url": "https://codeql.github.com/"
   },
   "CoffeeScript": {
     "include": true
@@ -275,6 +372,20 @@
   "Cuda": {
     "include": false
   },
+  "CUE": {
+    "description": "A data constraint language",
+    "include": false,
+    "url": "https://github.com/cue-lang/cue"
+  },
+  "Cue Sheet": {
+    "include": false,
+    "type": "metadata",
+    "url": "https://en.wikipedia.org/wiki/Cue_sheet_(computing)"
+  },
+  "cURL Config": {
+    "include": false,
+    "url": "https://curl.se/docs/manpage.html#-K"
+  },
   "CWeb": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/CWEB"
@@ -304,12 +415,25 @@
   "desktop": {
     "include": false
   },
+  "Dhall": {
+    "include": false,
+    "type": "configuration language",
+    "url": "https://github.com/dhall-lang/dhall-lang"
+  },
   "Diff": {
     "include": false
   },
   "DIGITAL Command Language": {
     "include": false,
     "stackoverflowTag": "dcl"
+  },
+  "dircolors": {
+    "include": false,
+    "url": "https://linux.die.net/man/5/dir_colors"
+  },
+  "DirectX 3D File": {
+    "description": "DirectX 3D model files",
+    "include": false
   },
   "DM": {
     "include": false
@@ -331,6 +455,9 @@
   },
   "E": {
     "include": true
+  },
+  "E-mail": {
+    "include": false
   },
   "Eagle": {
     "include": false
@@ -358,8 +485,9 @@
     "url": "http://eclipseclp.org/",
     "stackoverflowTag": "eclipse-clp"
   },
-  "edn": {
-    "include": false
+  "EditorConfig": {
+    "include": false,
+    "url": "https://editorconfig.org/"
   },
   "Edje Data Collection": {
     "description": "Data file containing instructions for Enlightenment window manager's Edje Compiler",
@@ -367,6 +495,9 @@
     "include": false,
     "type": "domain-specific language",
     "url": "https://docs.enlightenment.org/auto/edcref.html"
+  },
+  "edn": {
+    "include": false
   },
   "Eiffel": {
     "include": true
@@ -412,6 +543,9 @@
   "Fantom": {
     "include": true
   },
+  "FIGlet Font": {
+    "include": false
+  },
   "Filebench WML": {
     "include": false
   },
@@ -451,6 +585,10 @@
     "include": false,
     "stackoverflowTag": "game-maker"
   },
+  "GAML": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/GAMA_Platform#High-level_Agent-based_language"
+  },
   "GAMS": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/General_Algebraic_Modeling_System",
@@ -471,6 +609,14 @@
   "GDScript": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Godot_(game_engine)"
+  },
+  "GEDCOM": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/GEDCOM"
+  },
+  "Gemfile.lock": {
+    "include": false,
+    "url": "https://bundler.io/rationale.html"
   },
   "Genie": {
     "include": true
@@ -497,6 +643,14 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Cucumber_(software)"
   },
+  "Git Attributes": {
+    "include": false,
+    "url": "https://git-scm.com/docs/gitattributes"
+  },
+  "Git Config": {
+    "include": false,
+    "url": "https://git-scm.com/docs/git-config"
+  },
   "GLSL": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/OpenGL_Shading_Language"
@@ -505,6 +659,10 @@
     "description": "Pointwise's scripting language",
     "extension": ".glf",
     "include": false
+  },
+  "Glyph Bitmap Distribution Format": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Glyph_Bitmap_Distribution_Format"
   },
   "GN": {
     "description": "Generate Ninja",
@@ -517,6 +675,14 @@
   },
   "Go": {
     "include": true
+  },
+  "Go Checksums": {
+    "include": false,
+    "url": "https://golang.org/ref/mod#go-sum-files"
+  },
+  "Go Module": {
+    "include": false,
+    "url": "https://golang.org/ref/mod#go-mod-file"
   },
   "Golo": {
     "description": "A lightweight dynamic language for the JVM",
@@ -567,6 +733,10 @@
   "Handlebars": {
     "include": false
   },
+  "HAProxy": {
+    "description": "HAProxy configuration file",
+    "include": false
+  },
   "Harbour": {
     "description": "Cross-platform, multi-threading, object-oriented, scriptable programming language, backwards compatible with xBase languages",
     "include": true,
@@ -581,6 +751,10 @@
   "HCL": {
     "include": false,
     "url": "https://github.com/hashicorp/hcl"
+  },
+  "HiveQL": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Apache_Hive#HiveQL"
   },
   "HLSL": {
     "include": false,
@@ -812,7 +986,8 @@
     "include": true
   },
   "M": {
-    "include": true
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/MUMPS"
   },
   "M4": {
     "include": false
