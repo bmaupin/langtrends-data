@@ -71,8 +71,9 @@ export default class DataPopulator {
   /**
    * Populate languages in the data file
    * @param languagesFile - Path to the languages data file
+   * @param numLanguages - Number of languages to populate (used for testing)
    */
-  public async populateLanguages(languagesFile: string) {
+  public async populateLanguages(languagesFile: string, numLanguages?: number) {
     this.languages = await DataPopulator.readDataFile(languagesFile);
 
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
@@ -80,6 +81,10 @@ export default class DataPopulator {
 
     for (let i = 0; i < this.languagesFromGithub.length; i++) {
       const languageName = this.languagesFromGithub[i];
+
+      if (numLanguages && i > numLanguages) {
+        break;
+      }
 
       if (languageName && languagesMetadata[languageName]) {
         if (languagesMetadata[languageName].include === true) {
