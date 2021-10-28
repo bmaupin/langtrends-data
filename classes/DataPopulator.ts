@@ -197,7 +197,9 @@ export default class DataPopulator {
   }
 
   private async populateScoresForDate(date: Date, numScores?: number) {
-    let languages = this.languages;
+    // Make a shallow copy of this.languages; we shouldn't need a deep copy since we're not modifying the objects
+    // inside the array, just the array itself
+    let languages = [...this.languages];
 
     if (numScores) {
       languages = languages.splice(0, numScores);
