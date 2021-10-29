@@ -81,3 +81,33 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
    ```
    npm run update-languages
    ```
+
+1. (Optional) Update `scores.json` and `scores-full.json`
+
+   ```
+   npm run update-data
+   ```
+
+#### Modifying languages
+
+If a language has changed on GitHub:
+
+1. Update the language in `languages-metadata.json`
+
+   1. Remove or rename as needed
+
+   1. If `include` was set to `false`, no other steps need to be taken
+
+1. If `include` was set to `true`
+
+   1. If the language was renamed, simply update the old language in `languages.json` with the new name
+
+   1. If the language was removed, remove the language from `languages.json` and all matching scores from `scores-full.json`
+
+      > ⓘ `scores.json` doesn't have to be updated
+
+1. Run `update-data` to update `languages.json` and as a sanity check to make sure the scores are okay
+
+   ```
+   npm run update-data
+   ```
