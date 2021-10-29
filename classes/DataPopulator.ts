@@ -340,11 +340,23 @@ export default class DataPopulator {
    * @param condensedScoresFile - Path to the condensed scores data file
    */
   public async populateCondensedScores(condensedScoresFile: string) {
+    // Get settings from the frontend
+    const response = await fetch(
+      'https://raw.githubusercontent.com/bmaupin/langtrends/master/src/settings.json'
+    );
+    const uiSettings = await response.json();
+
     const condensedScores = [];
-    const condensedScoresDates = await this.generateCondensedScoresDates();
+    const condensedScoresDates = await this.generateCondensedScoresDates(
+      uiSettings.numberOfDates
+    );
 
     for (const score of this.scores) {
-      if (condensedScoresDates.includes(score.date)) {
+      if (
+        condensedScoresDates.includes(score.date) &&
+        // Filter out scores under the minimum score set in the frontend
+        score.points > uiSettings.minimumScore
+      ) {
         condensedScores.push(score);
       }
     }
@@ -355,24 +367,21 @@ export default class DataPopulator {
 
   /**
    * Generate list of dates of scores to include in condensed scores
-   * @returns List of dates
+   * @param numberOfDates - Number of dates to get
+   * @returns - List of dates
    */
-  private async generateCondensedScoresDates(): Promise<string[]> {
-    // Get the number of the dates from the frontend
-    const response = await fetch(
-      'https://raw.githubusercontent.com/bmaupin/langtrends/master/src/settings.json'
-    );
-    // We need to get the number of dates shown in the chart plus one extra, since a given date's
-    // data is based on the difference between it and the previous date's data
-    const numberOfDates = (await response.json()).numberOfDates + 1;
-
+  private async generateCondensedScoresDates(
+    numberOfDates: number
+  ): Promise<string[]> {
     const condensedScoresDates = [] as string[];
     const intervalsInMonths = [1, 3, 12];
     for (const intervalInMonths of intervalsInMonths) {
       // Make a copy of this.firstDayOfMonth so we don't overwrite it
       let currentDate = new Date(this.firstDayOfMonth);
 
-      for (let i = 0; i < numberOfDates; i++) {
+      // We need to get the number of dates shown in the chart plus one extra, since a given date's
+      // data is based on the difference between it and the previous date's data
+      for (let i = 0; i < numberOfDates + 1; i++) {
         // Don't add duplicate months
         if (
           !condensedScoresDates.includes(convertDateToDateString(currentDate))
