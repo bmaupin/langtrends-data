@@ -4,12 +4,13 @@ import DataPopulator from './classes/DataPopulator';
 
 const main = async () => {
   const dataPopulator = new DataPopulator();
-  const errors = await dataPopulator.checkLanguages('data/languages.json');
-  if (errors.length !== 0) {
-    for (const error of errors) {
-      console.error(error);
-    }
+  const languageDiscrepancies = await dataPopulator.populateLanguages(
+    'data/languages.json'
+  );
+  if (languageDiscrepancies) {
     process.exit(1);
+  } else {
+    console.info('No language discrepancies found');
   }
 };
 

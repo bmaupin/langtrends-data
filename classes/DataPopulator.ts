@@ -67,65 +67,24 @@ export default class DataPopulator {
     }
   }
 
-  public async checkLanguages(languagesFile: string) {
-    this.languages = await DataPopulator.readDataFile(languagesFile);
-    const languagesFromGithub = await GitHub.getLanguageNames();
-
-    const languagesInDataNotInGitHub = [];
-    const languagesInGitHubNotInData = [];
-
-    for (const languageName of languagesFromGithub) {
-      if (languageName && languagesMetadata[languageName]) {
-        if (languagesMetadata[languageName].include === true) {
-          await this.upsertLanguage(
-            languageName,
-            languagesMetadata[languageName].stackoverflowTag
-          );
-        }
-      } else {
-        languagesInGitHubNotInData.push(languageName);
-      }
-    }
-
-    for (const languageName in languagesMetadata) {
-      if (!languagesFromGithub.includes(languageName)) {
-        languagesInDataNotInGitHub.push(languageName);
-      }
-    }
-
-    const errors = [];
-    if (languagesInGitHubNotInData.length !== 0) {
-      errors.push(
-        new Error(
-          `Languages from GitHub not found in data: ${languagesInGitHubNotInData.join(
-            ', '
-          )}`
-        )
-      );
-    }
-    if (languagesInDataNotInGitHub.length !== 0) {
-      errors.push(
-        new Error(
-          `Languages in data no longer in GitHub: ${languagesInDataNotInGitHub.join(
-            ', '
-          )}`
-        )
-      );
-    }
-
-    return errors;
-  }
-
   /**
    * Populate languages in the data file
    * @param languagesFile - Path to the languages data file
    * @param numLanguages - Number of languages to populate (used for testing)
+   * @returns - Whether or not there are any language discrepancies in the data files
    */
-  public async populateLanguages(languagesFile: string, numLanguages?: number) {
+  public async populateLanguages(
+    languagesFile: string,
+    numLanguages?: number
+  ): Promise<boolean> {
     this.languages = await DataPopulator.readDataFile(languagesFile);
 
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
     this.languagesFromGithub = await GitHub.getLanguageNames();
+
+    let languageDiscrepancies = false;
+    const languagesInDataNotInGitHub = [];
+    const languagesInGitHubNotInData = [];
 
     for (const languageName of this.languagesFromGithub) {
       if (numLanguages && this.languages.length >= numLanguages) {
@@ -140,21 +99,37 @@ export default class DataPopulator {
           );
         }
       } else {
-        console.log(
-          `DEBUG: Language from GitHub not found in languages.json: ${languageName}`
-        );
+        languagesInGitHubNotInData.push(languageName);
       }
+    }
+
+    if (languagesInGitHubNotInData.length !== 0) {
+      console.info(
+        `Languages from GitHub not found in data: ${languagesInGitHubNotInData.join(
+          ', '
+        )}\n`
+      );
+      languageDiscrepancies = true;
     }
 
     for (const languageName in languagesMetadata) {
       if (!this.languagesFromGithub.includes(languageName)) {
-        console.warn(
-          `WARNING: Language in languages-metadata.json no longer in GitHub: ${languageName}`
-        );
+        languagesInDataNotInGitHub.push(languageName);
       }
     }
 
+    if (languagesInDataNotInGitHub.length !== 0) {
+      console.warn(
+        `Warning: Languages in metadata not found in GitHub: ${languagesInDataNotInGitHub.join(
+          ', '
+        )}\n`
+      );
+      languageDiscrepancies = true;
+    }
+
     await writeFile(languagesFile, JSON.stringify(this.languages));
+
+    return languageDiscrepancies;
   }
 
   /**
