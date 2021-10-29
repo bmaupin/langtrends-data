@@ -154,8 +154,8 @@ export default class GitHub {
     options: https.RequestOptions,
     postData: string
   ) {
-    console.log(
-      `WARNING: ${options.hostname} returned error code ${errorCode}; retrying in ${secondsToWait} seconds`
+    console.warn(
+      `Warning: ${options.hostname} returned error code ${errorCode}; retrying in ${secondsToWait} seconds`
     );
     await GitHub._waitSeconds(secondsToWait);
     return await this._httpsRequest(options, postData);
@@ -174,8 +174,8 @@ export default class GitHub {
     }
 
     if (body.data.rateLimit.remaining <= settings.maxConcurrentRequests) {
-      console.log(
-        `WARNING: Github API hourly quota remaining: ${body.data.rateLimit.remaining}`
+      console.warn(
+        `Warning: Github API hourly quota remaining: ${body.data.rateLimit.remaining}`
       );
     } else if (body.data.rateLimit.remaining <= 0) {
       throw new Error('Github API hourly limit exceeded');

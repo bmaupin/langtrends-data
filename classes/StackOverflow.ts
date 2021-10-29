@@ -80,12 +80,12 @@ export default class Stackoverflow {
         ) {
           if (response.statusCode === 400) {
             console.warn(
-              'WARNING: Stackoverflow API daily limit exceeded or API key incorrect'
+              'Warning: Stackoverflow API daily limit exceeded or API key incorrect'
             );
           } else if (response.statusCode === 503) {
             // Stackoverflow might throw a 503 if it feels there are too many requests
             console.warn(
-              'WARNING: Stackoverflow API returned 503; reduce maxConcurrentRequests'
+              'Warning: Stackoverflow API returned 503; reduce maxConcurrentRequests'
             );
           }
           reject(new Error('statusCode=' + response.statusCode));
@@ -120,7 +120,7 @@ export default class Stackoverflow {
         // feels there are too many requests
         if (err.code === 'ECONNRESET') {
           console.warn(
-            'WARNING: Stackoverflow API closed connection; reduce maxConcurrentRequests'
+            'Warning: Stackoverflow API closed connection; reduce maxConcurrentRequests'
           );
         }
         // Use the original message and code but our stack trace since the original stack trace won't point back to
@@ -134,8 +134,8 @@ export default class Stackoverflow {
 
   static _handleApiLimits(body: StackOverflowData) {
     if (body.quota_remaining <= settings.maxConcurrentRequests) {
-      console.log(
-        `WARNING: StackOverflow API daily quota remaining: ${body.quota_remaining}`
+      console.warn(
+        `Warning: StackOverflow API daily quota remaining: ${body.quota_remaining}`
       );
     } else if (body.quota_remaining <= 0) {
       throw new Error('Stackoverflow API daily limit exceeded');

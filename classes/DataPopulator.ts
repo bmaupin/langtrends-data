@@ -201,10 +201,8 @@ export default class DataPopulator {
       }
       // Log the populated score count even if there are errors
     } finally {
-      console.log(
-        `INFO: Successfully populated ${
-          this.scores.length - OLD_SCORE_COUNT
-        } scores`
+      console.info(
+        `Successfully populated ${this.scores.length - OLD_SCORE_COUNT} scores`
       );
     }
 
@@ -259,8 +257,8 @@ export default class DataPopulator {
       ) {
         // Only log this for the first date to prevent from spamming the logs
         if (date.toISOString() === this.firstDayOfMonth.toISOString()) {
-          console.log(
-            `WARNING: Language in data file not found in GitHub: ${languages[i].name}`
+          console.warn(
+            `Warning: Language in data file not found in GitHub: ${languages[i].name}`
           );
         }
       } else {
@@ -302,7 +300,9 @@ export default class DataPopulator {
       date.toISOString() === this.firstDayOfMonth.toISOString() &&
       stackoverflowScore === 0
     ) {
-      console.log(`WARNING: stackoverflow tag not found for ${language.name}`);
+      console.warn(
+        `Warning: Stack Overflow tag not found for ${language.name}`
+      );
     }
 
     return githubScore + stackoverflowScore;
