@@ -90,9 +90,6 @@
     "include": true,
     "stackoverflowTag": "arc-lisp"
   },
-  "Arduino": {
-    "include": false
-  },
   "AsciiDoc": {
     "include": false
   },
@@ -102,9 +99,6 @@
     "url": "https://en.wikipedia.org/wiki/Advanced_Configuration_and_Power_Interface"
   },
   "ASN.1": {
-    "include": false
-  },
-  "ASP": {
     "include": false
   },
   "ASP.NET": {
@@ -204,9 +198,6 @@
     "include": false
   },
   "Brightscript": {
-    "include": false
-  },
-  "Bro": {
     "include": false
   },
   "Browserslist": {
@@ -763,9 +754,6 @@
   "HTML": {
     "include": false
   },
-  "HTML+Django": {
-    "include": false
-  },
   "HTML+ECR": {
     "include": false
   },
@@ -852,6 +840,10 @@
   "JFlex": {
     "include": false
   },
+  "Jinja": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Jinja_(template_engine)"
+  },
   "Jison": {
     "include": false
   },
@@ -864,6 +856,9 @@
   "JSON": {
     "include": false
   },
+  "JSON with Comments": {
+    "include": false
+  },
   "JSON5": {
     "include": false
   },
@@ -873,9 +868,6 @@
   "JSONLD": {
     "include": false,
     "stackoverflowTag": "json-ld"
-  },
-  "JSX": {
-    "include": false
   },
   "Julia": {
     "include": true,
@@ -1032,9 +1024,6 @@
     "description": "Scripting language for Autodesk 3ds Max and Autodesk 3ds Max Design",
     "include": false,
     "url": "http://docs.autodesk.com/3DSMAX/14/ENU/MAXScript%20Help%202012/"
-  },
-  "MediaWiki": {
-    "include": false
   },
   "Mercury": {
     "include": true
@@ -1247,7 +1236,7 @@
   "Pascal": {
     "include": true
   },
-  "PAWN": {
+  "Pawn": {
     "include": false,
     "url": "https://www.compuphase.com/pawn/"
   },
@@ -1258,9 +1247,6 @@
   },
   "Perl": {
     "include": true
-  },
-  "Perl 6": {
-    "include": false
   },
   "PHP": {
     "include": true
@@ -1382,6 +1368,10 @@
   "Ragel": {
     "include": false
   },
+  "Raku": {
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/Raku_(programming_language)"
+  },
   "RAML": {
     "include": false
   },
@@ -1428,9 +1418,6 @@
   },
   "REXX": {
     "include": true
-  },
-  "RHTML": {
-    "include": false
   },
   "Ring": {
     "include": true
@@ -1603,9 +1590,6 @@
   "Stylus": {
     "include": false
   },
-  "Sublime Text Config": {
-    "include": false
-  },
   "SubRip Text": {
     "include": false
   },
@@ -1727,7 +1711,7 @@
   "VHDL": {
     "include": false
   },
-  "Vim script": {
+  "Vim Script": {
     "include": false,
     "stackoverflowTag": "vim"
   },
@@ -1768,6 +1752,10 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Web_IDL"
   },
+  "Wikitext": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Wiki#Editing"
+  },
   "wisp": {
     "description": "Homoiconic JS dialect with a clojure syntax, s-expressions and macros",
     "include": true,
@@ -1775,6 +1763,10 @@
   },
   "World of Warcraft Addon Data": {
     "include": false
+  },
+  "X PixMap": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/X_PixMap"
   },
   "X10": {
     "include": true
@@ -1802,10 +1794,6 @@
   "XPages": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/XPages"
-  },
-  "XPM": {
-    "include": false,
-    "url": "https://en.wikipedia.org/wiki/X_PixMap"
   },
   "XProc": {
     "include": false,
@@ -1838,6 +1826,10 @@
   "YARA": {
     "include": false,
     "url": "https://virustotal.github.io/yara/"
+  },
+  "Zeek": {
+    "include": false,
+    "url": "https://github.com/zeek/zeek"
   },
   "Zephir": {
     "description": "DSL for PHP extensions",

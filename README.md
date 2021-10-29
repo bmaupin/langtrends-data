@@ -34,7 +34,7 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
 - Dates are stored in a format which can be directly converted to a `Date` object using `new Date(score.date)`
   - This will also create a `Date` with a timestamp of midnight UTC, which was the intention; for example, `new Date('2021-01-01')` is the same as `new Date('2021-01-01 00:00:00.000Z')`
 
-#### Adding languages to languages-metadata.json
+#### Adding languages to `languages-metadata.json`
 
 1. Run update-languages to get the list of missing languages
 
@@ -66,7 +66,7 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
    - Commercial/proprietary languages are fine as long as they are general purpose and not intentionally limited to a specific operating system or hardware (e.g. ColdFusion, PureBasic)
    - Don't include: DSLs, markup languages, abandoned/superceded languages (e.g. CSS, HTML, SQL)
 
-1. Add the language to languages-metadata.json
+1. Add the language to `languages-metadata.json`
 
    - The name should exactly match the output from `update-languages` (including the case)
    - `include` is the only required attribute
@@ -75,3 +75,9 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
 
    - Adding a `url` is preferred especially if there's ambiguity
    - Add a `description` and/or `type` in cases where it may not be clear why a language was/wasn't included
+
+1. Update `languages.json`
+
+   ```
+   npm run update-languages
+   ```
