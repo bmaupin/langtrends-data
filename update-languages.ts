@@ -9,8 +9,6 @@ const main = async () => {
   );
   if (languageDiscrepancies) {
     process.exit(1);
-  } else {
-    console.info('No language discrepancies found');
   }
 };
 

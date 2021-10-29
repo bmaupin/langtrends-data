@@ -21,4 +21,4 @@ jobs:
       - run: npm ci
 
       - name: Check languages
-        run: npm run check-languages
+        run: npm run update-languages
