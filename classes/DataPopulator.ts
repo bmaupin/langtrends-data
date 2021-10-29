@@ -78,6 +78,7 @@ export default class DataPopulator {
     numLanguages?: number
   ): Promise<boolean> {
     this.languages = await DataPopulator.readDataFile(languagesFile);
+    const oldLanguageCount = this.languages.length;
 
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
     this.languagesFromGithub = await GitHub.getLanguageNames();
@@ -126,6 +127,12 @@ export default class DataPopulator {
       );
       languageDiscrepancies = true;
     }
+
+    console.info(
+      `Successfully populated ${
+        this.languages.length - oldLanguageCount
+      } languages`
+    );
 
     await writeFile(languagesFile, JSON.stringify(this.languages));
 
@@ -180,19 +187,19 @@ export default class DataPopulator {
     this.scores = await DataPopulator.readDataFile(scoresFile);
 
     // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
-    const OLDEST_DATE = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
-    const OLD_SCORE_COUNT = this.scores.length;
+    const oldestDate = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
+    const oldScoreCount = this.scores.length;
     // Make a copy of this.firstDayOfMonth so we don't overwrite it
     let currentDate = new Date(this.firstDayOfMonth);
 
     // Populate all scores starting with the current date and working backwards one month at a time
     try {
       while (true) {
-        if (currentDate < OLDEST_DATE) {
+        if (currentDate < oldestDate) {
           break;
         }
 
-        if (numScores && this.scores.length - OLD_SCORE_COUNT >= numScores) {
+        if (numScores && this.scores.length - oldScoreCount >= numScores) {
           break;
         }
 
@@ -202,7 +209,7 @@ export default class DataPopulator {
       // Log the populated score count even if there are errors
     } finally {
       console.info(
-        `Successfully populated ${this.scores.length - OLD_SCORE_COUNT} scores`
+        `Successfully populated ${this.scores.length - oldScoreCount} scores`
       );
     }
 
