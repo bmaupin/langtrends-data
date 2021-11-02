@@ -56,5 +56,9 @@ test('Test populateCondensedScores', async () => {
 });
 
 test('Test validateLanguages', async () => {
-  await dataPopulator.validateLanguages(LANGUAGES_FILE);
+  try {
+    await dataPopulator.validateLanguages(LANGUAGES_FILE);
+  } catch (error) {
+    console.log(error);
+  }
 });

@@ -4,10 +4,10 @@ import DataPopulator from './classes/DataPopulator';
 
 const main = async () => {
   const dataPopulator = new DataPopulator();
-  const languageDiscrepancies = await dataPopulator.populateLanguages(
-    'data/languages.json'
-  );
-  if (languageDiscrepancies) {
+  try {
+    await dataPopulator.validateLanguages('data/languages.json');
+  } catch (error) {
+    console.error(error);
     process.exit(1);
   }
 };

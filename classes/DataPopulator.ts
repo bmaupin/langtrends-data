@@ -366,17 +366,28 @@ export default class DataPopulator {
   }
 
   // TODO: jsdoc
-  public async validateLanguages(languagesFile: string): Promise<boolean> {
-    return (
-      (await this.areGitHubLanguagesMissing()) ||
-      (await this.areExtraLanguagesInData()) ||
-      (await this.areStackOverflowTagsMissing(languagesFile))
+  public async validateLanguages(languagesFile: string) {
+    const validationErrors = [
+      await this.checkForLanguagesInGitHubNotInMetadata(),
+      await this.checkForLanguagesInMetadataNotInGitHub(),
+      await this.checkForMissingStackOverflowTags(languagesFile),
+    ];
+
+    const filteredErrors = validationErrors.filter(
+      (validationError) => validationError !== undefined
     );
+
+    if (filteredErrors.length > 0) {
+      throw new Error(
+        `Language validation failed:\n\n${filteredErrors.join('\n\n')}`
+      );
+    }
   }
 
-  private async areGitHubLanguagesMissing(): Promise<boolean> {
-    let languageDiscrepancies = false;
-    const languagesInGitHubNotInData = [];
+  private async checkForLanguagesInGitHubNotInMetadata(): Promise<
+    string | undefined
+  > {
+    const languagesInGitHubNotInMetadata = [];
 
     if (!this.languagesFromGithub) {
       this.languagesFromGithub = await GitHub.getLanguageNames();
@@ -384,49 +395,39 @@ export default class DataPopulator {
 
     for (const languageName of this.languagesFromGithub) {
       if (!languagesMetadata[languageName]) {
-        languagesInGitHubNotInData.push(languageName);
+        languagesInGitHubNotInMetadata.push(languageName);
       }
     }
-    if (languagesInGitHubNotInData.length !== 0) {
-      console.info(
-        `Languages from GitHub not found in data: ${languagesInGitHubNotInData.join(
-          ', '
-        )}\n`
-      );
-      languageDiscrepancies = true;
+    if (languagesInGitHubNotInMetadata.length !== 0) {
+      return `Languages from GitHub not found in data: ${languagesInGitHubNotInMetadata.join(
+        ', '
+      )}`;
     }
-
-    return languageDiscrepancies;
   }
 
-  private async areExtraLanguagesInData(): Promise<boolean> {
-    let languageDiscrepancies = false;
-    const languagesInDataNotInGitHub = [];
+  private async checkForLanguagesInMetadataNotInGitHub(): Promise<
+    string | undefined
+  > {
+    const languagesInMetadataNotInGitHub = [];
 
     for (const languageName in languagesMetadata) {
       if (
         this.languagesFromGithub &&
         !this.languagesFromGithub.includes(languageName)
       ) {
-        languagesInDataNotInGitHub.push(languageName);
+        languagesInMetadataNotInGitHub.push(languageName);
       }
     }
-    if (languagesInDataNotInGitHub.length !== 0) {
-      console.warn(
-        `Warning: Languages in metadata not found in GitHub: ${languagesInDataNotInGitHub.join(
-          ', '
-        )}\n`
-      );
-      languageDiscrepancies = true;
+    if (languagesInMetadataNotInGitHub.length !== 0) {
+      return `Languages in metadata not found in GitHub: ${languagesInMetadataNotInGitHub.join(
+        ', '
+      )}`;
     }
-
-    return languageDiscrepancies;
   }
 
-  private async areStackOverflowTagsMissing(
+  private async checkForMissingStackOverflowTags(
     languagesFile: string
-  ): Promise<boolean> {
-    let languageDiscrepancies = false;
+  ): Promise<string | undefined> {
     const languagesWithMissingTags = [];
 
     if (this.languages.length === 0) {
@@ -460,14 +461,9 @@ export default class DataPopulator {
     }
 
     if (languagesWithMissingTags.length !== 0) {
-      console.warn(
-        `Warning: Stack Overflow tags not found for: ${languagesWithMissingTags.join(
-          ', '
-        )}\n`
-      );
-      languageDiscrepancies = true;
+      return `Stack Overflow tags not found for: ${languagesWithMissingTags.join(
+        ', '
+      )}`;
     }
-
-    return languageDiscrepancies;
   }
 }
