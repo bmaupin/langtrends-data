@@ -367,15 +367,20 @@ export default class DataPopulator {
 
   // TODO: jsdoc
   public async validateLanguages(languagesFile: string): Promise<boolean> {
-    this.languages = await DataPopulator.readDataFile(languagesFile);
-    const oldLanguageCount = this.languages.length;
+    return (
+      (await this.areGitHubLanguagesMissing()) ||
+      (await this.areExtraLanguagesInData()) ||
+      (await this.areStackOverflowTagsMissing(languagesFile))
+    );
+  }
 
-    // Store languagesFromGithub in a class field because we'll need it later when populating scores
-    this.languagesFromGithub = await GitHub.getLanguageNames();
-
+  private async areGitHubLanguagesMissing(): Promise<boolean> {
     let languageDiscrepancies = false;
-    const languagesInDataNotInGitHub = [];
     const languagesInGitHubNotInData = [];
+
+    if (!this.languagesFromGithub) {
+      this.languagesFromGithub = await GitHub.getLanguageNames();
+    }
 
     for (const languageName of this.languagesFromGithub) {
       if (!languagesMetadata[languageName]) {
@@ -391,8 +396,18 @@ export default class DataPopulator {
       languageDiscrepancies = true;
     }
 
+    return languageDiscrepancies;
+  }
+
+  private async areExtraLanguagesInData(): Promise<boolean> {
+    let languageDiscrepancies = false;
+    const languagesInDataNotInGitHub = [];
+
     for (const languageName in languagesMetadata) {
-      if (!this.languagesFromGithub.includes(languageName)) {
+      if (
+        this.languagesFromGithub &&
+        !this.languagesFromGithub.includes(languageName)
+      ) {
         languagesInDataNotInGitHub.push(languageName);
       }
     }
@@ -405,22 +420,18 @@ export default class DataPopulator {
       languageDiscrepancies = true;
     }
 
-    if (await this.areStackOverflowTagsMissing()) {
-      languageDiscrepancies = true;
-    }
-
-    console.info(
-      `Successfully populated ${
-        this.languages.length - oldLanguageCount
-      } languages`
-    );
-
     return languageDiscrepancies;
   }
 
-  private async areStackOverflowTagsMissing(): Promise<boolean> {
+  private async areStackOverflowTagsMissing(
+    languagesFile: string
+  ): Promise<boolean> {
     let languageDiscrepancies = false;
     const languagesWithMissingTags = [];
+
+    if (this.languages.length === 0) {
+      this.languages = await DataPopulator.readDataFile(languagesFile);
+    }
 
     // TODO: move uiSettings.minimumScore out of the frontend?
     // Get settings from the frontend
