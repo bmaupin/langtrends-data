@@ -48,7 +48,7 @@ export default class DataPopulator {
   private firstDayOfMonth: Date;
   private github: GitHub;
   private languages: Language[];
-  private languagesFromGithub?: (string | null)[];
+  private languagesFromGithub?: string[];
   private scores: Score[];
   private stackoverflow: StackOverflow;
 
@@ -73,19 +73,12 @@ export default class DataPopulator {
    * @param numLanguages - Number of languages to populate (used for testing)
    * @returns - Whether or not there are any language discrepancies in the data files
    */
-  public async populateLanguages(
-    languagesFile: string,
-    numLanguages?: number
-  ): Promise<boolean> {
+  public async populateLanguages(languagesFile: string, numLanguages?: number) {
     this.languages = await DataPopulator.readDataFile(languagesFile);
     const oldLanguageCount = this.languages.length;
 
     // Store languagesFromGithub in a class field because we'll need it later when populating scores
     this.languagesFromGithub = await GitHub.getLanguageNames();
-
-    let languageDiscrepancies = false;
-    const languagesInDataNotInGitHub = [];
-    const languagesInGitHubNotInData = [];
 
     for (const languageName of this.languagesFromGithub) {
       if (numLanguages && this.languages.length >= numLanguages) {
@@ -100,34 +93,8 @@ export default class DataPopulator {
           );
         }
       } else {
-        languagesInGitHubNotInData.push(languageName);
+        console.info(`Language from GitHub not found in data: ${languageName}`);
       }
-    }
-    if (languagesInGitHubNotInData.length !== 0) {
-      console.info(
-        `Languages from GitHub not found in data: ${languagesInGitHubNotInData.join(
-          ', '
-        )}\n`
-      );
-      languageDiscrepancies = true;
-    }
-
-    for (const languageName in languagesMetadata) {
-      if (!this.languagesFromGithub.includes(languageName)) {
-        languagesInDataNotInGitHub.push(languageName);
-      }
-    }
-    if (languagesInDataNotInGitHub.length !== 0) {
-      console.warn(
-        `Warning: Languages in metadata not found in GitHub: ${languagesInDataNotInGitHub.join(
-          ', '
-        )}\n`
-      );
-      languageDiscrepancies = true;
-    }
-
-    if (await this.areStackOverflowTagsMissing()) {
-      languageDiscrepancies = true;
     }
 
     console.info(
@@ -137,50 +104,6 @@ export default class DataPopulator {
     );
 
     await writeFile(languagesFile, JSON.stringify(this.languages));
-
-    return languageDiscrepancies;
-  }
-
-  private async areStackOverflowTagsMissing(): Promise<boolean> {
-    let languageDiscrepancies = false;
-    const languagesWithMissingTags = [];
-
-    // TODO: move uiSettings.minimumScore out of the frontend?
-    // Get settings from the frontend
-    const response = await fetch(
-      'https://raw.githubusercontent.com/bmaupin/langtrends/master/src/settings.json'
-    );
-    const uiSettings = await response.json();
-
-    // TODO: do this in batches using Promise.all to speed it up
-    for (const language of this.languages) {
-      const githubScore = await this.github.getScore(
-        language.name,
-        this.firstDayOfMonth
-      );
-      const stackoverflowScore = await this.stackoverflow.getScore(
-        language.stackoverflowTag || language.name,
-        this.firstDayOfMonth
-      );
-      // Only concern ourselves with languages approaching the minimum score
-      if (
-        githubScore > uiSettings.minimumScore / 2 &&
-        stackoverflowScore === 0
-      ) {
-        languagesWithMissingTags.push(language.name);
-      }
-    }
-
-    if (languagesWithMissingTags.length !== 0) {
-      console.warn(
-        `Warning: Stack Overflow tags not found for: ${languagesWithMissingTags.join(
-          ', '
-        )}\n`
-      );
-      languageDiscrepancies = true;
-    }
-
-    return languageDiscrepancies;
   }
 
   /**
@@ -440,5 +363,100 @@ export default class DataPopulator {
     }
 
     return condensedScoresDates;
+  }
+
+  // TODO: jsdoc
+  public async validateLanguages(languagesFile: string): Promise<boolean> {
+    this.languages = await DataPopulator.readDataFile(languagesFile);
+    const oldLanguageCount = this.languages.length;
+
+    // Store languagesFromGithub in a class field because we'll need it later when populating scores
+    this.languagesFromGithub = await GitHub.getLanguageNames();
+
+    let languageDiscrepancies = false;
+    const languagesInDataNotInGitHub = [];
+    const languagesInGitHubNotInData = [];
+
+    for (const languageName of this.languagesFromGithub) {
+      if (!languagesMetadata[languageName]) {
+        languagesInGitHubNotInData.push(languageName);
+      }
+    }
+    if (languagesInGitHubNotInData.length !== 0) {
+      console.info(
+        `Languages from GitHub not found in data: ${languagesInGitHubNotInData.join(
+          ', '
+        )}\n`
+      );
+      languageDiscrepancies = true;
+    }
+
+    for (const languageName in languagesMetadata) {
+      if (!this.languagesFromGithub.includes(languageName)) {
+        languagesInDataNotInGitHub.push(languageName);
+      }
+    }
+    if (languagesInDataNotInGitHub.length !== 0) {
+      console.warn(
+        `Warning: Languages in metadata not found in GitHub: ${languagesInDataNotInGitHub.join(
+          ', '
+        )}\n`
+      );
+      languageDiscrepancies = true;
+    }
+
+    if (await this.areStackOverflowTagsMissing()) {
+      languageDiscrepancies = true;
+    }
+
+    console.info(
+      `Successfully populated ${
+        this.languages.length - oldLanguageCount
+      } languages`
+    );
+
+    return languageDiscrepancies;
+  }
+
+  private async areStackOverflowTagsMissing(): Promise<boolean> {
+    let languageDiscrepancies = false;
+    const languagesWithMissingTags = [];
+
+    // TODO: move uiSettings.minimumScore out of the frontend?
+    // Get settings from the frontend
+    const response = await fetch(
+      'https://raw.githubusercontent.com/bmaupin/langtrends/master/src/settings.json'
+    );
+    const uiSettings = await response.json();
+
+    // TODO: do this in batches using Promise.all to speed it up
+    for (const language of this.languages) {
+      const githubScore = await this.github.getScore(
+        language.name,
+        this.firstDayOfMonth
+      );
+      const stackoverflowScore = await this.stackoverflow.getScore(
+        language.stackoverflowTag || language.name,
+        this.firstDayOfMonth
+      );
+      // Only concern ourselves with languages approaching the minimum score
+      if (
+        githubScore > uiSettings.minimumScore / 2 &&
+        stackoverflowScore === 0
+      ) {
+        languagesWithMissingTags.push(language.name);
+      }
+    }
+
+    if (languagesWithMissingTags.length !== 0) {
+      console.warn(
+        `Warning: Stack Overflow tags not found for: ${languagesWithMissingTags.join(
+          ', '
+        )}\n`
+      );
+      languageDiscrepancies = true;
+    }
+
+    return languageDiscrepancies;
   }
 }

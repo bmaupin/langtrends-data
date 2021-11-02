@@ -1,4 +1,4 @@
-name: Check languages
+name: Validate languages
 
 on:
   schedule:
@@ -20,5 +20,8 @@ jobs:
           node-version: 'lts/*'
       - run: npm ci
 
-      - name: Check languages
-        run: npm run update-languages
+      - name: Validate languages
+        run: npm run validate-languages
+        env:
+          GITHUB_API_KEY: ${{ secrets.GITHUB_TOKEN }}
+          STACKOVERFLOW_API_KEY: ${{ secrets.STACKOVERFLOW_API_KEY }}

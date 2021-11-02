@@ -54,3 +54,7 @@ test('Test populateCondensedScores', async () => {
   ) as Score[];
   expect(scores.length).toEqual(NUM_SCORES);
 });
+
+test('Test validateLanguages', async () => {
+  await dataPopulator.validateLanguages(LANGUAGES_FILE);
+});

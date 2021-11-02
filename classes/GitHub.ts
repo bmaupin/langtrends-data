@@ -27,11 +27,11 @@ export default class GitHub {
     this._apiKey = newApiKey;
   }
 
-  static async getLanguageNames(): Promise<(string | null)[]> {
+  static async getLanguageNames(): Promise<string[]> {
     const GITHUB_LANGUAGES_URL = 'https://github.com/search/advanced';
 
     const dom = await JSDOM.fromURL(GITHUB_LANGUAGES_URL);
-    const languageNames = [];
+    const languageNames = [] as string[];
 
     const select = dom.window.document.getElementById('search_language');
     const optgroups = select!.getElementsByTagName('optgroup');
@@ -39,7 +39,9 @@ export default class GitHub {
     for (let i = 0; i < optgroups.length; i++) {
       const options = optgroups[i].getElementsByTagName('option');
       for (let j = 0; j < options.length; j++) {
-        languageNames.push(options[j].textContent);
+        if (options[j].textContent) {
+          languageNames.push(options[j].textContent as string);
+        }
       }
     }
 
