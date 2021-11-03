@@ -141,7 +141,6 @@
   },
   "Ballerina": {
     "include": true,
-    "stackoverflowTag": "ballerinalang",
     "url": "https://en.wikipedia.org/wiki/Ballerina_(programming_language)"
   },
   "BASIC": {
@@ -870,8 +869,7 @@
     "stackoverflowTag": "json-ld"
   },
   "Julia": {
-    "include": true,
-    "stackoverflowTag": "julia-lang"
+    "include": true
   },
   "Jupyter Notebook": {
     "include": false
@@ -900,7 +898,8 @@
     "include": false
   },
   "Lasso": {
-    "include": true
+    "include": true,
+    "stackoverflowTag": "lasso-lang"
   },
   "Latte": {
     "include": false,
@@ -1126,7 +1125,9 @@
     "include": false
   },
   "Nim": {
-    "include": true
+    "include": true,
+    "stackoverflowTag": "nim-lang",
+    "url": "https://nim-lang.org/"
   },
   "Ninja": {
     "include": false,
@@ -1337,8 +1338,8 @@
     "url": "https://en.wikipedia.org/wiki/Pure_Data"
   },
   "PureBasic": {
-    "description": "Commercially distributed procedural programming language based on BASIC",
-    "include": true,
+    "description": "TODO: Currently disabled because of GitHub false positives (https://github.com/github/linguist/discussions/5628)",
+    "include": false,
     "url": "http://www.purebasic.com/"
   },
   "PureScript": {
@@ -1394,7 +1395,7 @@
     "include": true
   },
   "Rebol": {
-    "description": "NOTE: See https://github.com/bmaupin/langtrends-api/issues/6",
+    "description": "TODO: Currently disabled due to https://github.com/github/linguist/issues/4782",
     "include": false
   },
   "Red": {
@@ -1656,7 +1657,9 @@
     "url": "https://en.wikipedia.org/wiki/TOML"
   },
   "Turing": {
-    "include": true
+    "description": "Turing is unmaintained as of 2007 and was also primarily a teaching language",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Turing_(programming_language)"
   },
   "Turtle": {
     "include": false,
@@ -1695,7 +1698,8 @@
     "include": false
   },
   "UrWeb": {
-    "include": true
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/Ur_(programming_language)"
   },
   "Vala": {
     "include": true
