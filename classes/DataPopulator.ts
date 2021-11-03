@@ -180,6 +180,8 @@ export default class DataPopulator {
       );
     }
 
+    this.sortScores();
+
     await writeFile(scoresFile, JSON.stringify(this.scores, null, 2));
   }
 
@@ -198,6 +200,10 @@ export default class DataPopulator {
   }
 
   private async populateScoresForDate(date: Date, numScores?: number) {
+    console.debug(
+      `Debug: Populating scores for ${convertDateToDateString(date)}`
+    );
+
     // Make a shallow copy of this.languages; we shouldn't need a deep copy since we're not modifying the objects
     // inside the array, just the array itself
     let languages = [...this.languages];
@@ -300,6 +306,21 @@ export default class DataPopulator {
         points: points,
       });
     }
+  }
+
+  /**
+   * Sort this.scores in place descending by date and then by language ID. This should
+   * make it easier to track changes with Git in the full scores file (e.g. if the Stack
+   * Overflow tag changes for a language and we have to remove the scores and recalculate
+   * them).
+   */
+  private sortScores() {
+    this.scores.sort((a, b) => {
+      if (a.date === b.date) {
+        return a.languageId - b.languageId;
+      }
+      return a.date > b.date ? 1 : -1;
+    });
   }
 
   /**
