@@ -5,6 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "dev": "nodemon",
+    "remove-scores": "ts-node remove-scores.ts",
     "start": "ts-node .",
     "test": "jest --coverage",
     "update-data": "ts-node update-data.ts",

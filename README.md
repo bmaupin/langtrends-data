@@ -63,7 +63,7 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
 1. Decide whether or not to include the language
 
    - As a rule of thumb, any language that can be used to build a cross-platform application should be included
-   - Commercial/proprietary languages are fine as long as they are general purpose and not intentionally limited to a specific operating system or hardware (e.g. ColdFusion, PureBasic)
+   - Commercial/proprietary languages are fine as long as they adhere to the above rule, e.g. ASP.NET and ColdFusion can be used to write web applications which can be accessed on any platform (in theory)
    - Don't include: DSLs, markup languages, abandoned/superceded languages (e.g. CSS, HTML, SQL)
 
 1. Add the language to `languages-metadata.json`
@@ -94,20 +94,48 @@ If a language has changed on GitHub:
 
 1. Update the language in `languages-metadata.json`
 
-   1. Remove or rename as needed
+1. If the language was renamed, manually update the old language in `languages.json` with the new name
 
-   1. If `include` was set to `false`, no other steps need to be taken
+1. If the language was removed (`include` was previously set to `true`)
 
-1. If `include` was set to `true`
+   1. Remove all scores for that language from `scores-full.json`
 
-   1. If the language was renamed, simply update the old language in `languages.json` with the new name
+      ```
+      npm run remove-scores PureBasic
+      ```
 
-   1. If the language was removed, remove the language from `languages.json` and all matching scores from `scores-full.json`
+   1. Remove the language from `languages.json` manually
 
-      > ⓘ `scores.json` doesn't have to be updated
-
-1. Run `update-data` to update `languages.json` and as a sanity check to make sure the scores are okay
+1. Run `update-data` to update `languages.json` and `scores.json`
 
    ```
    npm run update-data
    ```
+
+1. Commit changes to the `data` directory
+
+#### Modifying Stack Overflow tags
+
+If you get a warning like this:
+
+```
+Warning: Stack Overflow tag not found for Nim
+```
+
+1. Go to [Stack Overflow tags](https://stackoverflow.com/tags) and find the appropriate tag (e.g. `nim-lang` in our example)
+
+1. Add or update the tag in `languages-metadata.json`
+
+1. Remove all scores for that language from `scores-full.json`
+
+   ```
+   npm run remove-scores Ballerina
+   ```
+
+1. Run `update-data` to update `languages.json` and `scores.json`
+
+   ```
+   npm run update-data
+   ```
+
+1. Commit changes to the `data` directory
