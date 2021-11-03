@@ -40,7 +40,7 @@ test('Test populateAllScores', async () => {
   expect(scores[0].points).toBeGreaterThan(1000);
 
   // The latest score should be from this month
-  expect(new Date(scores[0].date).getUTCMonth()).toEqual(
+  expect(new Date(scores[scores.length - 1].date).getUTCMonth()).toEqual(
     new Date().getUTCMonth()
   );
   // Scores should always be from the first day of the month
