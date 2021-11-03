@@ -90,47 +90,21 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
 
 #### Modifying languages
 
-If a language has changed on GitHub:
+If a language has changed on GitHub or Stack Overflow:
+
+1. Go to [Stack Overflow tags](https://stackoverflow.com/tags) and find the appropriate tag
 
 1. Update the language in `languages-metadata.json`
 
+1. If the language was removed (`include` was previously set to `true`) or `stackoverflowTag` was changed, remove all scores for that language from `scores-full.json`
+
+   ```
+   npm run remove-scores PureBasic
+   ```
+
+1. If the language was removed (`include` was previously set to `true`), remove the language from `languages.json` manually
+
 1. If the language was renamed, manually update the old language in `languages.json` with the new name
-
-1. If the language was removed (`include` was previously set to `true`)
-
-   1. Remove all scores for that language from `scores-full.json`
-
-      ```
-      npm run remove-scores PureBasic
-      ```
-
-   1. Remove the language from `languages.json` manually
-
-1. Run `update-data` to update `languages.json` and `scores.json`
-
-   ```
-   npm run update-data
-   ```
-
-1. Commit changes to the `data` directory
-
-#### Modifying Stack Overflow tags
-
-If you get a warning like this:
-
-```
-Warning: Stack Overflow tag not found for Nim
-```
-
-1. Go to [Stack Overflow tags](https://stackoverflow.com/tags) and find the appropriate tag (e.g. `nim-lang` in our example)
-
-1. Add or update the tag in `languages-metadata.json`
-
-1. Remove all scores for that language from `scores-full.json`
-
-   ```
-   npm run remove-scores Ballerina
-   ```
 
 1. Run `update-data` to update `languages.json` and `scores.json`
 
