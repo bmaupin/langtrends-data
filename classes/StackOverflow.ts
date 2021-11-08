@@ -85,7 +85,7 @@ export default class Stackoverflow {
           } else if (response.statusCode === 503) {
             // Stackoverflow might throw a 503 if it feels there are too many requests
             console.warn(
-              'Warning: Stackoverflow API returned 503; reduce maxConcurrentRequests'
+              'Warning: Stackoverflow API returned 503; reduce maxConcurrentRequests and wait a bit before trying again'
             );
           }
           reject(new Error('statusCode=' + response.statusCode));
@@ -120,7 +120,7 @@ export default class Stackoverflow {
         // feels there are too many requests
         if (err.code === 'ECONNRESET') {
           console.warn(
-            'Warning: Stackoverflow API closed connection; reduce maxConcurrentRequests'
+            'Warning: Stackoverflow API closed connection; reduce maxConcurrentRequests and wait a bit before trying again'
           );
         }
         // Use the original message and code but our stack trace since the original stack trace won't point back to

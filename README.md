@@ -82,11 +82,17 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
    npm run update-languages
    ```
 
-1. (Optional) Update `scores.json` and `scores-full.json`
+1. Update `scores.json` and `scores-full.json`
 
-   ```
-   npm run update-data
-   ```
+   1. Bump `maxConcurrentRequests` down to `5` ([classes/settings.json](classes/settings.json))
+
+      > ⚠ This is especially important if adding multiple languages at once. The default `maxConcurrentRequests` value of `10` is fine for the monthly run of `update-data`, which only updates one date at a time. But for updating multiple dates, the Stack Exchange API abuse prevention is much more likely to kick in.
+
+   1. Update the data
+
+      ```
+      npm run update-data
+      ```
 
 #### Modifying languages
 
