@@ -18,7 +18,7 @@ interface StackOverflowData {
   total: number;
 }
 
-export default class Stackoverflow {
+export default class StackOverflow {
   _apiKey?: string;
 
   set apiKey(newApiKey: string) {
@@ -29,7 +29,7 @@ export default class Stackoverflow {
     let url = this._buildUrl(date, languageName);
     let body = await this._callApi(url);
 
-    Stackoverflow._handleApiLimits(body);
+    StackOverflow._handleApiLimits(body);
 
     return body.total;
   }
@@ -37,8 +37,8 @@ export default class Stackoverflow {
   _buildUrl(date: Date, languageName: string): string {
     let url = util.format(
       API_URL,
-      Stackoverflow._encodeDate(date),
-      Stackoverflow._encodeLanguageName(languageName)
+      StackOverflow._encodeDate(date),
+      StackOverflow._encodeLanguageName(languageName)
     );
     url = this._addApiKey(url);
 
@@ -85,7 +85,7 @@ export default class Stackoverflow {
           } else if (response.statusCode === 503) {
             // Stackoverflow might throw a 503 if it feels there are too many requests
             console.warn(
-              'Warning: Stackoverflow API returned 503; reduce maxConcurrentRequests and wait a bit before trying again'
+              'Warning: Stackoverflow API returned 503; reduce maxConcurrentRequests and wait at least one hour before trying again'
             );
           }
           reject(new Error('statusCode=' + response.statusCode));
@@ -116,11 +116,11 @@ export default class Stackoverflow {
       });
 
       request.on('error', (err: NodeJS.ErrnoException) => {
-        // Stackoverflow might close the connection for any outstanding requests and return a 503 for new ones if it
+        // Stack Overflow might close the connection for any outstanding requests and return a 503 for new ones if it
         // feels there are too many requests
         if (err.code === 'ECONNRESET') {
           console.warn(
-            'Warning: Stackoverflow API closed connection; reduce maxConcurrentRequests and wait a bit before trying again'
+            'Warning: Stack Overflow API closed connection; reduce maxConcurrentRequests and wait at least one hour before trying again'
           );
         }
         // Use the original message and code but our stack trace since the original stack trace won't point back to
@@ -135,16 +135,16 @@ export default class Stackoverflow {
   static _handleApiLimits(body: StackOverflowData) {
     if (body.quota_remaining <= settings.maxConcurrentRequests) {
       console.warn(
-        `Warning: StackOverflow API daily quota remaining: ${body.quota_remaining}`
+        `Warning: Stack Overflow API daily quota remaining: ${body.quota_remaining}`
       );
     } else if (body.quota_remaining <= 0) {
-      throw new Error('Stackoverflow API daily limit exceeded');
+      throw new Error('Stack Overflow API daily limit exceeded');
     }
 
-    // The backoff field never seems to be called, but throw if it happens so we can add logic for it (https://stackapps.com/a/3057/41977)
-    if (body.hasOwnProperty('backoff')) {
+    // The backoff field never seems to be sent, but throw if it happens so we can add logic for it (https://stackapps.com/a/3057/41977)
+    if (body.backoff) {
       throw new Error(
-        `StackOverflow API backoff field not handled: ${body.backoff}`
+        `Stack Overflow API backoff field not handled: ${body.backoff}`
       );
     }
   }
