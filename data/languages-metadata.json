@@ -392,6 +392,10 @@
   "D-ObjDump": {
     "include": false
   },
+  "Dafny": {
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/Dafny"
+  },
   "Darcs Patch": {
     "include": false,
     "stackoverflowTag": "darcs"
@@ -522,6 +526,11 @@
   "F#": {
     "include": true
   },
+  "F*": {
+    "include": true,
+    "stackoverflowTag": "fstar",
+    "url": "https://en.wikipedia.org/wiki/F*_(programming_language)"
+  },
   "Factor": {
     "include": true,
     "stackoverflowTag": "factor-lang"
@@ -532,6 +541,15 @@
   },
   "Fantom": {
     "include": true
+  },
+  "Faust": {
+    "description": "A programming language for sound synthesis and audio processing",
+    "include": false,
+    "url": "https://faust.grame.fr/"
+  },
+  "Fennel": {
+    "include": true,
+    "url": "https://fennel-lang.org/"
   },
   "FIGlet Font": {
     "include": false
@@ -548,6 +566,11 @@
     "include": false,
     "url": "https://esolangs.org/wiki/Fish"
   },
+  "Fluent": {
+    "description": "A localization system designed to improve how software is translated",
+    "include": false,
+    "url": "https://github.com/projectfluent/fluent"
+  },
   "FLUX": {
     "desription": "Reshade .fx file?",
     "include": false
@@ -562,11 +585,24 @@
   "Fortran": {
     "include": true
   },
+  "Fortran Free Form": {
+    "description": "A different format of Fotran with no results in GitHub search",
+    "include": false
+  },
+  "FreeBasic": {
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/FreeBASIC"
+  },
   "FreeMarker": {
     "include": false
   },
   "Frege": {
     "include": true
+  },
+  "Futhark": {
+    "description": "'Futhark is not intended to replace existing general-purpose languages'",
+    "include": false,
+    "url": "https://futhark-lang.org/"
   },
   "G-code": {
     "include": false
@@ -750,6 +786,10 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/High-Level_Shading_Language"
   },
+  "HolyC": {
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/TempleOS"
+  },
   "HTML": {
     "include": false
   },
@@ -763,6 +803,10 @@
     "include": false
   },
   "HTML+PHP": {
+    "include": false
+  },
+  "HTML+Razor": {
+    "description": "'the .razor extension is a new extension we are introducing in .NET Core 3.0 for Razor Components that is based on the existing .cshtml Razor format.'",
     "include": false
   },
   "HTTP": {
@@ -787,9 +831,17 @@
   "Idris": {
     "include": true
   },
+  "Ignore List": {
+    "description": ".dockerignore, .gitignore, .npmignore, etc",
+    "include": false
+  },
   "IGOR Pro": {
     "include": false,
     "stackoverflowTag": "igor"
+  },
+  "ImageJ Macro": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/ImageJ"
   },
   "Inform 7": {
     "include": false,
@@ -822,6 +874,10 @@
   "J": {
     "include": true
   },
+  "JAR Manifest": {
+    "include": false,
+    "url": "https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html"
+  },
   "Jasmin": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Jasmin_(software)"
@@ -829,12 +885,23 @@
   "Java": {
     "include": true
   },
+  "Java Properties": {
+    "include": false
+  },
   "Java Server Pages": {
     "include": false,
     "stackoverflowTag": "jsp"
   },
   "JavaScript": {
     "include": true
+  },
+  "JavaScript+ERB": {
+    "description": "JavaScript files containing embedded Ruby syntax (for Rails?)",
+    "include": false
+  },
+  "Jest Snapshot": {
+    "include": false,
+    "url": "https://jestjs.io/docs/snapshot-testing"
   },
   "JFlex": {
     "include": false
@@ -852,6 +919,10 @@
   "Jolie": {
     "include": true
   },
+  "jq": {
+    "include": false,
+    "url": "https://stedolan.github.io/jq/"
+  },
   "JSON": {
     "include": false
   },
@@ -868,11 +939,26 @@
     "include": false,
     "stackoverflowTag": "json-ld"
   },
+  "Jsonnet": {
+    "description": "A data templating language that extends JSON",
+    "include": false,
+    "url": "https://jsonnet.org/"
+  },
   "Julia": {
     "include": true
   },
   "Jupyter Notebook": {
     "include": false
+  },
+  "Kaitai Struct": {
+    "description": "A YAML-based language for describing the structure of binary file formats",
+    "include": false,
+    "url": "https://kaitai.io/"
+  },
+  "KakouneScript": {
+    "description": "the scripting language interpreted by the Kakoune editor",
+    "include": false,
+    "url": "https://github.com/mawww/kakoune"
   },
   "KiCad Layout": {
     "include": false
@@ -894,8 +980,18 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/KUKA_Robot_Language"
   },
+  "Kusto": {
+    "description": "Azure Log Analytics's query language",
+    "include": false,
+    "url": "https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/"
+  },
   "LabVIEW": {
     "include": false
+  },
+  "Lark": {
+    "description": " Lark grammar files, a variant of EBNF used by the Lark parsing library",
+    "include": false,
+    "url": "https://lark-parser.readthedocs.io/en/latest/grammar.html"
   },
   "Lasso": {
     "include": true,
@@ -973,6 +1069,10 @@
     "url": "https://en.wikipedia.org/wiki/Linden_Scripting_Language",
     "stackoverflowTag": "linden-scripting-language"
   },
+  "LTspice Symbol": {
+    "include": false,
+    "url": "http://www.zen22142.zen.co.uk/ltspice/newsymbols.htm"
+  },
   "Lua": {
     "include": true
   },
@@ -985,6 +1085,11 @@
   },
   "M4Sugar": {
     "include": false
+  },
+  "Macaulay2": {
+    "description": "a computer algebra system with an interpreted high-level programming language",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Macaulay2"
   },
   "Makefile": {
     "include": false
@@ -1024,6 +1129,11 @@
     "include": false,
     "url": "http://docs.autodesk.com/3DSMAX/14/ENU/MAXScript%20Help%202012/"
   },
+  "mcfunction": {
+    "description": "Minecraft server command functions",
+    "include": false,
+    "url": "https://minecraft.fandom.com/wiki/Function"
+  },
   "Mercury": {
     "include": true
   },
@@ -1036,12 +1146,25 @@
     "include": false,
     "url": "https://developer.apple.com/metal/"
   },
+  "Microsoft Developer Studio Project": {
+    "include": false
+  },
+  "Microsoft Visual Studio Solution": {
+    "description": "a structure for organizing projects in Visual Studio",
+    "include": false,
+    "url": "https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/solution-dot-sln-file?view=vs-2019"
+  },
   "MiniD": {
     "description": "Small, lightweight extension lanugage superseded by Croc",
     "include": false
   },
   "Mirah": {
     "include": true
+  },
+  "mIRC Script": {
+    "description": "the scripting language embedded in mIRC, an IRC client for Windows",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/MIRC_scripting_language"
   },
   "Modelica": {
     "include": false,
