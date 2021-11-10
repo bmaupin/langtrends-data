@@ -155,6 +155,8 @@ export default class DataPopulator {
 
     // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
     const oldestDate = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
+    // Useful for debugging
+    // const oldestDate = this.firstDayOfMonth;
     const oldScoreCount = this.scores.length;
     // Make a copy of this.firstDayOfMonth so we don't overwrite it
     let currentDate = new Date(this.firstDayOfMonth);
