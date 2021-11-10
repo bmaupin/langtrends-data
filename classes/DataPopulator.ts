@@ -345,7 +345,7 @@ export default class DataPopulator {
       if (
         condensedScoresDates.includes(score.date) &&
         // Filter out scores under the minimum score set in the frontend
-        score.points > uiSettings.minimumScore
+        score.points > settings.minimumScore
       ) {
         condensedScores.push(score);
       }
@@ -457,13 +457,6 @@ export default class DataPopulator {
       this.languages = await DataPopulator.readDataFile(languagesFile);
     }
 
-    // TODO: move uiSettings.minimumScore out of the frontend?
-    // Get settings from the frontend
-    const response = await fetch(
-      'https://raw.githubusercontent.com/bmaupin/langtrends/master/src/settings.json'
-    );
-    const uiSettings = await response.json();
-
     // TODO: do this in batches using Promise.all to speed it up
     for (const language of this.languages) {
       const githubScore = await this.github.getScore(
@@ -475,10 +468,7 @@ export default class DataPopulator {
         this.firstDayOfMonth
       );
       // Only concern ourselves with languages approaching the minimum score
-      if (
-        githubScore > uiSettings.minimumScore / 2 &&
-        stackoverflowScore === 0
-      ) {
+      if (githubScore > settings.minimumScore / 2 && stackoverflowScore === 0) {
         languagesWithMissingTags.push(language.name);
       }
     }
