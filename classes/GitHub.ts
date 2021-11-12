@@ -21,10 +21,12 @@ interface GitHubData {
 }
 
 export default class GitHub {
-  private _apiKey?: string;
+  private apiKey: string;
 
-  set apiKey(newApiKey: string) {
-    this._apiKey = newApiKey;
+  // Require API key in the constructor as it can't be null for the GraphQL API
+  // (https://platform.github.community/t/anonymous-access/2093)
+  constructor(apiKey: string) {
+    this.apiKey = apiKey;
   }
 
   public static async getLanguageNames(): Promise<string[]> {
@@ -49,11 +51,6 @@ export default class GitHub {
   }
 
   public async getScore(languageName: string, date: Date): Promise<number> {
-    // API key can't be null for the GraphQL API (https://platform.github.community/t/anonymous-access/2093)
-    if (typeof this._apiKey === 'undefined') {
-      throw new Error('Github API key cannot be null');
-    }
-
     const postData = this.buildPostData(date, languageName);
     const body = await this.callApi(API_URL, postData);
 
@@ -88,7 +85,7 @@ export default class GitHub {
     const optionsUrl = new URL(url);
     const options = {
       headers: {
-        Authorization: `bearer ${this._apiKey}`,
+        Authorization: `bearer ${this.apiKey}`,
         // For whatever reason, user agent is required by the Github API
         'User-Agent': 'node.js',
       },

@@ -53,15 +53,16 @@ export default class DataPopulator {
   private stackoverflow: StackOverflow;
 
   constructor() {
+    if (!process.env.GITHUB_API_KEY) {
+      throw new Error('GITHUB_API_KEY must be set');
+    }
+
     this.firstDayOfMonth = DataPopulator.getFirstDayOfMonthUTC();
-    this.github = new GitHub();
+    this.github = new GitHub(process.env.GITHUB_API_KEY);
     this.languages = [];
     this.scores = [];
     this.stackoverflow = new StackOverflow();
 
-    if (process.env.GITHUB_API_KEY) {
-      this.github.apiKey = process.env.GITHUB_API_KEY;
-    }
     if (process.env.STACKOVERFLOW_API_KEY) {
       this.stackoverflow.apiKey = process.env.STACKOVERFLOW_API_KEY;
     }
