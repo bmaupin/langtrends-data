@@ -20,7 +20,7 @@ test('Test getScore', async () => {
   );
 });
 
-test('Test GitHub with empty API key', async () => {
+test('Test getScore with empty API key', async () => {
   const github = new GitHub('');
   await expect(github.getScore('C++', new Date('2017-01-01'))).rejects.toThrow(
     'statusCode=401'

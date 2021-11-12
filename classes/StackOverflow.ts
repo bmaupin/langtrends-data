@@ -19,10 +19,10 @@ interface StackOverflowData {
 }
 
 export default class StackOverflow {
-  private _apiKey?: string;
+  private apiKey?: string;
 
-  set apiKey(newApiKey: string) {
-    this._apiKey = newApiKey;
+  constructor(apiKey?: string) {
+    this.apiKey = apiKey;
   }
 
   public async getScore(languageName: string, date: Date): Promise<number> {
@@ -57,8 +57,8 @@ export default class StackOverflow {
 
   private addApiKey(url: string): string {
     const KEY_PARAMETER = '&key=';
-    if (typeof this._apiKey !== 'undefined') {
-      url = `${url}${KEY_PARAMETER}${this._apiKey}`;
+    if (typeof this.apiKey !== 'undefined') {
+      url = `${url}${KEY_PARAMETER}${this.apiKey}`;
     }
 
     return url;

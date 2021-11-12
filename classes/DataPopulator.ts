@@ -61,11 +61,7 @@ export default class DataPopulator {
     this.github = new GitHub(process.env.GITHUB_API_KEY);
     this.languages = [];
     this.scores = [];
-    this.stackoverflow = new StackOverflow();
-
-    if (process.env.STACKOVERFLOW_API_KEY) {
-      this.stackoverflow.apiKey = process.env.STACKOVERFLOW_API_KEY;
-    }
+    this.stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY);
   }
 
   /**
