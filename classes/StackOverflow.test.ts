@@ -17,3 +17,10 @@ test('Test getScore without API key', async () => {
     await stackoverflow.getScore('JavaScript', new Date('2017-01-01'))
   ).toBeGreaterThan(1000000);
 });
+
+test('Test getScore with bad API key', async () => {
+  const stackoverflow = new StackOverflow('njO13SHsx1huIkFtYThY7M0T');
+  await expect(
+    stackoverflow.getScore('JavaScript', new Date('2017-01-01'))
+  ).rejects.toThrow('statusCode=400');
+});
