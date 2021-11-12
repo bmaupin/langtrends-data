@@ -19,43 +19,43 @@ interface StackOverflowData {
 }
 
 export default class StackOverflow {
-  _apiKey?: string;
+  private _apiKey?: string;
 
   set apiKey(newApiKey: string) {
     this._apiKey = newApiKey;
   }
 
-  async getScore(languageName: string, date: Date): Promise<number> {
-    let url = this._buildUrl(date, languageName);
-    let body = await this._callApi(url);
+  public async getScore(languageName: string, date: Date): Promise<number> {
+    let url = this.buildUrl(date, languageName);
+    let body = await this.callApi(url);
 
-    StackOverflow._handleApiLimits(body);
+    StackOverflow.handleApiLimits(body);
 
     return body.total;
   }
 
-  _buildUrl(date: Date, languageName: string): string {
+  private buildUrl(date: Date, languageName: string): string {
     let url = util.format(
       API_URL,
-      StackOverflow._encodeDate(date),
-      StackOverflow._encodeLanguageName(languageName)
+      StackOverflow.encodeDate(date),
+      StackOverflow.encodeLanguageName(languageName)
     );
-    url = this._addApiKey(url);
+    url = this.addApiKey(url);
 
     return url;
   }
 
-  static _encodeDate(date: Date): number {
+  private static encodeDate(date: Date): number {
     // All dates in the API are in unix epoch time, which is the number of seconds since midnight UTC January 1st, 1970.
     // (https://api.stackexchange.com/docs/dates)
     return Math.floor(Number(date) / 1000);
   }
 
-  static _encodeLanguageName(languageName: string): string {
+  private static encodeLanguageName(languageName: string): string {
     return encodeURIComponent(languageName.toLowerCase().replace(/ /g, '-'));
   }
 
-  _addApiKey(url: string): string {
+  private addApiKey(url: string): string {
     const KEY_PARAMETER = '&key=';
     if (typeof this._apiKey !== 'undefined') {
       url = `${url}${KEY_PARAMETER}${this._apiKey}`;
@@ -64,14 +64,14 @@ export default class StackOverflow {
     return url;
   }
 
-  async _callApi(url: string) {
+  private async callApi(url: string) {
     const options = new URL(url);
-    const bodyJson = await this._httpsRequest(options);
+    const bodyJson = await this.httpsRequest(options);
     return JSON.parse(bodyJson);
   }
 
   // Based on https://stackoverflow.com/a/38543075/399105
-  _httpsRequest(options: https.RequestOptions): Promise<string> {
+  private httpsRequest(options: https.RequestOptions): Promise<string> {
     return new Promise((resolve, reject) => {
       const request = https.request(options, async (response) => {
         if (
@@ -132,7 +132,7 @@ export default class StackOverflow {
     });
   }
 
-  static _handleApiLimits(body: StackOverflowData) {
+  private static handleApiLimits(body: StackOverflowData) {
     if (body.quota_remaining <= settings.maxConcurrentRequests) {
       console.warn(
         `Warning: Stack Overflow API daily quota remaining: ${body.quota_remaining}`

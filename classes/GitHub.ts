@@ -21,13 +21,13 @@ interface GitHubData {
 }
 
 export default class GitHub {
-  _apiKey?: string;
+  private _apiKey?: string;
 
   set apiKey(newApiKey: string) {
     this._apiKey = newApiKey;
   }
 
-  static async getLanguageNames(): Promise<string[]> {
+  public static async getLanguageNames(): Promise<string[]> {
     const GITHUB_LANGUAGES_URL = 'https://github.com/search/advanced';
 
     const dom = await JSDOM.fromURL(GITHUB_LANGUAGES_URL);
@@ -48,43 +48,43 @@ export default class GitHub {
     return languageNames;
   }
 
-  async getScore(languageName: string, date: Date): Promise<number> {
+  public async getScore(languageName: string, date: Date): Promise<number> {
     // API key can't be null for the GraphQL API (https://platform.github.community/t/anonymous-access/2093)
     if (typeof this._apiKey === 'undefined') {
       throw new Error('Github API key cannot be null');
     }
 
-    const postData = this._buildPostData(date, languageName);
-    const body = await this._callApi(API_URL, postData);
+    const postData = this.buildPostData(date, languageName);
+    const body = await this.callApi(API_URL, postData);
 
-    GitHub._handleApiLimits(body);
+    GitHub.handleApiLimits(body);
 
     return body.data.search.repositoryCount;
   }
 
-  _buildPostData(date: Date, languageName: string): string {
+  private buildPostData(date: Date, languageName: string): string {
     const postData =
-      `{"query": "{ search(query: \\"language:${GitHub._encodeLanguageName(
+      `{"query": "{ search(query: \\"language:${GitHub.encodeLanguageName(
         languageName
       )} ` +
-      `created:<${GitHub._encodeDate(
+      `created:<${GitHub.encodeDate(
         date
       )}\\", type: REPOSITORY) { repositoryCount } rateLimit { remaining }}"}`;
 
     return postData;
   }
 
-  static _encodeLanguageName(languageName: string): string {
+  private static encodeLanguageName(languageName: string): string {
     // Github API requires spaces in language names to be replaced with dashes
     return languageName.replace(/ /g, '-');
   }
 
-  static _encodeDate(date: Date): string {
+  private static encodeDate(date: Date): string {
     // Github API requires the date to be formatted as yyyy-MM-dd
     return date.toISOString().slice(0, 10);
   }
 
-  async _callApi(url: string, postData: string) {
+  private async callApi(url: string, postData: string) {
     const optionsUrl = new URL(url);
     const options = {
       headers: {
@@ -97,12 +97,12 @@ export default class GitHub {
       path: optionsUrl.pathname,
     };
 
-    const bodyJson = await this._httpsRequest(options, postData);
+    const bodyJson = await this.httpsRequest(options, postData);
     return JSON.parse(bodyJson);
   }
 
   // Based on https://stackoverflow.com/a/38543075/399105
-  _httpsRequest(
+  private httpsRequest(
     options: https.RequestOptions,
     postData: string
   ): Promise<string> {
@@ -114,7 +114,7 @@ export default class GitHub {
           response.headers.hasOwnProperty('retry-after')
         ) {
           resolve(
-            await this._retryOnError(
+            await this.retryOnError(
               response.statusCode,
               Number(response.headers['retry-after']),
               options,
@@ -150,7 +150,7 @@ export default class GitHub {
     });
   }
 
-  async _retryOnError(
+  private async retryOnError(
     errorCode: number,
     secondsToWait: number,
     options: https.RequestOptions,
@@ -159,18 +159,18 @@ export default class GitHub {
     console.warn(
       `Warning: ${options.hostname} returned error code ${errorCode}; retrying in ${secondsToWait} seconds`
     );
-    await GitHub._waitSeconds(secondsToWait);
-    return await this._httpsRequest(options, postData);
+    await GitHub.waitSeconds(secondsToWait);
+    return await this.httpsRequest(options, postData);
   }
 
   // Based on https://stackoverflow.com/a/39027151/399105
-  static _waitSeconds(numSeconds: number) {
+  private static waitSeconds(numSeconds: number) {
     return new Promise((resolve) => {
       setTimeout(resolve, numSeconds * 1000);
     });
   }
 
-  static _handleApiLimits(body: GitHubData) {
+  private static handleApiLimits(body: GitHubData) {
     if (!body.data && body.errors) {
       throw new Error(`Github API error (${body.errors[0].message})`);
     }
