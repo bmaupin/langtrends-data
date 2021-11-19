@@ -806,7 +806,7 @@
     "include": false
   },
   "HTML+Razor": {
-    "description": "'the .razor extension is a new extension we are introducing in .NET Core 3.0 for Razor Components that is based on the existing .cshtml Razor format.'",
+    "description": "'The .razor extension is a new extension we are introducing in .NET Core 3.0 for Razor Components that is based on the existing .cshtml Razor format.'",
     "include": false
   },
   "HTTP": {
@@ -956,7 +956,7 @@
     "url": "https://kaitai.io/"
   },
   "KakouneScript": {
-    "description": "the scripting language interpreted by the Kakoune editor",
+    "description": "The scripting language interpreted by the Kakoune editor",
     "include": false,
     "url": "https://github.com/mawww/kakoune"
   },
@@ -1087,7 +1087,7 @@
     "include": false
   },
   "Macaulay2": {
-    "description": "a computer algebra system with an interpreted high-level programming language",
+    "description": "A computer algebra system with an interpreted high-level programming language",
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Macaulay2"
   },
@@ -1150,7 +1150,7 @@
     "include": false
   },
   "Microsoft Visual Studio Solution": {
-    "description": "a structure for organizing projects in Visual Studio",
+    "description": "A structure for organizing projects in Visual Studio",
     "include": false,
     "url": "https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/solution-dot-sln-file?view=vs-2019"
   },
@@ -1162,9 +1162,15 @@
     "include": true
   },
   "mIRC Script": {
-    "description": "the scripting language embedded in mIRC, an IRC client for Windows",
+    "description": "The scripting language embedded in mIRC, an IRC client for Windows",
     "include": false,
     "url": "https://en.wikipedia.org/wiki/MIRC_scripting_language"
+  },
+  "MLIR": {
+    "description": "TensorFlow Multi-Level Intermediate Representation",
+    "include": false,
+    "type": "intermediate language",
+    "url": "https://mlir.llvm.org/"
   },
   "Modelica": {
     "include": false,
@@ -1172,6 +1178,10 @@
   },
   "Modula-2": {
     "include": true
+  },
+  "Modula-3": {
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/Modula-3"
   },
   "Module Management System": {
     "description": "HPE Module Management System for OpenVMS",
@@ -1187,6 +1197,10 @@
   },
   "MoonScript": {
     "include": true
+  },
+  "Motorola 68K Assembly": {
+    "description": "I think this is probably too hardware-specific to be useful as a comparison to other languages",
+    "include": false
   },
   "MQL4": {
     "include": false
@@ -1208,9 +1222,26 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/MuPAD"
   },
+  "Muse": {
+    "description": "Markup language that originated with Emacs",
+    "include": false,
+    "type": "markup language"
+  },
+  "Mustache": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Mustache_(template_system)"
+  },
   "Myghty": {
     "include": false,
     "url": "https://pythonhosted.org/Myghty/"
+  },
+  "nanorc": {
+    "include": false,
+    "url": "https://www.nano-editor.org/dist/latest/nanorc.5.html"
+  },
+  "NASL": {
+    "description": "Nessus Attack Scripting Language, a scripting language used by the suite of CyberSecurity products related to Nessus",
+    "include": false
   },
   "NCL": {
     "include": false,
@@ -1222,6 +1253,11 @@
   },
   "Nemerle": {
     "include": true
+  },
+  "NEON": {
+    "description": "Nette Object Notation",
+    "include": false,
+    "url": "https://ne-on.org/"
   },
   "nesC": {
     "include": false
@@ -1268,6 +1304,10 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Nl_(format)"
   },
+  "NPM Config": {
+    "include": false,
+    "url": "https://docs.npmjs.com/cli/v7/configuring-npm/npmrc"
+  },
   "NSIS": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Nullsoft_Scriptable_Install_System"
@@ -1278,8 +1318,23 @@
   "NumPy": {
     "include": false
   },
+  "Nunjucks": {
+    "description": "Templating language for JavaScript",
+    "include": false,
+    "url": "https://mozilla.github.io/nunjucks/"
+  },
+  "NWScript": {
+    "description": "A scripting language used for developing custom game content for Neverwinter Nights",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/NWScript"
+  },
   "ObjDump": {
     "include": false
+  },
+  "Object Data Instance Notation": {
+    "description": "Another non-XML object data serialisation syntax",
+    "include": false,
+    "url": "https://github.com/openEHR/odin"
   },
   "Objective-C": {
     "include": true
@@ -1292,8 +1347,17 @@
     "include": false,
     "url": "http://www.cappuccino-project.org/learn/objective-j.html"
   },
+  "ObjectScript": {
+    "description": "programming language for InterSystems IRIS data platform",
+    "include": false,
+    "url": "https://irisdocs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GCOS_intro"
+  },
   "OCaml": {
     "include": true
+  },
+  "Odin": {
+    "include": true,
+    "url": "https://github.com/odin-lang/Odin"
   },
   "Omgrofl": {
     "include": false
@@ -1309,6 +1373,11 @@
   "Opal": {
     "include": true
   },
+  "Open Policy Agent": {
+    "description": "OPA implements a domain-agnostic policy language",
+    "include": false,
+    "url": "https://www.openpolicyagent.org/"
+  },
   "OpenCL": {
     "include": false
   },
@@ -1316,11 +1385,20 @@
     "include": false,
     "stackoverflowTag": "openedge"
   },
+  "OpenQASM": {
+    "description": "Assembly language for quantum computers",
+    "include": false,
+    "url": "https://github.com/Qiskit/openqasm/"
+  },
   "OpenRC runscript": {
     "include": false
   },
   "OpenSCAD": {
     "include": false
+  },
+  "OpenStep Property List": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Property_list"
   },
   "OpenType Feature File": {
     "include": false
@@ -1364,6 +1442,10 @@
     "include": false,
     "url": "https://www.compuphase.com/pawn/"
   },
+  "PEG.js": {
+    "include": false,
+    "url": "https://pegjs.org/"
+  },
   "Pep8": {
     "description": "Pep/8 simulator assembly language",
     "include": false,
@@ -1395,6 +1477,10 @@
   "Pike": {
     "include": true
   },
+  "PlantUML": {
+    "include": false,
+    "url": "https://plantuml.com"
+  },
   "PLpgSQL": {
     "include": false
   },
@@ -1402,6 +1488,10 @@
     "include": false
   },
   "Pod": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Plain_Old_Documentation"
+  },
+  "Pod 6": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Plain_Old_Documentation"
   },
@@ -1432,8 +1522,18 @@
     "include": false,
     "type": "domain-specific language"
   },
+  "Prisma": {
+    "description": "Prisma database schema definition files",
+    "include": false,
+    "url": "https://www.prisma.io/"
+  },
   "Processing": {
     "include": false
+  },
+  "Proguard": {
+    "description": "Proguard rules files",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/ProGuard_(software)"
   },
   "Prolog": {
     "include": true
@@ -1477,11 +1577,26 @@
   "Python traceback": {
     "include": false
   },
+  "Q#": {
+    "description": "Domain-specific programming language used for expressing quantum algorithms",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Q_Sharp"
+  },
   "QMake": {
     "include": false
   },
   "QML": {
     "include": false
+  },
+  "Qt Script": {
+    "description": "Deprecated scripting language for Qt (replaced with JavaScript)",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/QtScript"
+  },
+  "Quake": {
+    "description": "Scripting language used by Critical Mass Modula-3",
+    "include": false,
+    "url": "https://github.com/modula3/cm3/blob/master/docs/help/cm3/quake.html"
   },
   "R": {
     "include": true
@@ -1510,6 +1625,11 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/RDoc"
   },
+  "Readline Config": {
+    "description": "Readline Init File",
+    "include": false,
+    "url": "https://www.gnu.org/software/bash/manual/html_node/Readline-Init-File.html"
+  },
   "REALbasic": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Xojo"
@@ -1521,12 +1641,22 @@
     "description": "TODO: Currently disabled due to https://github.com/github/linguist/issues/4782",
     "include": false
   },
+  "Record Jar": {
+    "description": "A format for parsing and packing data? (https://github.com/Alhadis/Record-Jar)",
+    "include": false,
+    "url": "http://www.catb.org/esr/writings/taoup/html/ch05s02.html#id2906931"
+  },
   "Red": {
     "include": true
   },
   "Redcode": {
     "include": false,
     "url": "https://esolangs.org/wiki/Redcode"
+  },
+  "Redirect Rules": {
+    "description": "Netlify redirect rules file",
+    "include": false,
+    "url": "https://docs.netlify.com/routing/redirects/"
   },
   "Regular Expression": {
     "include": false
@@ -1537,14 +1667,28 @@
   "RenderScript": {
     "include": false
   },
+  "ReScript": {
+    "description": "Robustly typed language that compiles to JavaScript",
+    "include": true,
+    "url": "https://rescript-lang.org/"
+  },
   "reStructuredText": {
     "include": false
   },
   "REXX": {
     "include": true
   },
+  "Rich Text Format": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Rich_Text_Format"
+  },
   "Ring": {
     "include": true
+  },
+  "Riot": {
+    "description": "Riot.js tag files",
+    "include": false,
+    "url": "https://riot.js.org/"
   },
   "RMarkdown": {
     "include": false
@@ -1552,8 +1696,17 @@
   "RobotFramework": {
     "include": false
   },
+  "robots.txt": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Robots_exclusion_standard"
+  },
   "Roff": {
     "include": false
+  },
+  "Roff Manpage": {
+    "description": "Man pages generated by roff?",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Roff_(software)"
   },
   "Rouge": {
     "include": true
@@ -1617,6 +1770,10 @@
   "Self": {
     "include": true
   },
+  "SELinux Policy": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Security-Enhanced_Linux"
+  },
   "ShaderLab": {
     "description": "Shading Language used in Unity",
     "include": false,
@@ -1632,8 +1789,23 @@
   "Shen": {
     "include": true
   },
+  "Sieve": {
+    "description": "Programming language for email filtering",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)"
+  },
+  "Singularity": {
+    "description": "Singularity definition files",
+    "include": false,
+    "url": "https://singularity.hpcng.org/user-docs/master/definition_files.html"
+  },
   "Slash": {
     "include": true
+  },
+  "Slice": {
+    "description": "Proprietary file format that programmers follow to edit computer-language independent declarations and definitions of classes, interfaces, structures and enumerations",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Internet_Communications_Engine#Slice"
   },
   "Slim": {
     "description": "Ruby templating language",
@@ -1653,6 +1825,11 @@
     "include": false,
     "url": "https://www.smarty.net"
   },
+  "SmPL": {
+    "description": "Used by the Coccinelle tool to write semantic patches",
+    "include": false,
+    "url": "https://coccinelle.gitlabpages.inria.fr/website/docs/index.html"
+  },
   "SMT": {
     "description": "SMT-LIB",
     "include": false,
@@ -1662,6 +1839,11 @@
     "description": "A contract-oriented programming language for writing smart contracts",
     "include": false,
     "type": "domain-specific language"
+  },
+  "Soong": {
+    "description": "Soong build tool configuration files",
+    "include": false,
+    "url": "https://android.googlesource.com/platform/build/soong/+/refs/heads/master/README.md"
   },
   "SourcePawn": {
     "include": false,
@@ -1694,6 +1876,10 @@
     "include": false,
     "url": "http://cedet.sourceforge.net/srecode.shtml"
   },
+  "SSH Config": {
+    "include": false,
+    "url": "https://man7.org/linux/man-pages/man5/ssh_config.5.html"
+  },
   "Stan": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Stan_(software)"
@@ -1701,6 +1887,11 @@
   "Standard ML": {
     "include": true,
     "stackoverflowTag": "sml"
+  },
+  "Starlark": {
+    "description": "A simplified dialect of Python intended as a configuration language",
+    "include": false,
+    "url": "https://github.com/bazelbuild/starlark"
   },
   "Stata": {
     "include": false,
