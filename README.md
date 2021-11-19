@@ -76,13 +76,7 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
    - Adding a `url` is preferred especially if there's ambiguity
    - Add a `description` and/or `type` in cases where it may not be clear why a language was/wasn't included
 
-1. Update `languages.json`
-
-   ```
-   npm run update-languages
-   ```
-
-1. (Recommended) Update `scores.json` and `scores-full.json`
+1. Update language and score data
 
    ```
    npm run update-data
