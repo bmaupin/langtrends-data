@@ -1,4 +1,4 @@
 {
-  "maxConcurrentRequests": 2,
+  "maxConcurrentRequests": 1,
   "minimumScore": 1000
 }
