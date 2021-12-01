@@ -45,7 +45,7 @@ test('Test populateAllScores', async () => {
   );
   // Scores should always be from the first day of the month
   expect(new Date(scores[0].date).getUTCDate()).toEqual(1);
-});
+}, 10000);
 
 test('Test populateCondensedScores', async () => {
   await dataPopulator.populateCondensedScores(CONDENSED_SCORES_FILE);
