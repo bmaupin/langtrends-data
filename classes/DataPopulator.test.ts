@@ -33,19 +33,24 @@ test('Test populateLanguages', async () => {
   expect(languages.length).toBe(numLanguages);
 });
 
-test('Test populateAllScores', async () => {
-  await dataPopulator.populateAllScores(SCORES_FILE, NUM_SCORES);
-  const scores = JSON.parse(await readFile(SCORES_FILE, 'utf8')) as Score[];
-  expect(scores.length).toEqual(NUM_SCORES);
-  expect(scores[0].points).toBeGreaterThan(1000);
+test(
+  'Test populateAllScores',
+  async () => {
+    await dataPopulator.populateAllScores(SCORES_FILE, NUM_SCORES);
+    const scores = JSON.parse(await readFile(SCORES_FILE, 'utf8')) as Score[];
+    expect(scores.length).toEqual(NUM_SCORES);
+    expect(scores[0].points).toBeGreaterThan(1000);
 
-  // The latest score should be from this month
-  expect(new Date(scores[scores.length - 1].date).getUTCMonth()).toEqual(
-    new Date().getUTCMonth()
-  );
-  // Scores should always be from the first day of the month
-  expect(new Date(scores[0].date).getUTCDate()).toEqual(1);
-}, 10000);
+    // The latest score should be from this month
+    expect(new Date(scores[scores.length - 1].date).getUTCMonth()).toEqual(
+      new Date().getUTCMonth()
+    );
+    // Scores should always be from the first day of the month
+    expect(new Date(scores[0].date).getUTCDate()).toEqual(1);
+  },
+  // Adjust test timeout based on number of scores we're getting
+  2000 * NUM_SCORES
+);
 
 test('Test populateCondensedScores', async () => {
   await dataPopulator.populateCondensedScores(CONDENSED_SCORES_FILE);
