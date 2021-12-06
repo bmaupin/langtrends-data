@@ -203,27 +203,11 @@ export default class DataPopulator {
       `Debug: Populating scores for ${convertDateToDateString(date)}`
     );
 
-    // Make a shallow copy of this.languages; we shouldn't need a deep copy since we're not modifying the objects
-    // inside the array, just the array itself
-    let languages = [...this.languages];
+    for (let i = 0; i < this.languages.length; i++) {
+      if (numScores && i >= numScores) {
+        break;
+      }
 
-    if (numScores) {
-      languages = languages.splice(0, numScores);
-    }
-
-    // Do this in batches to avoid going over API limits
-    while (languages.length !== 0) {
-      await this.populateBatchOfScores(
-        date,
-        languages.splice(0, settings.maxConcurrentRequests)
-      );
-    }
-  }
-
-  private async populateBatchOfScores(date: Date, languages: Language[]) {
-    const promises = [];
-
-    for (let i = 0; i < languages.length; i++) {
       // When GitHub renames a language, the old name will be in the data file and will end up getting sent to the
       // GitHub API. Unfortunately, instead of returning a score of 0 the language filter won't match and it will
       // return the total score (repository count) for all languages. So we need to prevent this from happening by
@@ -232,20 +216,18 @@ export default class DataPopulator {
       // prevent the old data from having to be re-fetched.
       if (
         this.languagesFromGithub &&
-        !this.languagesFromGithub.includes(languages[i].name)
+        !this.languagesFromGithub.includes(this.languages[i].name)
       ) {
         // Only log this for the first date to prevent from spamming the logs
         if (date.toISOString() === this.firstDayOfMonth.toISOString()) {
           console.warn(
-            `Warning: Language in data file not found in GitHub: ${languages[i].name}`
+            `Warning: Language in data file not found in GitHub: ${this.languages[i].name}`
           );
         }
       } else {
-        promises.push(this.populateScore(date, languages[i]));
+        await this.populateScore(date, this.languages[i]);
       }
     }
-
-    await Promise.all(promises);
   }
 
   private async populateScore(date: Date, language: Language) {
@@ -454,7 +436,6 @@ export default class DataPopulator {
       this.languages = await DataPopulator.readDataFile(languagesFile);
     }
 
-    // TODO: do this in batches using Promise.all to speed it up
     for (const language of this.languages) {
       const githubScore = await this.github.getScore(
         language.name,

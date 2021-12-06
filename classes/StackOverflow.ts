@@ -82,10 +82,12 @@ export default class StackOverflow {
             console.warn(
               'Warning: Stackoverflow API daily limit exceeded or API key incorrect'
             );
-          } else if (response.statusCode === 503) {
+          }
+          // TODO: We may be able to remove this if statement now that we're not making parallel API requests
+          else if (response.statusCode === 503) {
             // Stackoverflow might throw a 503 if it feels there are too many requests
             console.warn(
-              'Warning: Stackoverflow API returned 503; reduce maxConcurrentRequests and wait at least one hour before trying again'
+              'Warning: Stackoverflow API returned 503; wait a bit and try again'
             );
           }
           reject(new Error('statusCode=' + response.statusCode));
@@ -116,11 +118,12 @@ export default class StackOverflow {
       });
 
       request.on('error', (err: NodeJS.ErrnoException) => {
+        // TODO: We may be able to remove this if statement now that we're not making parallel API requests
         // Stack Overflow might close the connection for any outstanding requests and return a 503 for new ones if it
         // feels there are too many requests
         if (err.code === 'ECONNRESET') {
           console.warn(
-            'Warning: Stack Overflow API closed connection; reduce maxConcurrentRequests and wait at least one hour before trying again'
+            'Warning: Stack Overflow API closed connection; wait a bit and try again'
           );
         }
         // Use the original message and code but our stack trace since the original stack trace won't point back to
@@ -133,11 +136,7 @@ export default class StackOverflow {
   }
 
   private static handleApiLimits(body: StackOverflowData) {
-    if (body.quota_remaining <= settings.maxConcurrentRequests) {
-      console.warn(
-        `Warning: Stack Overflow API daily quota remaining: ${body.quota_remaining}`
-      );
-    } else if (body.quota_remaining <= 0) {
+    if (body.quota_remaining <= 0) {
       throw new Error('Stack Overflow API daily limit exceeded');
     }
 
