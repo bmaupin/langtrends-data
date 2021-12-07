@@ -21,7 +21,6 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
   - This is the score data intended to be published and used by the frontend
   - This file is not intended to be manually edited
   - This file contains no whitespace in order to reduce the size of data that needs to be transferred
-  - Scores do not contain IDs because there's no need for them and this reduces the size of data that needs to be transferred
 - [scores-full.json](data/scores-full.json)
   - This is the full list of scores
   - This file is not intended to be manually edited
@@ -29,10 +28,12 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
 
 #### Date format
 
-- Dates are stored without times in order to reduce the size of the data files
-- Dates are stored as strings so they can be easily read
-- Dates are stored in a format which can be directly converted to a `Date` object using `new Date(score.date)`
-  - This will also create a `Date` with a timestamp of midnight UTC, which was the intention; for example, `new Date('2021-01-01')` is the same as `new Date('2021-01-01 00:00:00.000Z')`
+- Dates are stored in this format: `YYYY-MM-DD`, e.g. `2021-01-01`
+  - Omitting the time reduces the size of the data files
+  - Using strings (instead of integers) makes the data easier to read
+  - This format still permits converting to a `Date` object using `new Date(score.date)`
+    - Other considered formats (e.g. `YYYYMMDD`) don't work without parsing
+    - This will also create a `Date` with a timestamp of midnight UTC (regardless of the local time zone), which was the intention; for example, `new Date('2021-01-01')` is the same as `new Date('2021-01-01 00:00:00.000Z')`
 
 #### Adding languages to `languages-metadata.json`
 
