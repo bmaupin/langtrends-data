@@ -456,6 +456,11 @@
   "Eagle": {
     "include": false
   },
+  "Earthly": {
+    "description": "Earthly takes some of the best ideas from Makefiles and Dockerfiles and combines them into one specification.",
+    "include": false,
+    "url": "https://github.com/earthly/earthly"
+  },
   "Easybuild": {
     "include": false
   },
@@ -1198,6 +1203,10 @@
   "MoonScript": {
     "include": true
   },
+  "Motoko": {
+    "include": false,
+    "url": "https://github.com/dfinity/motoko"
+  },
   "Motorola 68K Assembly": {
     "description": "I think this is probably too hardware-specific to be useful as a comparison to other languages",
     "include": false
@@ -1538,6 +1547,10 @@
   "Prolog": {
     "include": true
   },
+  "Promela": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Promela"
+  },
   "Propeller Spin": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Parallax_Propeller"
@@ -1787,6 +1800,11 @@
   "Shell": {
     "include": false,
     "type": "domain-specific language"
+  },
+  "ShellCheck Config": {
+    "description": "A shell script static analysis tool",
+    "include": false,
+    "url": "https://github.com/koalaman/shellcheck"
   },
   "ShellSession": {
     "include": false
