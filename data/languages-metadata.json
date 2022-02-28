@@ -3,6 +3,10 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/1C_Company"
   },
+  "2-Dimensional Array": {
+    "description": "2da filetype which is used in some of BioWare's game engines and in games such as the first Witcher",
+    "include": false
+  },
   "4D": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/4th_Dimension_(software)"
@@ -257,6 +261,11 @@
   "Clarion": {
     "include": false
   },
+  "Clarity": {
+    "description": "Smart contract language for Bitcoin",
+    "include": false,
+    "url": "https://clarity-lang.org/"
+  },
   "Classic ASP": {
     "include": true,
     "stackoverflowTag": "asp-classic"
@@ -376,6 +385,11 @@
     "include": false,
     "url": "https://curl.se/docs/manpage.html#-K"
   },
+  "Curry": {
+    "description": "Experimental functional logic programming language for research and teaching",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Curry_(programming_language)"
+  },
   "CWeb": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/CWEB"
@@ -405,6 +419,15 @@
   },
   "DataWeave": {
     "include": false
+  },
+  "Debian Package Control File": {
+    "include": false,
+    "url": "https://www.debian.org/doc/debian-policy/ch-controlfields.html"
+  },
+  "DenizenScript": {
+    "description": "Scripting language for Minecraft server plugins",
+    "include": false,
+    "url": "https://github.com/DenizenScript/Denizen"
   },
   "desktop": {
     "include": false
@@ -527,6 +550,10 @@
   },
   "Erlang": {
     "include": true
+  },
+  "Euphoria": {
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/Euphoria_(programming_language)"
   },
   "F#": {
     "include": true
@@ -682,6 +709,11 @@
     "include": false,
     "url": "https://git-scm.com/docs/git-config"
   },
+  "Gleam": {
+    "description": "Type-safe language that runs on the BEAM (Erlang) virtual machine",
+    "include": true,
+    "url": "https://github.com/gleam-lang/gleam/"
+  },
   "GLSL": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/OpenGL_Shading_Language"
@@ -754,6 +786,10 @@
     "include": false,
     "stackoverflowTag": "gsp"
   },
+  "GSC": {
+    "description": "A programming language used for Call of Duty's virtual machine",
+    "include": false
+  },
   "Hack": {
     "include": true,
     "stackoverflowTag": "hacklang"
@@ -794,6 +830,11 @@
   "HolyC": {
     "include": true,
     "url": "https://en.wikipedia.org/wiki/TempleOS"
+  },
+  "hoon": {
+    "description": "Programming language for alternative OS Urbit",
+    "include": false,
+    "url": "https://urbit.org/docs/hoon"
   },
   "HTML": {
     "include": false
@@ -878,6 +919,10 @@
   },
   "J": {
     "include": true
+  },
+  "Janet": {
+    "include": true,
+    "url": "https://github.com/janet-lang/janet"
   },
   "JAR Manifest": {
     "include": false,
@@ -989,6 +1034,11 @@
     "description": "Azure Log Analytics's query language",
     "include": false,
     "url": "https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/"
+  },
+  "kvlang": {
+    "description": "Language for creating widgets in Kivy GUI framework",
+    "include": false,
+    "url": "https://kivy.org/doc/master/guide/lang.html"
   },
   "LabVIEW": {
     "include": false
@@ -1162,6 +1212,15 @@
   "MiniD": {
     "description": "Small, lightweight extension lanugage superseded by Croc",
     "include": false
+  },
+  "MiniYAML": {
+    "description": "YAML variant used by OpenRA game engine",
+    "include": false
+  },
+  "Mint": {
+    "description": "TODO: we could potentially include Mint once there's a StackOverflow tag for it (currently the mint tag is an alias for linux-mint)",
+    "include": false,
+    "url": "https://github.com/mint-lang/mint"
   },
   "Mirah": {
     "include": true
@@ -1539,6 +1598,11 @@
   "Processing": {
     "include": false
   },
+  "Procfile": {
+    "description": "Heroku apps include a Procfile that specifies the commands that are executed by the app on startup",
+    "include": false,
+    "url": "https://devcenter.heroku.com/articles/procfile"
+  },
   "Proguard": {
     "description": "Proguard rules files",
     "include": false,
@@ -1556,8 +1620,12 @@
     "url": "https://en.wikipedia.org/wiki/Parallax_Propeller"
   },
   "Protocol Buffer": {
-    "include": false,
-    "stackoverflowTag": "protocol-buffers"
+    "description": "Cross-platform data format used to serialize structured data",
+    "include": false
+  },
+  "Protocol Buffer Text Format": {
+    "descriptions": "Protocol buffer messages can be sent in binary or text format",
+    "include": false
   },
   "Public Key": {
     "include": false
@@ -1734,6 +1802,11 @@
     "extension": ".x",
     "include": false,
     "url": "https://en.wikipedia.org/wiki/RPCGEN#RPC_Language"
+  },
+  "RPGLE": {
+    "description": "Programming language from IBM for business applications",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/IBM_RPG"
   },
   "RPM Spec": {
     "include": false
@@ -2129,6 +2202,11 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Vue.js"
   },
+  "Vyper": {
+    "description": "Smart contract language for Ethereum",
+    "include": false,
+    "url": "https://github.com/vyperlang/vyper"
+  },
   "Wavefront Material": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Wavefront_.obj_file#Material_template_library"
@@ -2177,6 +2255,10 @@
     "description": "Homoiconic JS dialect with a clojure syntax, s-expressions and macros",
     "include": true,
     "url": "https://gozala.github.io/wisp/"
+  },
+  "Witcher Script": {
+    "description": "Scripting language for Witcher video games",
+    "include": false
   },
   "Wollok": {
     "description": "A programming language and environment for teaching OOP.",
