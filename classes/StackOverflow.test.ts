@@ -12,10 +12,21 @@ test('Test getScore with API key', async () => {
 });
 
 test('Test getScore without API key', async () => {
+  // Suppress warnings logged by this test (https://stackoverflow.com/a/58717352/399105)
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+
   const stackoverflow = new StackOverflow();
-  expect(
-    await stackoverflow.getScore('JavaScript', new Date('2017-01-01'))
-  ).toBeGreaterThan(1000000);
+
+  // Anonymous API calls have a much lower rate limit and may fail; this is fine
+  try {
+    expect(
+      await stackoverflow.getScore('JavaScript', new Date('2017-01-01'))
+    ).toBeGreaterThan(1000000);
+  } catch (error) {
+    if (error instanceof Error) {
+      expect(error.message).toBe('statusCode=400');
+    }
+  }
 });
 
 test('Test getScore with bad API key', async () => {
