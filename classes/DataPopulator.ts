@@ -235,6 +235,20 @@ export default class DataPopulator {
 
     if (!score) {
       const points = await this.getPointsFromApi(date, language);
+      const lastMonthPoints =
+        this.getScoreFromData(
+          DataPopulator.subtractMonthsUTC(date, 1),
+          language
+        )?.points || 0;
+
+      // Throw an error if a language's points have decreased more than a certain amount (https://github.com/bmaupin/langtrends/issues/33)
+      // This might need some tweaking; values of over 100 in a month have definitely been seen
+      if (lastMonthPoints - points > settings.maximumScoreDeviation) {
+        throw new Error(
+          `Points for language ${language.name} decreased a lot; this month: ${points}, last month: ${lastMonthPoints}`
+        );
+      }
+
       await this.upsertScore(date, language, points);
     }
   }
