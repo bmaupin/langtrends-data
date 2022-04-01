@@ -4,8 +4,6 @@ import https from 'https';
 import { JSDOM } from 'jsdom';
 import { URL } from 'url';
 
-import settings from './settings.json';
-
 const API_URL = 'https://api.github.com/graphql';
 
 interface GitHubData {

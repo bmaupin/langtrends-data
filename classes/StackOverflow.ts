@@ -5,8 +5,6 @@ import { URL } from 'url';
 import util from 'util';
 import zlib from 'zlib';
 
-import settings from './settings.json';
-
 // Uses a custom filter that only returns backoff, quota_remaining, and total
 // (https://api.stackexchange.com/docs/create-filter#unsafe=false&filter=!.UE8F0bVg4M-_Ii4&run=true)
 const API_URL =
