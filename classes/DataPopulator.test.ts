@@ -1,6 +1,7 @@
 'use strict';
 
 import { readFile, rm, writeFile } from 'fs/promises';
+import { afterAll, beforeAll, expect, spyOn, test } from 'vitest';
 
 import DataPopulator, { Language, Score } from './DataPopulator';
 
@@ -73,8 +74,8 @@ test(
   'Test significant decrease in points',
   async () => {
     // Suppress logs from this test (https://stackoverflow.com/a/58717352/399105)
-    jest.spyOn(console, 'debug').mockImplementation(() => {});
-    jest.spyOn(console, 'info').mockImplementation(() => {});
+    spyOn(console, 'debug').mockImplementation(() => {});
+    spyOn(console, 'info').mockImplementation(() => {});
 
     // Wipe the scores file for a clean slate and then re-create it
     await rm(SCORES_FILE);

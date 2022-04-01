@@ -1,6 +1,7 @@
 'use strict';
 
 import 'dotenv/config';
+import { expect, spyOn, test } from 'vitest';
 
 import StackOverflow from './StackOverflow';
 
@@ -13,7 +14,7 @@ test('Test getScore with API key', async () => {
 
 test('Test getScore without API key', async () => {
   // Suppress warnings logged by this test (https://stackoverflow.com/a/58717352/399105)
-  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  spyOn(console, 'warn').mockImplementation(() => {});
 
   const stackoverflow = new StackOverflow();
 
@@ -31,7 +32,7 @@ test('Test getScore without API key', async () => {
 
 test('Test getScore with bad API key', async () => {
   // Suppress warnings logged by this test (https://stackoverflow.com/a/58717352/399105)
-  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  spyOn(console, 'warn').mockImplementation(() => {});
   const stackoverflow = new StackOverflow('njO13SHsx1huIkFtYThY7M0T');
   await expect(
     stackoverflow.getScore('JavaScript', new Date('2017-01-01'))

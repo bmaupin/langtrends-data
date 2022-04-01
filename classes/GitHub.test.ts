@@ -1,6 +1,7 @@
 'use strict';
 
 import 'dotenv/config';
+import { expect, test } from 'vitest';
 
 import GitHub from './GitHub';
 
