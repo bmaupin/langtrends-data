@@ -162,6 +162,11 @@
   "Befunge": {
     "include": false
   },
+  "Berry": {
+    "description": "Embedded scripting language optimized for microcontrollers",
+    "include": false,
+    "url": "https://github.com/berry-lang/berry"
+  },
   "BibTeX": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/BibTeX"
@@ -227,6 +232,21 @@
     "description": "Used to store metadata about Haskell projects",
     "include": false,
     "url": "https://cabal.readthedocs.io/"
+  },
+  "Cadence": {
+    "description": "Used by the Flow blockchain for its smart contracts",
+    "include": false,
+    "url": "https://github.com/onflow/cadence"
+  },
+  "Cairo": {
+    "description": "Programming language for StarkNet",
+    "include": false,
+    "url": "https://github.com/starkware-libs/cairo-lang"
+  },
+  "CameLIGO": {
+    "description": "One of the dialects of LigoLANG",
+    "include": false,
+    "url": "https://gitlab.com/ligolang/ligo"
   },
   "Cap'n Proto": {
     "include": false
@@ -676,6 +696,15 @@
     "include": false,
     "url": "https://bundler.io/rationale.html"
   },
+  "Genero": {
+    "description": "Genero Business Development Language (BDL) is a program language designed to write an interactive database application. This language is the evolution of the language Informix 4GL.",
+    "include": false,
+    "url": "https://4js.com/"
+  },
+  "Genero Forms": {
+    "description": "Genero Forms is a markup for Genero",
+    "include": false
+  },
   "Genie": {
     "include": true
   },
@@ -1069,6 +1098,11 @@
   "LFE": {
     "include": true
   },
+  "LigoLANG": {
+    "description": "Smart-contract language for the Tezos blockchain",
+    "include": false,
+    "url": "https://gitlab.com/ligolang/ligo"
+  },
   "LilyPond": {
     "include": false
   },
@@ -1254,6 +1288,10 @@
   "Monkey": {
     "include": false,
     "type": "video game programming language"
+  },
+  "Monkey C": {
+    "description": "Programming languages for Garmin wearable devices",
+    "include": false
   },
   "Moocode": {
     "include": false,
@@ -1723,6 +1761,11 @@
   "Reason": {
     "include": true
   },
+  "ReasonLIGO": {
+    "description": "One of the dialects of LigoLANG",
+    "include": false,
+    "url": "https://gitlab.com/ligolang/ligo"
+  },
   "Rebol": {
     "description": "TODO: Currently disabled due to https://github.com/github/linguist/issues/4782",
     "include": false
@@ -2037,6 +2080,10 @@
     "include": false,
     "stackoverflowTag": "system-verilog"
   },
+  "Talon": {
+    "description": "Scripting language for Talon, a cross-platform hands-free input system",
+    "include": false
+  },
   "Tcl": {
     "include": true
   },
@@ -2245,6 +2292,10 @@
   "Wikitext": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Wiki#Editing"
+  },
+  "Win32 Message File": {
+    "include": false,
+    "url": "https://docs.microsoft.com/en-us/windows/win32/eventlog/message-text-files"
   },
   "Windows Registry Entries": {
     "description": ".reg files",
