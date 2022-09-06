@@ -2,12 +2,17 @@
 
 'use strict';
 
+import 'dotenv/config';
+
+import GitHub from '../classes/GitHub';
 import settings from '../classes/settings.json';
+import StackOverflow from '../classes/StackOverflow';
 
 import languages from '../data/languages.json';
 import scores from '../data/scores-full.json';
+import { Language } from '../classes/DataPopulator';
 
-const main = () => {
+const main = async () => {
   let currentDate = '2008-02-01';
   let previousDate = '';
 
@@ -30,26 +35,63 @@ const main = () => {
         score.languageId === currentDateScore.languageId
     );
 
-    const deviation = previousDateScore!.points - currentDateScore.points;
-    if (deviation > settings.maximumScoreDeviation) {
-      console.log(
-        `Language: ${
-          languages.find(
-            (language) => language.id === currentDateScore.languageId
-          )?.name
-        }`
+    const deviationPoints = previousDateScore!.points - currentDateScore.points;
+    const deviationPercentage =
+      (deviationPoints / previousDateScore!.points) * 100;
+
+    if (
+      deviationPoints > settings.minimumScore ||
+      (previousDateScore!.points > settings.minimumScore &&
+        deviationPercentage > 1)
+    ) {
+      const language = languages.find(
+        (language) => language.id === currentDateScore.languageId
       );
 
+      if (!language) {
+        throw new Error(
+          `Language ID not found: ${currentDateScore.languageId}`
+        );
+      }
+
+      console.log(`Language: ${language.name}`);
+
       console.log('previousDateScore: ', previousDateScore);
+      console.log(
+        'previous score from API: ',
+        await getScoreFromApi(language, previousDate)
+      );
       console.log('currentDateScore: ', currentDateScore);
-      console.log('deviation: ', -deviation);
+      console.log(
+        'current score from API: ',
+        await getScoreFromApi(language, currentDate)
+      );
+      console.log('deviation: ', -deviationPoints);
       console.log(
         'deviation %:',
-        (-(deviation / previousDateScore!.points) * 100).toFixed(1)
+        (-(deviationPoints / previousDateScore!.points) * 100).toFixed(1)
       );
       console.log();
     }
   }
+};
+
+const getScoreFromApi = async (
+  language: Language,
+  dateString: string
+): Promise<number> => {
+  const date = new Date(dateString);
+
+  const github = new GitHub(process.env.GITHUB_API_KEY!);
+  const stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY!);
+
+  const githubScore = await github.getScore(language.name, date);
+  const stackoverflowScore = await stackoverflow.getScore(
+    language.stackoverflowTag || language.name,
+    date
+  );
+
+  return githubScore + stackoverflowScore;
 };
 
 main();
