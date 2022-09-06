@@ -26,6 +26,9 @@
   "Ada": {
     "include": true
   },
+  "Adblock Filter List": {
+    "include": false
+  },
   "Adobe Font Metrics": {
     "include": false
   },
@@ -66,6 +69,11 @@
   "Ant Build System": {
     "include": false,
     "stackoverflowTag": "ant"
+  },
+  "Antlers": {
+    "description": "Templating language, subset of HTML",
+    "include": false,
+    "url": "https://antlers.dev/"
   },
   "ANTLR": {
     "include": false
@@ -176,6 +184,11 @@
     "type": "domain-specific language",
     "url": "https://github.com/azure/bicep"
   },
+  "Bikeshed": {
+    "description": "A pre-processor for spec documents",
+    "include": false,
+    "url": "https://github.com/tabatkins/bikeshed"
+  },
   "Bison": {
     "include": false
   },
@@ -206,7 +219,14 @@
     "include": false
   },
   "Brightscript": {
-    "include": false
+    "description": "Scripting language for Roku devices",
+    "include": false,
+    "url": "https://developer.roku.com/docs/references/brightscript/language/brightscript-language-reference.md"
+  },
+  "BrighterScript": {
+    "description": "A superset of Roku's BrightScript language. Compiles to standard BrightScript.",
+    "include": false,
+    "url": "https://github.com/rokucommunity/brighterscript"
   },
   "Browserslist": {
     "include": false,
@@ -248,6 +268,11 @@
     "include": false,
     "url": "https://gitlab.com/ligolang/ligo"
   },
+  "CAP CDS": {
+    "description": "SAP Cloud Application Programming Core Data Services model files",
+    "include": false,
+    "url": "https://cap.cloud.sap/docs/cds/"
+  },
   "Cap'n Proto": {
     "include": false
   },
@@ -265,6 +290,10 @@
     "extension": ".ch",
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Charity_(programming_language)"
+  },
+  "Checksums": {
+    "description": "Files containing checksums",
+    "include": false
   },
   "ChucK": {
     "include": false
@@ -553,6 +582,11 @@
   "Elm": {
     "include": true
   },
+  "Elvish": {
+    "description": "Language for Elvish shell",
+    "include": false,
+    "url": "https://github.com/elves/elvish"
+  },
   "Emacs Lisp": {
     "include": false,
     "stackoverflowTag": "elisp"
@@ -696,6 +730,11 @@
     "include": false,
     "url": "https://bundler.io/rationale.html"
   },
+  "Gemini": {
+    "description": "Markup language for Gemini protocol",
+    "include": false,
+    "url": "https://gemini.circumlunar.space/"
+  },
   "Genero": {
     "description": "Genero Business Development Language (BDL) is a program language designed to write an interactive database application. This language is the evolution of the language Informix 4GL.",
     "include": false,
@@ -737,6 +776,11 @@
   "Git Config": {
     "include": false,
     "url": "https://git-scm.com/docs/git-config"
+  },
+  "Git Revision List": {
+    "description": "git-blame-ignore-revs file format, which is just a list of commit hashes with hash-comments allowed",
+    "include": false,
+    "url": "https://www.git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-fileltfilegt"
   },
   "Gleam": {
     "description": "Type-safe language that runs on the BEAM (Erlang) virtual machine",
@@ -855,6 +899,11 @@
   "HLSL": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/High-Level_Shading_Language"
+  },
+  "HOCON": {
+    "description": "Human-Optimized Config Object Notation; alternative to JSON",
+    "include": false,
+    "url": "https://github.com/lightbend/config/blob/main/HOCON.md"
   },
   "HolyC": {
     "include": true,
@@ -981,6 +1030,11 @@
   "Jest Snapshot": {
     "include": false,
     "url": "https://jestjs.io/docs/snapshot-testing"
+  },
+  "JetBrains MPS": {
+    "description": "JetBrains Meta programming System; DSL for tool for designing DSLs",
+    "include": false,
+    "url": "https://github.com/JetBrains/MPS"
   },
   "JFlex": {
     "include": false
@@ -1308,6 +1362,11 @@
     "description": "I think this is probably too hardware-specific to be useful as a comparison to other languages",
     "include": false
   },
+  "Move": {
+    "description": "A programming language for writing safe smart contracts originally developed at Facebook to power the Diem blockchain",
+    "include": false,
+    "url": "https://github.com/move-language/move"
+  },
   "MQL4": {
     "include": false
   },
@@ -1344,6 +1403,11 @@
   "nanorc": {
     "include": false,
     "url": "https://www.nano-editor.org/dist/latest/nanorc.5.html"
+  },
+  "Nasal": {
+    "description": "Scripting language for FlightGear flight simulator",
+    "include": false,
+    "url": "https://wiki.flightgear.org/Nasal_scripting_language"
   },
   "NASL": {
     "description": "Nessus Attack Scripting Language, a scripting language used by the suite of CyberSecurity products related to Nessus",
@@ -1607,6 +1671,11 @@
   "Pony": {
     "include": true
   },
+  "Portugol": {
+    "description": "Portuguese-based pseudocode language used by Visualg for learning programming",
+    "include": false,
+    "url": "http://visualg3.com.br/"
+  },
   "PostCSS": {
     "include": false,
     "type": "markup language",
@@ -1840,6 +1909,11 @@
   "Rouge": {
     "include": true
   },
+  "RouterOS Script": {
+    "description": "Scripting language for RouterOS used on MicroTik routers",
+    "include": false,
+    "url": "https://wiki.mikrotik.com/wiki/Manual:Scripting"
+  },
   "RPC": {
     "description": "XDR/RPCGEN",
     "extension": ".x",
@@ -2027,6 +2101,11 @@
     "include": true,
     "stackoverflowTag": "sml"
   },
+  "STAR": {
+    "description": "Self-Defining Text Archive and Retrieval (STAR) File is a text-based file format for storing structured data",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Self-defining_Text_Archive_and_Retrieval"
+  },
   "Starlark": {
     "description": "A simplified dialect of Python intended as a configuration language",
     "include": false,
@@ -2035,6 +2114,11 @@
   "Stata": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Stata"
+  },
+  "STL": {
+    "description": "A file format native to the stereolithography CAD software created by 3D Systems",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/STL_(file_format)"
   },
   "STON": {
     "description": "Smalltalk Object Notation",
@@ -2221,6 +2305,11 @@
     "include": false,
     "url": "https://varnish-cache.org/docs/trunk/users-guide/vcl.html"
   },
+  "Velocity Template Language": {
+    "description": "Template language used by Velocity, a Java-based template engine",
+    "include": false,
+    "url": "https://velocity.apache.org/"
+  },
   "Verilog": {
     "include": false
   },
@@ -2289,6 +2378,10 @@
     "include": false,
     "url": "https://www.gnu.org/software/wget/manual/html_node/Sample-Wgetrc.html"
   },
+  "Whiley": {
+    "include": true,
+    "url": "https://whiley.org/"
+  },
   "Wikitext": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Wiki#Editing"
@@ -2318,6 +2411,11 @@
   },
   "World of Warcraft Addon Data": {
     "include": false
+  },
+  "Wren": {
+    "description": "Scripting language intended for embedding in applications",
+    "include": false,
+    "url": "https://wren.io/"
   },
   "X BitMap": {
     "include": false,
@@ -2405,6 +2503,11 @@
     "description": "Snippet extension for Emacs",
     "include": false,
     "url": "http://joaotavora.github.io/yasnippet/"
+  },
+  "Yul": {
+    "description": "Programming language that is being used as an intermediate language in the compilation of Ethereum smart contracts written in in the Solidity language",
+    "include": false,
+    "url": "https://www.cs.utexas.edu/users/moore/acl2/manuals/current/manual/index-seo.php/YUL____YUL"
   },
   "ZAP": {
     "description": "Something related to ZIL",
