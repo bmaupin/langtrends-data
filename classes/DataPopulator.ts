@@ -241,12 +241,12 @@ export default class DataPopulator {
           language
         )?.points || 0;
 
+      // TODO: this logic will likely need to be tweaked. See https://github.com/bmaupin/langtrends-data/issues/17 for more information
       // Throw an error if a language's points have decreased more than a certain amount (https://github.com/bmaupin/langtrends/issues/33)
       // This might need some tweaking; values of over 100 in a month have definitely been seen
       if (
-        // Scores below the minimum deviate too much
-        lastMonthPoints > settings.minimumScore &&
-        points - lastMonthPoints < 0 &&
+        // Check if deviation itself is greater than the minimum score
+        lastMonthPoints - points > settings.minimumScore &&
         // Check if deviation is greater than a 1% decrease in points
         (lastMonthPoints - points) / lastMonthPoints > 0.01
       ) {

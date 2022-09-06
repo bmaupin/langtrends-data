@@ -39,11 +39,7 @@ const main = async () => {
     const deviationPercentage =
       (deviationPoints / previousDateScore!.points) * 100;
 
-    if (
-      deviationPoints > settings.minimumScore ||
-      (previousDateScore!.points > settings.minimumScore &&
-        deviationPercentage > 1)
-    ) {
+    if (deviationPoints > settings.minimumScore && deviationPercentage > 1) {
       const language = languages.find(
         (language) => language.id === currentDateScore.languageId
       );
@@ -67,10 +63,7 @@ const main = async () => {
         await getScoreFromApi(language, currentDate)
       );
       console.log('deviation: ', -deviationPoints);
-      console.log(
-        'deviation %:',
-        (-(deviationPoints / previousDateScore!.points) * 100).toFixed(1)
-      );
+      console.log('deviation %:', (-deviationPercentage).toFixed(1));
       console.log();
     }
   }
