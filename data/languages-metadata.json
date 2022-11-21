@@ -2415,6 +2415,10 @@
     "include": true,
     "stackoverflowTag": "vb.net"
   },
+  "Visual Basic 6.0": {
+    "include": true,
+    "stackoverflowTag": "vb6"
+  },
   "Volt": {
     "include": true
   },
