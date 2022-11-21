@@ -446,6 +446,11 @@
   "Cycript": {
     "include": false
   },
+  "Cypher": {
+    "description": "Query language for property graph databases",
+    "include": false,
+    "url": "https://github.com/opencypher/openCypher"
+  },
   "Cython": {
     "include": false
   },
@@ -555,6 +560,11 @@
     "include": false,
     "url": "http://eclipseclp.org/",
     "stackoverflowTag": "eclipse-clp"
+  },
+  "Ecmarkup": {
+    "description": "An HTML superset/Markdown subset source format for ECMAScript and related specifications",
+    "include": false,
+    "url": "https://github.com/tc39/ecmarkup"
   },
   "EditorConfig": {
     "include": false,
@@ -967,12 +977,22 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/ImageJ"
   },
+  "Imba": {
+    "description": "Full-stack programming language for the web that compiles to JavaScript",
+    "include": true,
+    "url": "https://github.com/imba/imba"
+  },
   "Inform 7": {
     "include": false,
     "stackoverflowTag": "inform7"
   },
   "INI": {
     "include": false
+  },
+  "Ink": {
+    "description": "Language for writing interactive narrative in games",
+    "include": false,
+    "url": "https://github.com/inkle/ink"
   },
   "Inno Setup": {
     "include": false
@@ -1082,6 +1102,11 @@
   },
   "Jupyter Notebook": {
     "include": false
+  },
+  "just": {
+    "description": "Language used by 'just' command runner recipe files",
+    "include": false,
+    "url": "https://github.com/casey/just"
   },
   "Kaitai Struct": {
     "description": "A YAML-based language for describing the structure of binary file formats",
@@ -1279,6 +1304,11 @@
   },
   "Mercury": {
     "include": true
+  },
+  "Mermaid": {
+    "description": "Markup language used to generate diagrams",
+    "include": false,
+    "url": "https://github.com/mermaid-js/mermaid"
   },
   "Meson": {
     "include": false,
@@ -1498,6 +1528,24 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/NWScript"
   },
+  "OASv2-json": {
+    "description": "OpenAPI v2 specification (JSON)",
+    "include": false,
+    "url": "https://swagger.io/specification/v2/"
+  },
+  "OASv2-yaml": {
+    "description": "OpenAPI v2 specification (YAML)",
+    "include": false
+  },
+  "OASv3-json": {
+    "description": "OpenAPI v3 specification (JSON)",
+    "include": false,
+    "url": "https://swagger.io/specification/"
+  },
+  "OASv3-yaml": {
+    "description": "OpenAPI v3 specification (YAML)",
+    "include": false
+  },
   "ObjDump": {
     "include": false
   },
@@ -1548,6 +1596,14 @@
     "include": false,
     "url": "https://www.openpolicyagent.org/"
   },
+  "OpenAPI Specification v2": {
+    "include": false,
+    "url": "https://swagger.io/resources/open-api/"
+  },
+  "OpenAPI Specification v3": {
+    "include": false,
+    "url": "https://swagger.io/resources/open-api/"
+  },
   "OpenCL": {
     "include": false
   },
@@ -1571,6 +1627,10 @@
     "url": "https://en.wikipedia.org/wiki/Property_list"
   },
   "OpenType Feature File": {
+    "include": false
+  },
+  "Option List": {
+    "description": "Option list files that use shell syntax for their contents (e.g. .ackrc, mocha.opts)",
     "include": false
   },
   "Org": {
@@ -1611,6 +1671,11 @@
   "Pawn": {
     "include": false,
     "url": "https://www.compuphase.com/pawn/"
+  },
+  "PDDL": {
+    "description": "Planning Domain Definition Language (PDDL) is a family of languages which allow us to define a planning problem",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Planning_Domain_Definition_Language"
   },
   "PEG.js": {
     "include": false,
@@ -1667,6 +1732,11 @@
   },
   "PogoScript": {
     "include": true
+  },
+  "Polar": {
+    "description": "Declarative logic programming language specialized for authorization logic",
+    "include": false,
+    "url": "https://www.osohq.com/docs/reference/polar-syntax"
   },
   "Pony": {
     "include": true
@@ -1961,6 +2031,11 @@
     "include": false,
     "type": "markup language"
   },
+  "Scenic": {
+    "description": "A domain-specific probabilistic programming language for modeling the environments of cyber-physical systems (e.g. autonomous vehicles)",
+    "include": false,
+    "url": "https://github.com/BerkeleyLearnVerify/Scenic"
+  },
   "Scheme": {
     "include": true
   },
@@ -2007,6 +2082,11 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)"
   },
+  "Simple File Verification": {
+    "description": "File format for storing CRC32 checksums of files to verify the integrity of files",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Simple_file_verification"
+  },
   "Singularity": {
     "description": "Singularity definition files",
     "include": false,
@@ -2037,6 +2117,11 @@
     "description": "PHP templating language",
     "include": false,
     "url": "https://www.smarty.net"
+  },
+  "Smithy": {
+    "description": "Language for defining services and SDKs",
+    "include": false,
+    "url": "https://github.com/awslabs/smithy"
   },
   "SmPL": {
     "description": "Used by the Coccinelle tool to write semantic patches",
