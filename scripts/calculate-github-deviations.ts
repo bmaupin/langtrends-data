@@ -1,5 +1,7 @@
-// Get deviations between scores for a particular language and date. See
-// https://github.com/bmaupin/langtrends-data/issues/17 for more information
+// Get deviations between scores for a particular language and date. For more information,
+// see:
+// - https://github.com/bmaupin/langtrends-data/issues/17
+// - https://github.com/bmaupin/langtrends-data/issues/18
 //
 // To run: node_modules/.bin/ts-node scripts/calculate-github-deviations.ts
 
@@ -13,7 +15,8 @@ import scoresFromData from '../data/scores-full.json';
 
 const languageName = 'Swift';
 const dateString = '2023-01-01';
-const numScores = 20;
+const numScores = 5;
+const waitTime = 300000;
 
 const main = async () => {
   console.log(`${languageName}\t${dateString}\n`);
@@ -38,7 +41,7 @@ const main = async () => {
 
     // Wait a few seconds between each score; if idential API calls are made too close
     // together, the result will be the same, which we don't want
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, waitTime));
   }
 
   console.log('From GitHub:');
@@ -48,46 +51,61 @@ const main = async () => {
     calculateMax(scoresFromGitHub) - calculateMin(scoresFromGitHub)
   );
   console.log('\taverage:', calculateAverage(scoresFromGitHub));
+  console.log('\tmax:', calculateMax(scoresFromGitHub));
 
   const scoreFromData = getScoreFromData(language, dateString);
-  if (!scoreFromData) {
-    console.log('\n(no score from data for comparison');
-  } else {
-    console.log('\nFor comparison:');
+  console.log('\nFor comparison:');
+
+  const scoreFromStackOverflow = await getStackOverflowScoreFromApi(
+    language,
+    date
+  );
+
+  if (scoreFromData) {
     // console.log('\tscore from data:', scoreFromData);
-    const scoreFromStackOverflow = await getStackOverflowScoreFromApi(
-      language,
-      date
-    );
     // console.log('\tscore from StackOverflow:', scoreFromStackOverflow);
     console.log(
       '\tGitHub score from data:',
       scoreFromData - scoreFromStackOverflow
     );
+  }
 
-    const previousMonth = subtractMonthsUTC(date, 1);
-    const previousMonthTotalScore = getScoreFromData(
-      language,
-      convertDateToDateString(previousMonth)
-    )!;
-    console.log(
-      "\tPrevious month's score from data:",
-      previousMonthTotalScore -
-        (await getStackOverflowScoreFromApi(language, previousMonth))
-    );
-    console.log();
+  const previousMonth = subtractMonthsUTC(date, 1);
+  const previousMonthTotalScore = getScoreFromData(
+    language,
+    convertDateToDateString(previousMonth)
+  )!;
+  console.log(
+    "\tPrevious month's score from data:",
+    previousMonthTotalScore -
+      (await getStackOverflowScoreFromApi(language, previousMonth))
+  );
+  console.log();
 
-    const newTotalScore =
-      calculateAverage(scoresFromGitHub) + scoreFromStackOverflow;
+  if (scoreFromData) {
+    const revisedTotalScore =
+      calculateMax(scoresFromGitHub) + scoreFromStackOverflow;
     console.log(
-      `New total score: ${newTotalScore} (${
-        newTotalScore - previousMonthTotalScore
+      `Revised total score: ${revisedTotalScore} (${
+        revisedTotalScore - previousMonthTotalScore
       })`
     );
     console.log(
       `Current total score: ${scoreFromData} (${
         scoreFromData - previousMonthTotalScore
       })`
+    );
+
+    // Format some scores for https://github.com/bmaupin/langtrends-data/issues/18
+    const currentGitHubScore = scoreFromData - scoreFromStackOverflow;
+    const revisedGitHubScore = calculateMax(scoresFromGitHub);
+
+    console.log(
+      `| ${languageName} | ${currentGitHubScore} | ${revisedGitHubScore} | ${
+        revisedGitHubScore - currentGitHubScore
+      } | ${((revisedGitHubScore / currentGitHubScore) * 100 - 100).toFixed(
+        2
+      )}% |`
     );
   }
 
