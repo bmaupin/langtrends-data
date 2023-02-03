@@ -1,6 +1,6 @@
+// Calculate score deviations in data/scores-full.json
+//
 // To run this: node_modules/.bin/ts-node scripts/calculate-deviation.ts
-
-'use strict';
 
 import 'dotenv/config';
 
