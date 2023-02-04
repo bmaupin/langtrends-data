@@ -8,7 +8,7 @@ import zlib from 'zlib';
 // Uses a custom filter that only returns backoff, quota_remaining, and total
 // (https://api.stackexchange.com/docs/create-filter#unsafe=false&filter=!.UE8F0bVg4M-_Ii4&run=true)
 const API_URL =
-  'https://api.stackexchange.com/2.2/search?todate=%s&site=stackoverflow&tagged=%s&filter=!.UE8F0bVg4M-_Ii4';
+  'https://api.stackexchange.com/2.2/search?fromdate=%s&todate=%s&site=stackoverflow&tagged=%s&filter=!.UE8F0bVg4M-_Ii4';
 
 interface StackOverflowData {
   backoff?: number;
@@ -23,8 +23,12 @@ export default class StackOverflow {
     this.apiKey = apiKey;
   }
 
-  public async getScore(languageName: string, date: Date): Promise<number> {
-    let url = this.buildUrl(date, languageName);
+  public async getScore(
+    languageName: string,
+    fromDate: Date,
+    toDate: Date
+  ): Promise<number> {
+    let url = this.buildUrl(languageName, fromDate, toDate);
     let body = await this.callApi(url);
 
     StackOverflow.handleApiLimits(body);
@@ -32,10 +36,11 @@ export default class StackOverflow {
     return body.total;
   }
 
-  private buildUrl(date: Date, languageName: string): string {
+  private buildUrl(languageName: string, fromDate: Date, toDate: Date): string {
     let url = util.format(
       API_URL,
-      StackOverflow.encodeDate(date),
+      StackOverflow.encodeDate(fromDate),
+      StackOverflow.encodeDate(toDate),
       StackOverflow.encodeLanguageName(languageName)
     );
     url = this.addApiKey(url);

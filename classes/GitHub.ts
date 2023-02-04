@@ -48,8 +48,13 @@ export default class GitHub {
     return languageNames;
   }
 
-  public async getScore(languageName: string, date: Date): Promise<number> {
-    const postData = this.buildPostData(date, languageName);
+  // Get the number of repositories created between fromDate and toDate (inclusive)
+  public async getScore(
+    languageName: string,
+    fromDate: Date,
+    toDate: Date
+  ): Promise<number> {
+    const postData = this.buildPostData(languageName, fromDate, toDate);
     const body = await this.callApi(API_URL, postData);
 
     GitHub.handleApiLimits(body);
@@ -57,13 +62,17 @@ export default class GitHub {
     return body.data.search.repositoryCount;
   }
 
-  private buildPostData(date: Date, languageName: string): string {
+  private buildPostData(
+    languageName: string,
+    fromDate: Date,
+    toDate: Date
+  ): string {
     const postData =
       `{"query": "{ search(query: \\"language:${GitHub.encodeLanguageName(
         languageName
       )} ` +
-      `created:<${GitHub.encodeDate(
-        date
+      `created:${GitHub.encodeDate(fromDate)}..${GitHub.encodeDate(
+        toDate
       )}\\", type: REPOSITORY) { repositoryCount } rateLimit { remaining }}"}`;
 
     return postData;
