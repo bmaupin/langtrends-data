@@ -1,7 +1,7 @@
 'use strict';
 
 import { readFile, writeFile } from 'fs/promises';
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 import GitHub from './GitHub';
 import _languagesMetadata from '../data/languages-metadata.json';
