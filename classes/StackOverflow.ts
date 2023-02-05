@@ -86,9 +86,7 @@ export default class StackOverflow {
             console.warn(
               'Warning: Stackoverflow API daily limit exceeded or API key incorrect'
             );
-          }
-          // TODO: We may be able to remove this if statement now that we're not making parallel API requests
-          else if (response.statusCode === 503) {
+          } else if (response.statusCode === 503) {
             // Stackoverflow might throw a 503 if it feels there are too many requests
             console.warn(
               'Warning: Stackoverflow API returned 503; wait a bit and try again'
@@ -122,7 +120,6 @@ export default class StackOverflow {
       });
 
       request.on('error', (err: NodeJS.ErrnoException) => {
-        // TODO: We may be able to remove this if statement now that we're not making parallel API requests
         // Stack Overflow might close the connection for any outstanding requests and return a 503 for new ones if it
         // feels there are too many requests
         if (err.code === 'ECONNRESET') {

@@ -53,7 +53,7 @@ export default class DataPopulator {
   private stackoverflow: StackOverflow;
 
   // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
-  private oldestDate = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
+  private oldestDate = new Date('2008-02-01');
 
   constructor() {
     if (!process.env.GITHUB_API_KEY) {
