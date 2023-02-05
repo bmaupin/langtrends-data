@@ -234,12 +234,15 @@ export default class DataPopulator {
     const score = this.getScoreFromData(date, language);
 
     if (!score) {
-      const points = await this.getPointsFromApi(date, language);
+      const newPoints = await this.getPointsFromApi(date, language);
       const lastMonthPoints =
         this.getScoreFromData(
           DataPopulator.subtractMonthsUTC(date, 1),
           language
         )?.points || 0;
+      const points = lastMonthPoints + newPoints;
+
+      // TODO: remove all this error checking?
 
       // TODO: this logic will likely need to be tweaked. See https://github.com/bmaupin/langtrends-data/issues/17 for more information
       // Throw an error if a language's points have decreased more than a certain amount (https://github.com/bmaupin/langtrends/issues/33)
@@ -271,11 +274,19 @@ export default class DataPopulator {
     date: Date,
     language: Language
   ): Promise<number> {
-    const githubScore = await this.github.getScore(language.name, date);
-    const stackoverflowScore = await this.stackoverflow.getScore(
-      language.stackoverflowTag || language.name,
+    const githubScore = await this.github.getScore(
+      language.name,
+      DataPopulator.subtractMonthsUTC(date, 1),
       date
     );
+    const stackoverflowScore = await this.stackoverflow.getScore(
+      language.stackoverflowTag || language.name,
+      DataPopulator.subtractMonthsUTC(date, 1),
+      date
+    );
+
+    // TODO: remove this???
+
     // Only log these for the first date, because for older dates it may just be that the tag count is actually 0
     if (
       date.toISOString() === this.firstDayOfMonth.toISOString() &&
@@ -459,10 +470,12 @@ export default class DataPopulator {
     for (const language of this.languages) {
       const githubScore = await this.github.getScore(
         language.name,
+        DataPopulator.subtractMonthsUTC(this.firstDayOfMonth, 1),
         this.firstDayOfMonth
       );
       const stackoverflowScore = await this.stackoverflow.getScore(
         language.stackoverflowTag || language.name,
+        DataPopulator.subtractMonthsUTC(this.firstDayOfMonth, 1),
         this.firstDayOfMonth
       );
       // Only concern ourselves with languages approaching the minimum score
