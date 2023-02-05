@@ -16,14 +16,14 @@ test('Test getScore', async () => {
     await github.getScore(
       'JavaScript',
       new Date('2023-01-01'),
-      new Date('2023-01-31')
+      new Date('2023-02-01')
     )
   ).toBeGreaterThan(100000);
   expect(
     await github.getScore(
       'JavaScript',
       new Date('2023-01-01'),
-      new Date('2023-01-31')
+      new Date('2023-02-01')
     )
   ).toBeLessThan(10000000);
 });
@@ -34,7 +34,18 @@ test('Test getScore with empty API key', async () => {
     github.getScore(
       'JavaScript',
       new Date('2023-01-01'),
-      new Date('2023-01-31')
+      new Date('2023-02-01')
     )
   ).rejects.toThrow('statusCode=401');
+});
+
+test('Test getScore with same from/to date', async () => {
+  const github = new GitHub(process.env.GITHUB_API_KEY!);
+  expect(
+    await github.getScore(
+      'JavaScript',
+      new Date('2023-02-01'),
+      new Date('2023-02-01')
+    )
+  ).toBe(0);
 });

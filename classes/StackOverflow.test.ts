@@ -10,7 +10,7 @@ test('Test getScore with API key', async () => {
     await stackoverflow.getScore(
       'JavaScript',
       new Date('2023-01-01'),
-      new Date('2023-01-31')
+      new Date('2023-02-01')
     )
   ).toBeGreaterThan(10000);
 });
@@ -27,7 +27,7 @@ test('Test getScore without API key', async () => {
       await stackoverflow.getScore(
         'JavaScript',
         new Date('2023-01-01'),
-        new Date('2023-01-31')
+        new Date('2023-02-01')
       )
     ).toBeGreaterThan(10000);
   } catch (error) {
@@ -45,7 +45,18 @@ test('Test getScore with bad API key', async () => {
     stackoverflow.getScore(
       'JavaScript',
       new Date('2023-01-01'),
-      new Date('2023-01-31')
+      new Date('2023-02-01')
     )
   ).rejects.toThrow('statusCode=400');
+});
+
+test('Test getScore with same from/to date', async () => {
+  const stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY!);
+  expect(
+    await stackoverflow.getScore(
+      'JavaScript',
+      new Date('2023-02-01'),
+      new Date('2023-02-01')
+    )
+  ).toBe(0);
 });

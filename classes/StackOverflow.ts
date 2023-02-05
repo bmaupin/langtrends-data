@@ -23,6 +23,7 @@ export default class StackOverflow {
     this.apiKey = apiKey;
   }
 
+  // Get the number of tags between fromDate (inclusive) and toDate (exclusive)
   public async getScore(
     languageName: string,
     fromDate: Date,
