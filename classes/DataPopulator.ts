@@ -52,6 +52,9 @@ export default class DataPopulator {
   private scores: Score[];
   private stackoverflow: StackOverflow;
 
+  // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
+  private oldestDate = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
+
   constructor() {
     if (!process.env.GITHUB_API_KEY) {
       throw new Error('GITHUB_API_KEY must be set');
@@ -150,10 +153,8 @@ export default class DataPopulator {
   public async populateAllScores(scoresFile: string, numScores?: number) {
     this.scores = await DataPopulator.readDataFile(scoresFile);
 
-    // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
-    const oldestDate = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
-    // Useful for debugging
-    // const oldestDate = this.firstDayOfMonth;
+    // Useful for debugging; only populate scores for the most recent month
+    // this.oldestDate = this.firstDayOfMonth;
     const oldScoreCount = this.scores.length;
     // Make a copy of this.firstDayOfMonth so we don't overwrite it
     let currentDate = new Date(this.firstDayOfMonth);
@@ -161,7 +162,7 @@ export default class DataPopulator {
     // Populate all scores starting with the current date and working backwards one month at a time
     try {
       while (true) {
-        if (currentDate < oldestDate) {
+        if (currentDate < this.oldestDate) {
           break;
         }
 
@@ -284,18 +285,6 @@ export default class DataPopulator {
       DataPopulator.subtractMonthsUTC(date, 1),
       date
     );
-
-    // TODO: remove this???
-
-    // Only log these for the first date, because for older dates it may just be that the tag count is actually 0
-    if (
-      date.toISOString() === this.firstDayOfMonth.toISOString() &&
-      stackoverflowScore === 0
-    ) {
-      console.warn(
-        `Warning: Stack Overflow tag not found for ${language.name}`
-      );
-    }
 
     return githubScore + stackoverflowScore;
   }
@@ -470,12 +459,12 @@ export default class DataPopulator {
     for (const language of this.languages) {
       const githubScore = await this.github.getScore(
         language.name,
-        DataPopulator.subtractMonthsUTC(this.firstDayOfMonth, 1),
+        this.oldestDate,
         this.firstDayOfMonth
       );
       const stackoverflowScore = await this.stackoverflow.getScore(
         language.stackoverflowTag || language.name,
-        DataPopulator.subtractMonthsUTC(this.firstDayOfMonth, 1),
+        this.oldestDate,
         this.firstDayOfMonth
       );
       // Only concern ourselves with languages approaching the minimum score
