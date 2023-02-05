@@ -155,14 +155,14 @@ export default class DataPopulator {
 
     const oldScoreCount = this.scores.length;
     // Make a copy of this.firstDayOfMonth so we don't overwrite it
-    let currentDate = new Date(this.firstDayOfMonth);
+    let currentDate = new Date(this.oldestDate);
+    // Useful for debugging; only populate scores for the most recent month
+    // currentDate = this.firstDayOfMonth;
 
     // Populate all scores starting with the current date and working backwards one month at a time
     try {
       while (true) {
-        // Useful for debugging; only populate scores for the most recent month
-        // if (currentDate < this.firstDayOfMonth) {
-        if (currentDate < this.oldestDate) {
+        if (currentDate > this.firstDayOfMonth) {
           break;
         }
 
@@ -171,7 +171,7 @@ export default class DataPopulator {
         }
 
         await this.populateScoresForDate(currentDate, numScores);
-        currentDate = DataPopulator.subtractMonthsUTC(currentDate, 1);
+        currentDate = DataPopulator.addMonthsUTC(currentDate, 1);
       }
       // Log the populated score count even if there are errors
     } finally {
@@ -189,6 +189,13 @@ export default class DataPopulator {
     return new Date(
       Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth())
     );
+  }
+
+  private static addMonthsUTC(date: Date, monthsToAdd: number): Date {
+    // Make a copy of the date object so we don't overwrite it
+    const newDate = new Date(date);
+    newDate.setUTCMonth(newDate.getUTCMonth() + monthsToAdd);
+    return newDate;
   }
 
   // Source: https://github.com/bmaupin/langtrends/blob/master/src/helpers/ApiHelper.js
