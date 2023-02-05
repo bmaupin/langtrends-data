@@ -153,8 +153,6 @@ export default class DataPopulator {
   public async populateAllScores(scoresFile: string, numScores?: number) {
     this.scores = await DataPopulator.readDataFile(scoresFile);
 
-    // Useful for debugging; only populate scores for the most recent month
-    // this.oldestDate = this.firstDayOfMonth;
     const oldScoreCount = this.scores.length;
     // Make a copy of this.firstDayOfMonth so we don't overwrite it
     let currentDate = new Date(this.firstDayOfMonth);
@@ -162,6 +160,8 @@ export default class DataPopulator {
     // Populate all scores starting with the current date and working backwards one month at a time
     try {
       while (true) {
+        // Useful for debugging; only populate scores for the most recent month
+        // if (currentDate < this.firstDayOfMonth) {
         if (currentDate < this.oldestDate) {
           break;
         }
@@ -235,15 +235,34 @@ export default class DataPopulator {
     const score = this.getScoreFromData(date, language);
 
     if (!score) {
-      const newPoints = await this.getPointsFromApi(date, language);
+      // First, we calculate the new score by getting the score difference for the latest
+      // month and adding it to the previous month's score. This is because the GitHub
+      // API no longer returns accurate results for the total score once the number of
+      // repositories goes above a certain limit (about a million?). See
+      // https://github.com/bmaupin/langtrends-data/issues/18 for more information
       const lastMonthPoints =
         this.getScoreFromData(
           DataPopulator.subtractMonthsUTC(date, 1),
           language
         )?.points || 0;
-      const points = lastMonthPoints + newPoints;
+      const newPoints = await this.getPointsFromApi(
+        language,
+        DataPopulator.subtractMonthsUTC(date, 1),
+        date
+      );
+      let points = lastMonthPoints + newPoints;
 
-      // TODO: remove all this error checking?
+      // If the new points is below a certain threshold, disregard last month's score and
+      // get the new score directly from the API. This is to account for languages whose
+      // score is actually going down, which the above methodology won't account for.
+      //
+      // The threshold was set based on real data from 5 languages whose points decreased.
+      // It could need some tweaking if the below error checking logic keeps getting
+      // triggered, but for now this logic as well as the error checking logic seem to
+      // give the results we want.
+      if (newPoints < 100) {
+        points = await this.getPointsFromApi(language, this.oldestDate, date);
+      }
 
       // TODO: this logic will likely need to be tweaked. See https://github.com/bmaupin/langtrends-data/issues/17 for more information
       // Throw an error if a language's points have decreased more than a certain amount (https://github.com/bmaupin/langtrends/issues/33)
@@ -272,18 +291,19 @@ export default class DataPopulator {
   }
 
   private async getPointsFromApi(
-    date: Date,
-    language: Language
+    language: Language,
+    fromDate: Date,
+    toDate: Date
   ): Promise<number> {
     const githubScore = await this.github.getScore(
       language.name,
-      DataPopulator.subtractMonthsUTC(date, 1),
-      date
+      fromDate,
+      toDate
     );
     const stackoverflowScore = await this.stackoverflow.getScore(
       language.stackoverflowTag || language.name,
-      DataPopulator.subtractMonthsUTC(date, 1),
-      date
+      fromDate,
+      toDate
     );
 
     return githubScore + stackoverflowScore;
