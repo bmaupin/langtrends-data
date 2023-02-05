@@ -12,6 +12,8 @@ import languages from '../data/languages.json';
 import scores from '../data/scores-full.json';
 import { Language } from '../classes/DataPopulator';
 
+const oldestDate = new Date('2008-02-01');
+
 const main = async () => {
   let currentDate = '2008-02-01';
   let previousDate = '';
@@ -78,9 +80,10 @@ const getScoreFromApi = async (
   const github = new GitHub(process.env.GITHUB_API_KEY!);
   const stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY!);
 
-  const githubScore = await github.getScore(language.name, date);
+  const githubScore = await github.getScore(language.name, oldestDate, date);
   const stackoverflowScore = await stackoverflow.getScore(
     language.stackoverflowTag || language.name,
+    oldestDate,
     date
   );
 
