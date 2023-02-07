@@ -8,8 +8,8 @@ import 'dotenv/config';
 
 const oldestDate = new Date('2008-02-01');
 
-const languageName = 'Visual Basic 6.0';
-const dateString = '2022-01-01';
+const languageName = 'C++';
+const dateString = '2023-02-01';
 const numScores = 2;
 
 const main = async () => {
@@ -19,11 +19,31 @@ const main = async () => {
 
   for (let i = 0; i < numScores; i++) {
     console.log(`${languageName}\t${convertDateToDateString(date)}\n`);
-    let githubScore = await getGitHubScoreFromApi(language, date);
+
+    let githubScore = await getGitHubScoreFromApi(
+      language,
+      subtractMonthsUTC(date, 1),
+      date
+    );
     console.log('GitHub score=', githubScore);
-    let stackoverflowScore = await getStackOverflowScoreFromApi(language, date);
+    let stackoverflowScore = await getStackOverflowScoreFromApi(
+      language,
+      subtractMonthsUTC(date, 1),
+      date
+    );
     console.log('Stack Overflow score=', stackoverflowScore);
     console.log('Combined score=', githubScore + stackoverflowScore);
+    console.log();
+
+    githubScore = await getGitHubScoreFromApi(language, oldestDate, date);
+    console.log('GitHub total score=', githubScore);
+    stackoverflowScore = await getStackOverflowScoreFromApi(
+      language,
+      oldestDate,
+      date
+    );
+    console.log('Stack Overflow total score=', stackoverflowScore);
+    console.log('Combined total score=', githubScore + stackoverflowScore);
     console.log();
 
     date = subtractMonthsUTC(date, 1);
@@ -46,11 +66,12 @@ const convertDateToDateString = (date: Date): string => {
 
 const getGitHubScoreFromApi = async (
   language: Language,
-  date: Date
+  fromDate: Date,
+  toDate: Date
 ): Promise<number> => {
   const github = new GitHub(process.env.GITHUB_API_KEY!);
 
-  return await github.getScore(language.name, oldestDate, date);
+  return await github.getScore(language.name, fromDate, toDate);
 };
 
 const getScoreFromData = (
@@ -68,14 +89,15 @@ const getScoreFromData = (
 
 const getStackOverflowScoreFromApi = async (
   language: Language,
-  date: Date
+  fromDate: Date,
+  toDate: Date
 ): Promise<number> => {
   const stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY!);
 
   return await stackoverflow.getScore(
     language.stackoverflowTag || language.name,
-    oldestDate,
-    date
+    fromDate,
+    toDate
   );
 };
 
