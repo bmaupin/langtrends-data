@@ -499,7 +499,10 @@ export default class DataPopulator {
         this.firstDayOfMonth
       );
       // Only concern ourselves with languages approaching the minimum score
-      if (githubScore > settings.minimumScore / 2 && stackoverflowScore === 0) {
+      if (
+        githubScore > settings.minimumScore * 0.75 &&
+        stackoverflowScore === 0
+      ) {
         languagesWithMissingTags.push(language.name);
       }
     }
