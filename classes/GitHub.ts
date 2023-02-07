@@ -48,8 +48,20 @@ export default class GitHub {
     return languageNames;
   }
 
-  public async getScore(languageName: string, date: Date): Promise<number> {
-    const postData = this.buildPostData(date, languageName);
+  // Get the number of repositories created between fromDate (inclusive) and toDate (exclusive)
+  public async getScore(
+    languageName: string,
+    fromDate: Date,
+    toDate: Date
+  ): Promise<number> {
+    // By default, toDate is inclusive; subtract a day to make it exclusive so that it
+    // matches the StackOverflow API. Plus this behaviour should be easier to
+    // conceptualise
+    const postData = this.buildPostData(
+      languageName,
+      fromDate,
+      GitHub.subtractDayUTC(toDate)
+    );
     const body = await this.callApi(API_URL, postData);
 
     GitHub.handleApiLimits(body);
@@ -57,13 +69,24 @@ export default class GitHub {
     return body.data.search.repositoryCount;
   }
 
-  private buildPostData(date: Date, languageName: string): string {
+  private static subtractDayUTC(date: Date): Date {
+    // Make a copy of the date object so we don't overwrite it
+    const newDate = new Date(date);
+    newDate.setUTCDate(newDate.getUTCDate() - 1);
+    return newDate;
+  }
+
+  private buildPostData(
+    languageName: string,
+    fromDate: Date,
+    toDate: Date
+  ): string {
     const postData =
       `{"query": "{ search(query: \\"language:${GitHub.encodeLanguageName(
         languageName
       )} ` +
-      `created:<${GitHub.encodeDate(
-        date
+      `created:${GitHub.encodeDate(fromDate)}..${GitHub.encodeDate(
+        toDate
       )}\\", type: REPOSITORY) { repositoryCount } rateLimit { remaining }}"}`;
 
     return postData;

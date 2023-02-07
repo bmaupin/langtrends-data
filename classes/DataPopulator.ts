@@ -1,7 +1,7 @@
 'use strict';
 
 import { readFile, writeFile } from 'fs/promises';
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 import GitHub from './GitHub';
 import _languagesMetadata from '../data/languages-metadata.json';
@@ -52,7 +52,13 @@ export default class DataPopulator {
   private scores: Score[];
   private stackoverflow: StackOverflow;
 
-  constructor() {
+  // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
+  private oldestDate = new Date('2008-02-01');
+
+  /**
+   * @param oldestDate - Oldest date to use for populating languages (used for testing)
+   */
+  constructor(oldestDate?: Date) {
     if (!process.env.GITHUB_API_KEY) {
       throw new Error('GITHUB_API_KEY must be set');
     }
@@ -60,6 +66,7 @@ export default class DataPopulator {
     this.firstDayOfMonth = DataPopulator.getFirstDayOfMonthUTC();
     this.github = new GitHub(process.env.GITHUB_API_KEY);
     this.languages = [];
+    this.oldestDate = oldestDate ?? this.oldestDate;
     this.scores = [];
     this.stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY);
   }
@@ -150,18 +157,16 @@ export default class DataPopulator {
   public async populateAllScores(scoresFile: string, numScores?: number) {
     this.scores = await DataPopulator.readDataFile(scoresFile);
 
-    // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
-    const oldestDate = new Date(Date.UTC(2008, 1)); // 2008-02-01 00:00:00 UTC
-    // Useful for debugging
-    // const oldestDate = this.firstDayOfMonth;
     const oldScoreCount = this.scores.length;
     // Make a copy of this.firstDayOfMonth so we don't overwrite it
-    let currentDate = new Date(this.firstDayOfMonth);
+    let currentDate = new Date(this.oldestDate);
+    // Useful for debugging; only populate scores for the most recent month
+    // currentDate = this.firstDayOfMonth;
 
     // Populate all scores starting with the current date and working backwards one month at a time
     try {
       while (true) {
-        if (currentDate < oldestDate) {
+        if (currentDate > this.firstDayOfMonth) {
           break;
         }
 
@@ -170,7 +175,7 @@ export default class DataPopulator {
         }
 
         await this.populateScoresForDate(currentDate, numScores);
-        currentDate = DataPopulator.subtractMonthsUTC(currentDate, 1);
+        currentDate = DataPopulator.addMonthsUTC(currentDate, 1);
       }
       // Log the populated score count even if there are errors
     } finally {
@@ -188,6 +193,13 @@ export default class DataPopulator {
     return new Date(
       Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth())
     );
+  }
+
+  private static addMonthsUTC(date: Date, monthsToAdd: number): Date {
+    // Make a copy of the date object so we don't overwrite it
+    const newDate = new Date(date);
+    newDate.setUTCMonth(newDate.getUTCMonth() + monthsToAdd);
+    return newDate;
   }
 
   // Source: https://github.com/bmaupin/langtrends/blob/master/src/helpers/ApiHelper.js
@@ -234,12 +246,34 @@ export default class DataPopulator {
     const score = this.getScoreFromData(date, language);
 
     if (!score) {
-      const points = await this.getPointsFromApi(date, language);
+      // First, we calculate the new score by getting the score difference for the latest
+      // month and adding it to the previous month's score. This is because the GitHub
+      // API no longer returns accurate results for the total score once the number of
+      // repositories goes above a certain limit (about a million?). See
+      // https://github.com/bmaupin/langtrends-data/issues/18 for more information
       const lastMonthPoints =
         this.getScoreFromData(
           DataPopulator.subtractMonthsUTC(date, 1),
           language
         )?.points || 0;
+      const newPoints = await this.getPointsFromApi(
+        language,
+        DataPopulator.subtractMonthsUTC(date, 1),
+        date
+      );
+      let points = lastMonthPoints + newPoints;
+
+      // If the new points is below a certain threshold, disregard last month's score and
+      // get the new score directly from the API. This is to account for languages whose
+      // score is actually going down, which the above methodology won't account for.
+      //
+      // The threshold was set based on real data from 5 languages whose points decreased.
+      // It could need some tweaking if the below error checking logic keeps getting
+      // triggered, but for now this logic as well as the error checking logic seem to
+      // give the results we want.
+      if (newPoints < 100) {
+        points = await this.getPointsFromApi(language, this.oldestDate, date);
+      }
 
       // TODO: this logic will likely need to be tweaked. See https://github.com/bmaupin/langtrends-data/issues/17 for more information
       // Throw an error if a language's points have decreased more than a certain amount (https://github.com/bmaupin/langtrends/issues/33)
@@ -268,23 +302,20 @@ export default class DataPopulator {
   }
 
   private async getPointsFromApi(
-    date: Date,
-    language: Language
+    language: Language,
+    fromDate: Date,
+    toDate: Date
   ): Promise<number> {
-    const githubScore = await this.github.getScore(language.name, date);
+    const githubScore = await this.github.getScore(
+      language.name,
+      fromDate,
+      toDate
+    );
     const stackoverflowScore = await this.stackoverflow.getScore(
       language.stackoverflowTag || language.name,
-      date
+      fromDate,
+      toDate
     );
-    // Only log these for the first date, because for older dates it may just be that the tag count is actually 0
-    if (
-      date.toISOString() === this.firstDayOfMonth.toISOString() &&
-      stackoverflowScore === 0
-    ) {
-      console.warn(
-        `Warning: Stack Overflow tag not found for ${language.name}`
-      );
-    }
 
     return githubScore + stackoverflowScore;
   }
@@ -459,10 +490,12 @@ export default class DataPopulator {
     for (const language of this.languages) {
       const githubScore = await this.github.getScore(
         language.name,
+        this.oldestDate,
         this.firstDayOfMonth
       );
       const stackoverflowScore = await this.stackoverflow.getScore(
         language.stackoverflowTag || language.name,
+        this.oldestDate,
         this.firstDayOfMonth
       );
       // Only concern ourselves with languages approaching the minimum score

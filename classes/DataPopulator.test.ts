@@ -17,7 +17,7 @@ const TIME_TO_GET_ONE_SCORE = 2000;
 let dataPopulator: DataPopulator;
 
 beforeAll(async () => {
-  dataPopulator = new DataPopulator();
+  dataPopulator = new DataPopulator(new Date('2023-01-01'));
 });
 
 afterAll(async () => {
@@ -37,6 +37,7 @@ test('Test populateLanguages', async () => {
 test(
   'Test populateAllScores',
   async () => {
+    // First make sure it works with the generated languages file
     await dataPopulator.populateAllScores(SCORES_FILE, NUM_SCORES);
     const scores = JSON.parse(await readFile(SCORES_FILE, 'utf8')) as Score[];
     expect(scores.length).toEqual(NUM_SCORES);
@@ -48,6 +49,29 @@ test(
     );
     // Scores should always be from the first day of the month
     expect(new Date(scores[0].date).getUTCDate()).toEqual(1);
+
+    // Wipe scores and languages files for a clean slate
+    await rm(LANGUAGES_FILE);
+    await rm(SCORES_FILE);
+    dataPopulator = new DataPopulator(new Date('2023-01-01'));
+
+    // Now hard-code the language file for more predictability for the other tests, since
+    // the languages from GitHub will in theory change order as their popularity changes
+    await writeFile(
+      LANGUAGES_FILE,
+      JSON.stringify([
+        { id: 1, name: 'C' },
+        { id: 2, name: 'C#' },
+        { id: 3, name: 'C++' },
+        { id: 4, name: 'CoffeeScript' },
+        { id: 5, name: 'Dart' },
+      ])
+    );
+    // This is still needed to populate the languages from the file in the object
+    await dataPopulator.populateLanguages(LANGUAGES_FILE, NUM_LANGUAGES);
+
+    // Re-create the scores file
+    await dataPopulator.populateAllScores(SCORES_FILE, NUM_SCORES);
   },
   // Adjust test timeout based on number of scores we're getting
   TIME_TO_GET_ONE_SCORE * NUM_SCORES
@@ -58,7 +82,8 @@ test('Test populateCondensedScores', async () => {
   const scores = JSON.parse(
     await readFile(CONDENSED_SCORES_FILE, 'utf8')
   ) as Score[];
-  expect(scores.length).toEqual(NUM_SCORES);
+  // The CoffeeScript scores shouldn't be included in the file
+  expect(scores.length).toEqual(8);
 });
 
 test('Test validateLanguages', async () => {
@@ -82,9 +107,9 @@ test(
     // Populate two months of data so we can manipulate the second to most recent one
     await dataPopulator.populateAllScores(SCORES_FILE, NUM_LANGUAGES * 2);
 
-    // Double the first score
+    // Set a high score for CoffeeScript
     const scores = JSON.parse(await readFile(SCORES_FILE, 'utf8')) as Score[];
-    scores[0].points *= 2;
+    scores[3].points = 2000;
 
     // Delete the most recent scores so they'll be repopulated
     scores.splice(NUM_LANGUAGES);

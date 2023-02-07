@@ -8,7 +8,7 @@ import zlib from 'zlib';
 // Uses a custom filter that only returns backoff, quota_remaining, and total
 // (https://api.stackexchange.com/docs/create-filter#unsafe=false&filter=!.UE8F0bVg4M-_Ii4&run=true)
 const API_URL =
-  'https://api.stackexchange.com/2.2/search?todate=%s&site=stackoverflow&tagged=%s&filter=!.UE8F0bVg4M-_Ii4';
+  'https://api.stackexchange.com/2.2/search?fromdate=%s&todate=%s&site=stackoverflow&tagged=%s&filter=!.UE8F0bVg4M-_Ii4';
 
 interface StackOverflowData {
   backoff?: number;
@@ -23,8 +23,13 @@ export default class StackOverflow {
     this.apiKey = apiKey;
   }
 
-  public async getScore(languageName: string, date: Date): Promise<number> {
-    let url = this.buildUrl(date, languageName);
+  // Get the number of tags between fromDate (inclusive) and toDate (exclusive)
+  public async getScore(
+    languageName: string,
+    fromDate: Date,
+    toDate: Date
+  ): Promise<number> {
+    let url = this.buildUrl(languageName, fromDate, toDate);
     let body = await this.callApi(url);
 
     StackOverflow.handleApiLimits(body);
@@ -32,10 +37,11 @@ export default class StackOverflow {
     return body.total;
   }
 
-  private buildUrl(date: Date, languageName: string): string {
+  private buildUrl(languageName: string, fromDate: Date, toDate: Date): string {
     let url = util.format(
       API_URL,
-      StackOverflow.encodeDate(date),
+      StackOverflow.encodeDate(fromDate),
+      StackOverflow.encodeDate(toDate),
       StackOverflow.encodeLanguageName(languageName)
     );
     url = this.addApiKey(url);
@@ -80,9 +86,7 @@ export default class StackOverflow {
             console.warn(
               'Warning: Stackoverflow API daily limit exceeded or API key incorrect'
             );
-          }
-          // TODO: We may be able to remove this if statement now that we're not making parallel API requests
-          else if (response.statusCode === 503) {
+          } else if (response.statusCode === 503) {
             // Stackoverflow might throw a 503 if it feels there are too many requests
             console.warn(
               'Warning: Stackoverflow API returned 503; wait a bit and try again'
@@ -116,7 +120,6 @@ export default class StackOverflow {
       });
 
       request.on('error', (err: NodeJS.ErrnoException) => {
-        // TODO: We may be able to remove this if statement now that we're not making parallel API requests
         // Stack Overflow might close the connection for any outstanding requests and return a 503 for new ones if it
         // feels there are too many requests
         if (err.code === 'ECONNRESET') {
