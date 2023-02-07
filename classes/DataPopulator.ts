@@ -55,7 +55,10 @@ export default class DataPopulator {
   // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
   private oldestDate = new Date('2008-02-01');
 
-  constructor() {
+  /**
+   * @param oldestDate - Oldest date to use for populating languages (used for testing)
+   */
+  constructor(oldestDate?: Date) {
     if (!process.env.GITHUB_API_KEY) {
       throw new Error('GITHUB_API_KEY must be set');
     }
@@ -63,6 +66,7 @@ export default class DataPopulator {
     this.firstDayOfMonth = DataPopulator.getFirstDayOfMonthUTC();
     this.github = new GitHub(process.env.GITHUB_API_KEY);
     this.languages = [];
+    this.oldestDate = oldestDate ?? this.oldestDate;
     this.scores = [];
     this.stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY);
   }
