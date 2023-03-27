@@ -304,6 +304,11 @@
     "type": "intermediate language",
     "url": "https://github.com/SELinuxProject/cil"
   },
+  "Circom": {
+    "description": "Domain-specific language for defining arithmetic circuits that can be used to generate zero-knowledge proofs",
+    "include": false,
+    "url": "https://github.com/iden3/circom"
+  },
   "Cirru": {
     "include": false
   },
@@ -518,6 +523,10 @@
   "Dogescript": {
     "include": false
   },
+  "Dotenv": {
+    "description": "Files containing environment variables",
+    "include": false
+  },
   "DTrace": {
     "include": false
   },
@@ -596,6 +605,11 @@
     "description": "Language for Elvish shell",
     "include": false,
     "url": "https://github.com/elves/elvish"
+  },
+  "Elvish Transcript": {
+    "description": "Transcripts of Elvish shell output",
+    "include": false,
+    "url": "https://github.com/github/linguist/pull/6302"
   },
   "Emacs Lisp": {
     "include": false,
@@ -830,6 +844,10 @@
     "include": false,
     "url": "https://golang.org/ref/mod#go-mod-file"
   },
+  "Godot Resource": {
+    "description": "Resource files for Godot game engine",
+    "include": false
+  },
   "Golo": {
     "description": "A lightweight dynamic language for the JVM",
     "include": true,
@@ -1047,6 +1065,11 @@
     "description": "JavaScript files containing embedded Ruby syntax (for Rails?)",
     "include": false
   },
+  "JCL": {
+    "description": "Job Control Language is a name for scripting languages used on IBM mainframe operating systems to instruct the system on how to run a batch job or start a subsystem.",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Job_Control_Language"
+  },
   "Jest Snapshot": {
     "include": false,
     "url": "https://jestjs.io/docs/snapshot-testing"
@@ -1103,7 +1126,7 @@
   "Jupyter Notebook": {
     "include": false
   },
-  "just": {
+  "Just": {
     "description": "Language used by 'just' command runner recipe files",
     "include": false,
     "url": "https://github.com/casey/just"
@@ -1118,6 +1141,10 @@
     "include": false,
     "url": "https://github.com/mawww/kakoune"
   },
+  "KerboScript": {
+    "description": "Scripting language used for the Kerbal Space Program video game",
+    "include": false
+  },
   "KiCad Layout": {
     "include": false
   },
@@ -1126,6 +1153,11 @@
   },
   "KiCad Schematic": {
     "include": false
+  },
+  "Kickstart": {
+    "description": "Red Hat Kickstart script files",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Kickstart_(Linux)"
   },
   "Kit": {
     "include": false,
@@ -1826,6 +1858,11 @@
   "PureScript": {
     "include": true
   },
+  "Pyret": {
+    "description": "Introductory programming language for education",
+    "include": false,
+    "url": "https://github.com/brownplt/pyret-lang"
+  },
   "Python": {
     "include": true
   },
@@ -2133,6 +2170,11 @@
     "include": false,
     "url": "http://smtlib.cs.uiowa.edu/"
   },
+  "Snakemake": {
+    "description": "Specification language for data analysis workflows",
+    "include": false,
+    "url": "https://github.com/snakemake/snakemake"
+  },
   "Solidity": {
     "description": "A contract-oriented programming language for writing smart contracts",
     "include": false,
@@ -2236,6 +2278,11 @@
   },
   "SVG": {
     "include": false
+  },
+  "Sway": {
+    "description": "Smart-contract language for the Fuel blockchain",
+    "include": false,
+    "url": "https://github.com/FuelLabs/sway"
   },
   "Swift": {
     "include": true
