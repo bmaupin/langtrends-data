@@ -3,6 +3,7 @@
 import { readFile, rm, writeFile } from 'fs/promises';
 
 import DataPopulator, { Language, Score } from './DataPopulator';
+import { addMonthsUTC } from './utils';
 
 const CONDENSED_SCORES_FILE = 'scores-condensed-test.json';
 const LANGUAGES_FILE = 'languages-test.json';
@@ -10,6 +11,7 @@ const LANGUAGES_FILE = 'languages-test.json';
 const NUM_SCORES = 10;
 // Populate only half the number of languages as scores to ensure they'll be spread across more than one date
 const NUM_LANGUAGES = NUM_SCORES / 2;
+const OLDEST_DATE = new Date('2023-01-01');
 const SCORES_FILE = 'scores-test.json';
 // Adjust this as needed to allow for enough time for the tests to pass
 const TIME_TO_GET_ONE_SCORE = 2000;
@@ -17,7 +19,7 @@ const TIME_TO_GET_ONE_SCORE = 2000;
 let dataPopulator: DataPopulator;
 
 beforeAll(async () => {
-  dataPopulator = new DataPopulator(new Date('2023-01-01'));
+  dataPopulator = new DataPopulator(OLDEST_DATE);
 });
 
 afterAll(async () => {
@@ -43,9 +45,9 @@ test(
     expect(scores.length).toEqual(NUM_SCORES);
     expect(scores[0].points).toBeGreaterThan(1000);
 
-    // The latest score should be from this month
+    // The latest score should be the oldest date + 1 month
     expect(new Date(scores[scores.length - 1].date).getUTCMonth()).toEqual(
-      new Date().getUTCMonth()
+      addMonthsUTC(OLDEST_DATE, 1).getUTCMonth()
     );
     // Scores should always be from the first day of the month
     expect(new Date(scores[0].date).getUTCDate()).toEqual(1);
