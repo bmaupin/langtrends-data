@@ -1,7 +1,7 @@
 'use strict';
 
 import { readFile, writeFile } from 'fs/promises';
-import { Language, Score } from './classes/DataPopulator';
+import { Language, Score } from './src/DataPopulator';
 
 const languagesFile = 'data/languages.json';
 const scoresFile = 'data/scores-full.json';

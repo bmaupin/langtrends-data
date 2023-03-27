@@ -1,6 +1,6 @@
-import { Language } from '../classes/DataPopulator';
-import GitHub from '../classes/GitHub';
-import StackOverflow from '../classes/StackOverflow';
+import { Language } from '../src/DataPopulator';
+import GitHub from '../src/GitHub';
+import StackOverflow from '../src/StackOverflow';
 import languages from '../data/languages.json';
 import scoresFromData from '../data/scores-full.json';
 

@@ -4,13 +4,13 @@
 
 import 'dotenv/config';
 
-import GitHub from '../classes/GitHub';
-import settings from '../classes/settings.json';
-import StackOverflow from '../classes/StackOverflow';
+import GitHub from '../src/GitHub';
+import settings from '../src/settings.json';
+import StackOverflow from '../src/StackOverflow';
 
 import languages from '../data/languages.json';
 import scores from '../data/scores-full.json';
-import { Language } from '../classes/DataPopulator';
+import { Language } from '../src/DataPopulator';
 
 const oldestDate = new Date('2008-02-01');
 

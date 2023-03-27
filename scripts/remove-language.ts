@@ -1,7 +1,7 @@
 'use strict';
 
 import { readFile, writeFile } from 'fs/promises';
-import { Language, Score } from './classes/DataPopulator';
+import { Language, Score } from './src/DataPopulator';
 
 const main = async () => {
   console.log('process.argv=', process.argv);

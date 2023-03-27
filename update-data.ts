@@ -1,6 +1,6 @@
 'use strict';
 
-import DataPopulator from './classes/DataPopulator';
+import DataPopulator from './src/DataPopulator';
 
 const main = async () => {
   try {

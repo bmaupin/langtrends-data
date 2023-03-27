@@ -12,11 +12,11 @@ This repository was created from [https://github.com/bmaupin/langtrends-api](htt
    git filter-repo --path server/boot/classes
    ```
 
-1. Rename `server/boot/classes` to `classes`
+1. Rename `server/boot/classes` to `src`
 
    ```
    before=server/boot/classes
-   after=classes
+   after=src
    git filter-branch -f --prune-empty --index-filter '
        git ls-files -s $before |
        sed "s@'"$before"'@'"$after"'@" |
