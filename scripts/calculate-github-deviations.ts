@@ -12,6 +12,7 @@ import GitHub from '../src/GitHub';
 import StackOverflow from '../src/StackOverflow';
 import languages from '../data/languages.json';
 import scoresFromData from '../data/scores-full.json';
+import { convertDateToDateString, subtractMonthsUTC } from '../src/utils';
 
 const languageName = 'Swift';
 const dateString = '2023-01-01';
@@ -183,23 +184,6 @@ const calculateMax = (numbers: number[]) => {
     }
   }
   return max;
-};
-
-/**
- * Convert data into ISO 8601 formatted date string. This has the advantage of being human readable
- * and should save on storage vs. storing the whole timestamp.
- * @param date - Date
- * @returns - Date string
- */
-const convertDateToDateString = (date: Date): string => {
-  return date.toISOString().slice(0, 10);
-};
-
-const subtractMonthsUTC = (date: Date, monthsToSubtract: number): Date => {
-  // Make a copy of the date object so we don't overwrite it
-  const newDate = new Date(date);
-  newDate.setUTCMonth(newDate.getUTCMonth() - monthsToSubtract);
-  return newDate;
 };
 
 main();

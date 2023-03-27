@@ -7,6 +7,11 @@ import GitHub from './GitHub';
 import _languagesMetadata from '../data/languages-metadata.json';
 import settings from './settings.json';
 import StackOverflow from './StackOverflow';
+import {
+  addMonthsUTC,
+  convertDateToDateString,
+  subtractMonthsUTC,
+} from './utils';
 
 import 'dotenv/config';
 
@@ -33,16 +38,6 @@ export interface Score {
 }
 
 const languagesMetadata = _languagesMetadata as LanguagesMetadata;
-
-/**
- * Convert data into ISO 8601 formatted date string. This has the advantage of being human readable
- * and should save on storage vs. storing the whole timestamp.
- * @param date - Date
- * @returns - Date string
- */
-const convertDateToDateString = (date: Date): string => {
-  return date.toISOString().slice(0, 10);
-};
 
 export default class DataPopulator {
   private firstDayOfMonth: Date;
@@ -175,7 +170,7 @@ export default class DataPopulator {
         }
 
         await this.populateScoresForDate(currentDate, numScores);
-        currentDate = DataPopulator.addMonthsUTC(currentDate, 1);
+        currentDate = addMonthsUTC(currentDate, 1);
       }
       // Log the populated score count even if there are errors
     } finally {
@@ -193,21 +188,6 @@ export default class DataPopulator {
     return new Date(
       Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth())
     );
-  }
-
-  private static addMonthsUTC(date: Date, monthsToAdd: number): Date {
-    // Make a copy of the date object so we don't overwrite it
-    const newDate = new Date(date);
-    newDate.setUTCMonth(newDate.getUTCMonth() + monthsToAdd);
-    return newDate;
-  }
-
-  // Source: https://github.com/bmaupin/langtrends/blob/master/src/helpers/ApiHelper.js
-  private static subtractMonthsUTC(date: Date, monthsToSubtract: number): Date {
-    // Make a copy of the date object so we don't overwrite it
-    const newDate = new Date(date);
-    newDate.setUTCMonth(newDate.getUTCMonth() - monthsToSubtract);
-    return newDate;
   }
 
   private async populateScoresForDate(date: Date, numScores?: number) {
@@ -252,13 +232,11 @@ export default class DataPopulator {
       // repositories goes above a certain limit (about a million?). See
       // https://github.com/bmaupin/langtrends-data/issues/18 for more information
       const lastMonthPoints =
-        this.getScoreFromData(
-          DataPopulator.subtractMonthsUTC(date, 1),
-          language
-        )?.points || 0;
+        this.getScoreFromData(subtractMonthsUTC(date, 1), language)?.points ||
+        0;
       const newPoints = await this.getPointsFromApi(
         language,
-        DataPopulator.subtractMonthsUTC(date, 1),
+        subtractMonthsUTC(date, 1),
         date
       );
       let points = lastMonthPoints + newPoints;
@@ -408,10 +386,7 @@ export default class DataPopulator {
         ) {
           condensedScoresDates.push(convertDateToDateString(currentDate));
         }
-        currentDate = DataPopulator.subtractMonthsUTC(
-          currentDate,
-          intervalInMonths
-        );
+        currentDate = subtractMonthsUTC(currentDate, intervalInMonths);
       }
     }
 
