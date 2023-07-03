@@ -465,6 +465,10 @@
   "D-ObjDump": {
     "include": false
   },
+  "D2": {
+    "description": "Diagram scripting language that turns text to diagrams",
+    "include": false
+  },
   "Dafny": {
     "include": true,
     "url": "https://en.wikipedia.org/wiki/Dafny"
@@ -844,6 +848,10 @@
     "include": false,
     "url": "https://golang.org/ref/mod#go-mod-file"
   },
+  "Go Workspace": {
+    "include": false,
+    "url": "https://go.dev/blog/get-familiar-with-workspaces#workspaces"
+  },
   "Godot Resource": {
     "description": "Resource files for Godot game engine",
     "include": false
@@ -941,6 +949,10 @@
     "description": "Programming language for alternative OS Urbit",
     "include": false,
     "url": "https://urbit.org/docs/hoon"
+  },
+  "Hosts File": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Hosts_(file)"
   },
   "HTML": {
     "include": false
@@ -1334,6 +1346,11 @@
     "include": false,
     "url": "https://minecraft.fandom.com/wiki/Function"
   },
+  "MDX": {
+    "description": "Markdown with JSX",
+    "include": false,
+    "url": "https://mdxjs.com/"
+  },
   "Mercury": {
     "include": true
   },
@@ -1555,6 +1572,10 @@
     "include": false,
     "url": "https://mozilla.github.io/nunjucks/"
   },
+  "Nushell": {
+    "include": false,
+    "url": "https://www.nushell.sh/"
+  },
   "NWScript": {
     "description": "A scripting language used for developing custom game content for Neverwinter Nights",
     "include": false,
@@ -1680,6 +1701,11 @@
   },
   "P4": {
     "include": false
+  },
+  "Pact": {
+    "description": "Smart contract language",
+    "include": false,
+    "url": "https://github.com/kadena-io/pact"
   },
   "Pan": {
     "include": false
@@ -1920,6 +1946,11 @@
   },
   "Raw token data": {
     "include": false
+  },
+  "RBS": {
+    "description": "Language to describe the structure of Ruby programs",
+    "include": false,
+    "url": "https://github.com/ruby/rbs"
   },
   "RDoc": {
     "include": false,
@@ -2345,6 +2376,11 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/TI-BASIC ??"
   },
+  "TL-Verilog": {
+    "description": "Transaction-Level Verilog, a hardware description language (HDL) used to model electronic systems",
+    "include": false,
+    "url": "https://www.tl-x.org/"
+  },
   "TLA": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/TLA%2B"
@@ -2487,7 +2523,7 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Wavefront_.obj_file"
   },
-  "wdl": {
+  "WDL": {
     "description": "Workflow Description Language",
     "include": false,
     "url": "https://software.broadinstitute.org/wdl/"
@@ -2499,6 +2535,11 @@
   },
   "WebAssembly": {
     "include": false
+  },
+  "WebAssembly Interface Type": {
+    "description": "IDL (interface description language) to provide tooling for the WebAssembly Component Model",
+    "include": false,
+    "url": "https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md"
   },
   "WebIDL": {
     "include": false,
@@ -2513,6 +2554,11 @@
     "description": ".wgetrc",
     "include": false,
     "url": "https://www.gnu.org/software/wget/manual/html_node/Sample-Wgetrc.html"
+  },
+  "WGSL": {
+    "description": "WebGPU Shading Language",
+    "include": false,
+    "url": "https://www.w3.org/TR/WGSL/"
   },
   "Whiley": {
     "include": true,

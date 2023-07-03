@@ -37,10 +37,10 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
 
 #### Adding languages to `languages-metadata.json`
 
-1. Run update-languages to get the list of missing languages
+1. Run validate-languages to get the list of missing languages
 
    ```
-   npm run update-languages
+   npm run validate-languages
    ```
 
 1. Identify the language
@@ -69,7 +69,7 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
 
 1. Add the language to `languages-metadata.json`
 
-   - The name should exactly match the output from `update-languages` (including the case)
+   - The name should exactly match the output from `validate-languages` (including the case)
    - `include` is the only required attribute
 
      > ⚠ If `include` is set to `true`, check [StackOverflow tags](https://stackoverflow.com/tags) to see if `stackoverflowTag` needs to be set
