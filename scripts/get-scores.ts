@@ -1,3 +1,9 @@
+// Get scores for a particular language and date, plus previous scores as desired
+//
+// To run:
+// 1. Adjust the language, date, and number of scores
+// 2. npx ts-node scripts/get-scores.ts
+
 import { Language } from '../src/DataPopulator';
 import GitHub from '../src/GitHub';
 import StackOverflow from '../src/StackOverflow';
@@ -9,8 +15,9 @@ import 'dotenv/config';
 
 const oldestDate = new Date('2008-02-01');
 
-const languageName = 'C++';
-const dateString = '2023-02-01';
+const languageName = 'ColdFusion';
+const dateString = '2023-09-01';
+// Get this many scores total, starting with the above date and then getting older scores
 const numScores = 2;
 
 const main = async () => {

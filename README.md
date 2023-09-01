@@ -108,3 +108,7 @@ If a language has changed on GitHub or Stack Overflow:
    ```
 
 1. Commit changes to the `data` directory
+
+#### Troubleshooting
+
+See [docs/troubleshooting.md](docs/troubleshooting.md)
