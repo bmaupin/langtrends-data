@@ -205,6 +205,12 @@
     "include": false
   },
   "Bluespec": {
+    "description": "Hardware description langauge",
+    "include": false,
+    "url": "https://github.com/B-Lang-org/bsc"
+  },
+  "Bluespec BH": {
+    "description": "A different Bluespec syntax",
     "include": false
   },
   "Boo": {
@@ -871,6 +877,9 @@
     "url": "http://gracelang.org"
   },
   "Gradle": {
+    "include": false
+  },
+  "Gradle Kotlin DSL": {
     "include": false
   },
   "Grammatical Framework": {
@@ -2014,6 +2023,10 @@
   "REXX": {
     "include": true
   },
+  "Rez": {
+    "description": "Language for generating resources for classic MacOS applications",
+    "include": false
+  },
   "Rich Text Format": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Rich_Text_Format"
@@ -2315,6 +2328,10 @@
     "include": false,
     "url": "https://github.com/FuelLabs/sway"
   },
+  "Sweave": {
+    "description": "A prose language for literate programming with the R statistical software language. Precursor to Rmarkdown, a supported language. Mixes R code with TeX documentation. Present in documentation of many R language repositories.",
+    "include": false
+  },
   "Swift": {
     "include": true
   },
@@ -2426,6 +2443,11 @@
   },
   "TypeScript": {
     "include": true
+  },
+  "Typst": {
+    "description": "Markup-based typesetting system that is designed to be as powerful as LaTeX while being much easier to learn and use",
+    "include": false,
+    "url": "https://github.com/typst/typst"
   },
   "Unified Parallel C": {
     "include": false
