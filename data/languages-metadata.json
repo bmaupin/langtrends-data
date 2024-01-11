@@ -589,6 +589,10 @@
     "include": false,
     "url": "https://editorconfig.org/"
   },
+  "EdgeQL": {
+    "description": "Query language for EdgeDB",
+    "include": false
+  },
   "Edje Data Collection": {
     "description": "Data file containing instructions for Enlightenment window manager's Edje Compiler",
     "extension": ".edc",
@@ -820,6 +824,11 @@
     "description": "Type-safe language that runs on the BEAM (Erlang) virtual machine",
     "include": true,
     "url": "https://github.com/gleam-lang/gleam/"
+  },
+  "Glimmer JS": {
+    "description": "JavaScript extensions for Glimmer.js framework",
+    "include": false,
+    "url": "https://github.com/glimmerjs/glimmer.js"
   },
   "GLSL": {
     "include": false,
@@ -1220,6 +1229,10 @@
   "Lean": {
     "include": false,
     "url": "https://leanprover.github.io/"
+  },
+  "Lean 4": {
+    "include": false,
+    "url": "https://github.com/leanprover/lean4"
   },
   "Less": {
     "include": false
@@ -1834,6 +1847,11 @@
     "include": false,
     "type": "domain-specific language"
   },
+  "Praat": {
+    "description": "Scripting language for Praat speech analysis tool",
+    "include": false,
+    "url": "https://github.com/praat/praat"
+  },
   "Prisma": {
     "description": "Prisma database schema definition files",
     "include": false,
@@ -2364,6 +2382,11 @@
     "include": true,
     "url": "http://terralang.org/"
   },
+  "Terraform Template": {
+    "description": "Templating language for Terraform",
+    "include": false,
+    "url": "https://github.com/hashicorp/terraform"
+  },
   "TeX": {
     "include": false
   },
@@ -2401,6 +2424,11 @@
   "TLA": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/TLA%2B"
+  },
+  "Toit": {
+    "description": "High-level language designed specifically for microcontrollers",
+    "include": false,
+    "url": "https://github.com/toitlang/toit"
   },
   "TOML": {
     "include": false,
