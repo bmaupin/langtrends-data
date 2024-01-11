@@ -773,13 +773,13 @@
     "include": false,
     "url": "https://gemini.circumlunar.space/"
   },
-  "Genero": {
+  "Genero 4gl": {
     "description": "Genero Business Development Language (BDL) is a program language designed to write an interactive database application. This language is the evolution of the language Informix 4GL.",
     "include": false,
     "url": "https://4js.com/"
   },
-  "Genero Forms": {
-    "description": "Genero Forms is a markup for Genero",
+  "Genero per": {
+    "description": "Markup for Genero, also known as Genero Forms",
     "include": false
   },
   "Genie": {
