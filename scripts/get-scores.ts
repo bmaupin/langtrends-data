@@ -13,12 +13,12 @@ import { convertDateToDateString, subtractMonthsUTC } from '../src/utils';
 
 import 'dotenv/config';
 
-const oldestDate = new Date('2008-02-01');
-
 const languageName = 'ColdFusion';
-const dateString = '2023-09-01';
+const dateString = '2024-05-01';
 // Get this many scores total, starting with the above date and then getting older scores
-const numScores = 2;
+const numScores = 1;
+
+const oldestDate = new Date('2008-02-01');
 
 const main = async () => {
   const language = getLanguage(languageName);
