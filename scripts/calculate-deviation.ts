@@ -4,6 +4,7 @@
 
 import 'dotenv/config';
 
+import { oldestDate } from '../src/consts';
 import GitHub from '../src/GitHub';
 import settings from '../src/settings.json';
 import StackOverflow from '../src/StackOverflow';
@@ -11,8 +12,6 @@ import StackOverflow from '../src/StackOverflow';
 import languages from '../data/languages.json';
 import scores from '../data/scores-full.json';
 import { Language } from '../src/DataPopulator';
-
-const oldestDate = new Date('2008-02-01');
 
 const main = async () => {
   let currentDate = '2008-02-01';

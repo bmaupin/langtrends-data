@@ -15,6 +15,14 @@ export const convertDateToDateString = (date: Date): string => {
   return date.toISOString().slice(0, 10);
 };
 
+// Get a date representing the first day of the current month based on UTC; that is to say
+// if the local day is 2024-03-31 and UTC is 2024-04-01, it should return 2024-04-01
+export const getFirstDayOfMonthUTC = (): Date => {
+  return new Date(
+    Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth())
+  );
+};
+
 // Source: https://github.com/bmaupin/langtrends/blob/master/src/helpers/ApiHelper.js
 export const subtractMonthsUTC = (
   date: Date,

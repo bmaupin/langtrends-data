@@ -68,7 +68,7 @@ export default class StackOverflow {
     return url;
   }
 
-  private async callApi(url: string) {
+  private async callApi(url: string): Promise<StackOverflowData> {
     const options = new URL(url);
     const bodyJson = await this.httpsRequest(options);
     return JSON.parse(bodyJson);
@@ -106,6 +106,9 @@ export default class StackOverflow {
               zlib.gunzip(Buffer.concat(body), (error, uncompressedData) => {
                 resolve(uncompressedData.toString());
               });
+              break;
+            case undefined:
+              resolve(Buffer.concat(body).toString());
               break;
             default:
               // If we get here it's likely due to another issue, normally a 503 error due to too many requests
