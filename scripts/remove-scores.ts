@@ -1,7 +1,13 @@
-'use strict';
+// Remove all scores for a language without removing the language so the scores can be
+// re-calculated
+//
+// To run:
+// npx ts-node scripts/remove-scores.ts LANGUAGE
+// e.g.
+// npx ts-node scripts/remove-scores.ts "Standard ML"
 
 import { readFile, writeFile } from 'fs/promises';
-import { Language, Score } from './src/DataPopulator';
+import { Language, Score } from '../src/DataPopulator';
 
 const languagesFile = 'data/languages.json';
 const scoresFile = 'data/scores-full.json';

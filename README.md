@@ -94,7 +94,7 @@ If a language has changed on GitHub or Stack Overflow:
 1. If the language was removed (`include` was previously set to `true`) or `stackoverflowTag` was changed, remove all scores for that language from `scores-full.json`
 
    ```
-   npm run remove-scores PureBasic
+   npx ts-node scripts/remove-scores.ts "Standard ML"
    ```
 
 1. If the language was removed (`include` was previously set to `true`), remove the language from `languages.json` manually
