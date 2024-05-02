@@ -4,6 +4,7 @@
 // 1. Adjust the language, date, and number of scores
 // 2. npx ts-node scripts/get-scores.ts
 
+import { oldestDate } from '../src/consts';
 import { Language } from '../src/DataPopulator';
 import GitHub from '../src/GitHub';
 import StackOverflow from '../src/StackOverflow';
@@ -17,8 +18,6 @@ const languageName = 'CoffeeScript';
 const dateString = '2024-05-01';
 // Get this many scores total, starting with the above date and then getting older scores
 const numScores = 1;
-
-const oldestDate = new Date('2008-02-01');
 
 const main = async () => {
   const language = getLanguage(languageName);

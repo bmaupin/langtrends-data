@@ -3,6 +3,7 @@
 import { readFile, writeFile } from 'fs/promises';
 import fetch from 'node-fetch';
 
+import { oldestDate } from './consts';
 import GitHub from './GitHub';
 import _languagesMetadata from '../data/languages-metadata.json';
 import settings from './settings.json';
@@ -45,16 +46,14 @@ export default class DataPopulator {
   private github: GitHub;
   private languages: Language[];
   private languagesFromGithub?: string[];
+  private oldestDate: Date;
   private scores: Score[];
   private stackoverflow: StackOverflow;
 
-  // The oldest date with data is 2007-11-01 but no languages have a score > 1 before 2008-02-01
-  private oldestDate = new Date('2008-02-01');
-
   /**
-   * @param oldestDate - Oldest date to use for populating languages (used for testing)
+   * @param oldestDateOverride - Oldest date to use for populating languages (used for testing)
    */
-  constructor(oldestDate?: Date) {
+  constructor(oldestDateOverride?: Date) {
     if (!process.env.GITHUB_API_KEY) {
       throw new Error('GITHUB_API_KEY must be set');
     }
@@ -62,7 +61,7 @@ export default class DataPopulator {
     this.firstDayOfMonth = getFirstDayOfMonthUTC();
     this.github = new GitHub(process.env.GITHUB_API_KEY);
     this.languages = [];
-    this.oldestDate = oldestDate ?? this.oldestDate;
+    this.oldestDate = oldestDateOverride ?? oldestDate;
     this.scores = [];
     this.stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY);
   }
