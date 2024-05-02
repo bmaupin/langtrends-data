@@ -13,7 +13,7 @@ import { convertDateToDateString, subtractMonthsUTC } from '../src/utils';
 
 import 'dotenv/config';
 
-const languageName = 'ColdFusion';
+const languageName = 'CoffeeScript';
 const dateString = '2024-05-01';
 // Get this many scores total, starting with the above date and then getting older scores
 const numScores = 1;

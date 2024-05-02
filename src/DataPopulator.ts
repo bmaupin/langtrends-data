@@ -10,6 +10,7 @@ import StackOverflow from './StackOverflow';
 import {
   addMonthsUTC,
   convertDateToDateString,
+  getFirstDayOfMonthUTC,
   subtractMonthsUTC,
 } from './utils';
 
@@ -58,7 +59,7 @@ export default class DataPopulator {
       throw new Error('GITHUB_API_KEY must be set');
     }
 
-    this.firstDayOfMonth = DataPopulator.getFirstDayOfMonthUTC();
+    this.firstDayOfMonth = getFirstDayOfMonthUTC();
     this.github = new GitHub(process.env.GITHUB_API_KEY);
     this.languages = [];
     this.oldestDate = oldestDate ?? this.oldestDate;
@@ -182,12 +183,6 @@ export default class DataPopulator {
     this.sortScores();
 
     await writeFile(scoresFile, JSON.stringify(this.scores, null, 2));
-  }
-
-  private static getFirstDayOfMonthUTC(): Date {
-    return new Date(
-      Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth())
-    );
   }
 
   private async populateScoresForDate(date: Date, numScores?: number) {
@@ -340,7 +335,7 @@ export default class DataPopulator {
   public async populateCondensedScores(condensedScoresFile: string) {
     // Get settings from the frontend
     const response = await fetch(
-      'https://raw.githubusercontent.com/bmaupin/langtrends/master/src/settings.json'
+      'https://raw.githubusercontent.com/bmaupin/langtrends/main/src/settings.json'
     );
     const uiSettings = await response.json();
 

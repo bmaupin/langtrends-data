@@ -3,7 +3,11 @@
 import { readFile, rm, writeFile } from 'fs/promises';
 
 import DataPopulator, { Language, Score } from './DataPopulator';
-import { addMonthsUTC } from './utils';
+import {
+  addMonthsUTC,
+  getFirstDayOfMonthUTC,
+  subtractMonthsUTC,
+} from './utils';
 
 const CONDENSED_SCORES_FILE = 'scores-condensed-test.json';
 const LANGUAGES_FILE = 'languages-test.json';
@@ -17,6 +21,13 @@ const SCORES_FILE = 'scores-test.json';
 const TIME_TO_GET_ONE_SCORE = 2000;
 
 let dataPopulator: DataPopulator;
+
+beforeAll(async () => {
+  // Clean up any test files left over from previous tests; "force: true" will ignore errors
+  await rm(LANGUAGES_FILE, { force: true });
+  await rm(SCORES_FILE, { force: true });
+  await rm(CONDENSED_SCORES_FILE, { force: true });
+});
 
 describe('Tests with generated languages file', () => {
   beforeAll(() => {
@@ -51,41 +62,54 @@ describe('Tests with generated languages file', () => {
   );
 
   afterAll(async () => {
-    // Wipe scores and languages files for a clean slate
+    // Clean up to avoid an impact on other tests that use the same files
     await rm(LANGUAGES_FILE);
     await rm(SCORES_FILE);
   });
 });
 
+// These tests need the languages file to be hard-coded for more predictability since the
+// languages from GitHub will in theory change order as their popularity changes
 describe('Tests with hard-coded languages file', () => {
-  beforeAll(async () => {
-    dataPopulator = new DataPopulator(new Date('2023-01-01'));
+  beforeAll(
+    async () => {
+      // Set the oldest date based on number of scores and languages to make sure we get enough scores
+      dataPopulator = new DataPopulator(
+        subtractMonthsUTC(
+          getFirstDayOfMonthUTC(),
+          NUM_SCORES / NUM_LANGUAGES - 1
+        )
+      );
 
-    // Now hard-code the language file for more predictability for the other tests, since
-    // the languages from GitHub will in theory change order as their popularity changes
-    await writeFile(
-      LANGUAGES_FILE,
-      JSON.stringify([
-        { id: 1, name: 'C' },
-        { id: 2, name: 'C#' },
-        { id: 3, name: 'C++' },
-        { id: 4, name: 'CoffeeScript' },
-        { id: 5, name: 'Dart' },
-      ])
-    );
-    // This is still needed to populate the languages from the file in the object
-    await dataPopulator.populateLanguages(LANGUAGES_FILE, NUM_LANGUAGES);
+      await writeFile(
+        LANGUAGES_FILE,
+        JSON.stringify([
+          { id: 1, name: 'C' },
+          { id: 2, name: 'C#' },
+          { id: 3, name: 'C++' },
+          { id: 4, name: 'CoffeeScript' },
+          { id: 5, name: 'Dart' },
+        ])
+      );
+      // This is still needed to populate the languages from the file in the object
+      await dataPopulator.populateLanguages(LANGUAGES_FILE, NUM_LANGUAGES);
 
-    // Re-create the scores file
-    await dataPopulator.populateAllScores(SCORES_FILE, NUM_SCORES);
-  }, 10000);
+      // Re-create the scores file
+      await dataPopulator.populateAllScores(SCORES_FILE, NUM_SCORES);
+    },
+    // Adjust test timeout based on number of scores we're getting
+    TIME_TO_GET_ONE_SCORE * NUM_SCORES
+  );
 
   test('Test populateCondensedScores', async () => {
     await dataPopulator.populateCondensedScores(CONDENSED_SCORES_FILE);
     const scores = JSON.parse(
       await readFile(CONDENSED_SCORES_FILE, 'utf8')
     ) as Score[];
-    // The CoffeeScript scores shouldn't be included in the file
+
+    // The score for a language is typically calculated per month and then adding that
+    // value to the previous month. Because of this, the scores for CoffeeScript will be
+    // so low that they shouldn't be included in the file
     expect(scores.length).toEqual(8);
   });
 
