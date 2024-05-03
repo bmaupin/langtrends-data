@@ -589,6 +589,11 @@
     "include": false,
     "url": "https://editorconfig.org/"
   },
+  "Edge": {
+    "description": "Template language used by AdonisJS JavaScript app framework",
+    "include": false,
+    "url": "https://github.com/edge-js/edge"
+  },
   "EdgeQL": {
     "description": "Query language for EdgeDB",
     "include": false
@@ -827,6 +832,11 @@
   },
   "Glimmer JS": {
     "description": "JavaScript extensions for Glimmer.js framework",
+    "include": false,
+    "url": "https://github.com/glimmerjs/glimmer.js"
+  },
+  "Glimmer TS": {
+    "description": "TypeScript flavour of Glimmer JS",
     "include": false,
     "url": "https://github.com/glimmerjs/glimmer.js"
   },
@@ -1440,6 +1450,10 @@
     "description": "HPE Module Management System for OpenVMS",
     "include": false
   },
+  "Mojo": {
+    "include": true,
+    "url": "https://github.com/modularml/mojo"
+  },
   "Monkey": {
     "include": false,
     "type": "video game programming language"
@@ -1621,6 +1635,10 @@
     "description": "OpenAPI v3 specification (YAML)",
     "include": false
   },
+  "Oberon": {
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/Oberon_(programming_language)"
+  },
   "ObjDump": {
     "include": false
   },
@@ -1791,6 +1809,10 @@
   },
   "Pike": {
     "include": true
+  },
+  "Pip Requirements": {
+    "description": "Text file that lists requirements for the pip install command",
+    "include": false
   },
   "PlantUML": {
     "include": false,
@@ -2067,6 +2089,11 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Robots_exclusion_standard"
   },
+  "Roc": {
+    "description": "Functional language, direct descendant of Elm",
+    "include": true,
+    "url": "https://github.com/roc-lang/roc"
+  },
   "Roff": {
     "include": false
   },
@@ -2203,6 +2230,11 @@
     "description": "Ruby templating language",
     "include": false,
     "url": "http://slim-lang.com/"
+  },
+  "Slint": {
+    "description": "Slint is a declarative GUI toolkit to build native user interfaces for desktop and embedded applications written in Rust, C++, or JavaScript",
+    "include": false,
+    "url": "https://github.com/slint-ui/slint/"
   },
   "Smali": {
     "description": "Disassembled Dalvik bytecode",
@@ -2398,6 +2430,11 @@
   "Text": {
     "description": "Plain text",
     "include": false
+  },
+  "TextGrid": {
+    "description": "Text-based data format used in linguistic research for aligning text with audio",
+    "include": false,
+    "url": "https://www.fon.hum.uva.nl/praat/manual/TextGrid_file_formats.html"
   },
   "Textile": {
     "include": false,
