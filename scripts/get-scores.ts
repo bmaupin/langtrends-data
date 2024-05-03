@@ -14,10 +14,10 @@ import { convertDateToDateString, subtractMonthsUTC } from '../src/utils';
 
 import 'dotenv/config';
 
-const languageName = 'CoffeeScript';
+const languageName = 'Standard ML';
 const dateString = '2024-05-01';
 // Get this many scores total, starting with the above date and then getting older scores
-const numScores = 1;
+const numScores = 5;
 
 const main = async () => {
   const language = getLanguage(languageName);

@@ -261,6 +261,8 @@ export default class DataPopulator {
         );
       }
 
+      // TODO: Should we also try to catch abnormal increases in score? This has happened at least on one occasion and the data had to be re-calculated as a result
+
       await this.upsertScore(date, language, points);
     }
   }
