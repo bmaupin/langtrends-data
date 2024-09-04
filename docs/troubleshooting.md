@@ -1,6 +1,8 @@
 # Troubleshooting
 
-#### Update data fails
+## Update data fails
+
+#### Failing due to score deviation
 
 1. Re-run the script
 
@@ -32,7 +34,36 @@
 
 1. If the scores don't need to be re-calculated, the error-checking logic may need to be adjusted. See `populateScore` in [DataPopulator.ts](../src/DataPopulator.ts).
 
-#### Re-calculate scores
+#### Failing for another reason
+
+Try updating just one score to isolate the problem
+
+1. Edit [get-scores.ts](../scripts/get-scores.ts) for that particular language and date
+
+   - `languageName` can be anything
+   - Set `dateString` to the failing date
+   - Set `numScores` to `1`
+
+1. Run [get-scores.ts](../scripts/get-scores.ts)
+
+   (See the instructions in the file)
+
+#### Call StackOverflow API directly for troubleshooting
+
+1. Generate the unix epoch formatted dates using JavaScript
+
+   ```javascript
+   Math.floor(new Date('2024-08-01') / 1000);
+   Math.floor(new Date('2024-09-01') / 1000);
+   ```
+
+1. Call the StackOverflow API, e.g.
+
+   [https://api.stackexchange.com/2.2/search?fromdate=1722470400&todate=1725148800&site=stackoverflow&tagged=typescript&filter=!.UE8F0bVg4M-\_Ii4](https://api.stackexchange.com/2.2/search?fromdate=1722470400&todate=1725148800&site=stackoverflow&tagged=typescript&filter=!.UE8F0bVg4M-_Ii4)
+
+   - To call with an API key, add `&key=` followed by the key to the end of the URL
+
+## Re-calculate scores
 
 1. If you want to update the scores for the language without adding newer scores, edit the `DataPopulator` constructor in [DataPopulator.ts](../src/DataPopulator.ts). and set it to the newest date in scores-full.json, e.g.
 
