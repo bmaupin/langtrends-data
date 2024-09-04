@@ -15,7 +15,7 @@ import { convertDateToDateString, subtractMonthsUTC } from '../src/utils';
 import 'dotenv/config';
 
 const languageName = 'Standard ML';
-const dateString = '2024-05-01';
+const dateString = '2024-09-01';
 // Get this many scores total, starting with the above date and then getting older scores
 const numScores = 5;
 

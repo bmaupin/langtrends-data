@@ -1,7 +1,6 @@
 'use strict';
 
 import https from 'https';
-import { URL } from 'url';
 import util from 'util';
 import zlib from 'zlib';
 
@@ -69,15 +68,23 @@ export default class StackOverflow {
   }
 
   private async callApi(url: string): Promise<StackOverflowData> {
-    const options = new URL(url);
-    const bodyJson = await this.httpsRequest(options);
+    const options = {
+      headers: {
+        // Stackoverflow API now requires a user agent
+        'User-Agent': 'node.js',
+      },
+    };
+    const bodyJson = await this.httpsRequest(options, url);
     return JSON.parse(bodyJson);
   }
 
   // Based on https://stackoverflow.com/a/38543075/399105
-  private httpsRequest(options: https.RequestOptions): Promise<string> {
+  private httpsRequest(
+    options: https.RequestOptions,
+    url: string
+  ): Promise<string> {
     return new Promise((resolve, reject) => {
-      const request = https.request(options, async (response) => {
+      const request = https.request(url, options, async (response) => {
         if (
           response.statusCode &&
           (response.statusCode < 200 || response.statusCode >= 300)
@@ -92,7 +99,14 @@ export default class StackOverflow {
               'Warning: Stackoverflow API returned 503; wait a bit and try again'
             );
           }
-          reject(new Error('statusCode=' + response.statusCode));
+          reject(
+            new Error(
+              `statusCode=${response.statusCode}, URL=${url.replace(
+                this.apiKey || '',
+                'REDACTED'
+              )}`
+            )
+          );
         }
 
         const body = [] as Buffer[];
