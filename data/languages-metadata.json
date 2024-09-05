@@ -90,7 +90,8 @@
     "stackoverflowTag": "apiblueprint"
   },
   "APL": {
-    "include": true
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/APL_(programming_language)"
   },
   "Apollo Guidance Computer": {
     "include": false
@@ -150,6 +151,10 @@
   },
   "Awk": {
     "include": true
+  },
+  "B4X": {
+    "include": true,
+    "url": "https://en.wikipedia.org/wiki/B4X"
   },
   "Ballerina": {
     "include": true,
@@ -221,6 +226,10 @@
     "type": "intermediate verification language",
     "url": "https://github.com/boogie-org/boogie/"
   },
+  "BQN": {
+    "include": true,
+    "url": "https://github.com/mlochbaum/BQN"
+  },
   "Brainfuck": {
     "include": false
   },
@@ -264,10 +273,18 @@
     "include": false,
     "url": "https://github.com/onflow/cadence"
   },
+  "Caddyfile": {
+    "description": "Configuration file for Caddy web server",
+    "include": false
+  },
   "Cairo": {
     "description": "Programming language for StarkNet",
     "include": false,
     "url": "https://github.com/starkware-libs/cairo-lang"
+  },
+  "Cairo Zero": {
+    "description": "Pre 1.0 release version of Cairo programming language",
+    "include": false
   },
   "CameLIGO": {
     "description": "One of the dialects of LigoLANG",
@@ -281,6 +298,11 @@
   },
   "Cap'n Proto": {
     "include": false
+  },
+  "Carbon": {
+    "description": "Experimental successor to C++",
+    "include": true,
+    "url": "https://github.com/carbon-language/carbon-lang"
   },
   "CartoCSS": {
     "include": false
@@ -406,6 +428,11 @@
   "Creole": {
     "include": false
   },
+  "crontab": {
+    "description": "crontab files for cron",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Cron"
+  },
   "Crystal": {
     "include": true,
     "stackoverflowTag": "crystal-lang"
@@ -456,6 +483,11 @@
   },
   "Cycript": {
     "include": false
+  },
+  "Cylc": {
+    "description": "General purpose workflow engine that also manages cycling systems very efficiently",
+    "include": false,
+    "url": "https://github.com/cylc/cylc-flow"
   },
   "Cypher": {
     "description": "Query language for property graph databases",
@@ -539,6 +571,11 @@
   },
   "DTrace": {
     "include": false
+  },
+  "Dune": {
+    "description": "Build system for OCaml",
+    "include": false,
+    "url": "https://dune.readthedocs.io"
   },
   "Dylan": {
     "include": true
@@ -690,6 +727,11 @@
     "extension": ".fs",
     "include": false,
     "url": "https://en.wikipedia.org/wiki/RenderScript"
+  },
+  "FIRRTL": {
+    "description": "Hardware description language that compiles to Verilog",
+    "include": false,
+    "url": "https://github.com/chipsalliance/chisel"
   },
   "fish": {
     "include": false,
@@ -1017,6 +1059,10 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/HYPHY_(software)"
   },
+  "iCalendar": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/ICalendar"
+  },
   "IDL": {
     "include": true
   },
@@ -1098,6 +1144,11 @@
     "include": false,
     "stackoverflowTag": "jsp"
   },
+  "Java Template Engine": {
+    "description": "Template engine for Java and Kotlin",
+    "include": false,
+    "url": "https://jte.gg/"
+  },
   "JavaScript": {
     "include": true
   },
@@ -1162,6 +1213,9 @@
   },
   "Julia": {
     "include": true
+  },
+  "Julia REPL": {
+    "include": false
   },
   "Jupyter Notebook": {
     "include": false
@@ -1286,6 +1340,11 @@
   "Literate Haskell": {
     "include": false
   },
+  "LiveCode Script": {
+    "description": "Lanugage used by LiveCode, a cross-platform application development environment",
+    "include": true,
+    "url": "https://livecode.com/"
+  },
   "LiveScript": {
     "include": true
   },
@@ -1319,6 +1378,11 @@
   },
   "Lua": {
     "include": true
+  },
+  "Luau": {
+    "description": "Embeddable scripting language derived from Lua",
+    "include": false,
+    "url": "https://github.com/luau-lang/luau"
   },
   "M": {
     "include": true,
@@ -1589,6 +1653,16 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Nl_(format)"
   },
+  "NMODL": {
+    "description": "NEURON extension to MODL, a model description language used within the neuroscientific community",
+    "include": false,
+    "url": "https://www.neuron.yale.edu/neuron/static/py_doc/modelspec/programmatic/mechanisms/nmodl2.html"
+  },
+  "Noir": {
+    "description": "Domain Specific Language for SNARK proving systems",
+    "include": false,
+    "url": "https://github.com/noir-lang/noir"
+  },
   "NPM Config": {
     "include": false,
     "url": "https://docs.npmjs.com/cli/v7/configuring-npm/npmrc"
@@ -1813,6 +1887,11 @@
   "Pip Requirements": {
     "description": "Text file that lists requirements for the pip install command",
     "include": false
+  },
+  "Pkl": {
+    "description": "Configuration as code language",
+    "include": false,
+    "url": "https://github.com/apple/pkl"
   },
   "PlantUML": {
     "include": false,
@@ -2101,6 +2180,11 @@
     "description": "Man pages generated by roff?",
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Roff_(software)"
+  },
+  "RON": {
+    "description": "Data serialization format that looks similar to Rust syntax",
+    "include": false,
+    "url": "https://github.com/ron-rs/ron"
   },
   "Rouge": {
     "include": true
@@ -2409,6 +2493,11 @@
     "include": true,
     "url": "https://en.wikipedia.org/wiki/Tea_(programming_language)"
   },
+  "templ": {
+    "description": "HTML templating language for Go",
+    "include": false,
+    "url": "https://github.com/a-h/templ"
+  },
   "Terra": {
     "description": "Low-level system programming language that is embedded in and meta-programmed by the Lua programming language",
     "include": true,
@@ -2554,6 +2643,11 @@
   "VBScript": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/VBScript"
+  },
+  "vCard": {
+    "description": "File format standard for electronic business cards",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/VCard"
   },
   "VCL": {
     "description": "Varnish Configuration Language",
