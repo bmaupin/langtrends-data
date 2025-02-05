@@ -760,7 +760,7 @@
     "description": "A different format of Fotran with no results in GitHub search",
     "include": false
   },
-  "FreeBasic": {
+  "FreeBASIC": {
     "include": true,
     "url": "https://en.wikipedia.org/wiki/FreeBASIC"
   },

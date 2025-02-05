@@ -89,19 +89,19 @@ If a language has changed on GitHub or Stack Overflow:
 
 1. Go to [Stack Overflow tags](https://stackoverflow.com/tags) and find the appropriate tag
 
-1. Update the language in `languages-metadata.json`
+1. Update the language in [`languages-metadata.json`](data/languages-metadata.json)
 
-1. If the language was removed (`include` was previously set to `true`) or `stackoverflowTag` was changed, remove all scores for that language from `scores-full.json`
+1. If the language was removed (`include` was previously set to `true`) or `stackoverflowTag` was changed, remove all scores for that language from [`scores-full.json`](data/scores-full.json)
 
    ```
    npx ts-node scripts/remove-scores.ts "Standard ML"
    ```
 
-1. If the language was removed (`include` was previously set to `true`), remove the language from `languages.json` manually
+1. If the language was removed (`include` was previously set to `true`), remove the language from [`languages.json`](data/languages.json) manually
 
-1. If the language was renamed, manually update the old language in `languages.json` with the new name
+1. If the language was renamed, manually update the old language in [`languages.json`](data/languages.json) with the new name
 
-1. Run `update-data` to update `languages.json` and `scores.json`
+1. Run `update-data` to update [`languages.json`](data/languages.json) and [`scores.json`](data/scores.json)
 
    ```
    npm run update-data
