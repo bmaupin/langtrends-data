@@ -988,6 +988,11 @@
     "include": true,
     "url": "https://harbour.github.io/"
   },
+  "Hare": {
+    "description": "Systems programming language designed to be simple, stable, and robust",
+    "include": true,
+    "url": "https://harelang.org/"
+  },
   "Haskell": {
     "include": true
   },
@@ -1530,6 +1535,11 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/MOO"
   },
+  "MoonBit": {
+    "description": "Programming language that is user-friendly, builds fast, and produces high quality output",
+    "include": true,
+    "url": "https://www.moonbitlang.com/"
+  },
   "MoonScript": {
     "include": true
   },
@@ -1746,6 +1756,16 @@
   },
   "Omgrofl": {
     "include": false
+  },
+  "omnetpp-msg": {
+    "description": "DSL for the OMNeT++ network simulator",
+    "include": false,
+    "url": "https://omnetpp.org/"
+  },
+  "omnetpp-ned": {
+    "description": "DSL for the OMNeT++ network simulator",
+    "include": false,
+    "url": "https://omnetpp.org/"
   },
   "ooc": {
     "description": "Small programming language that compiles to C99",
@@ -2051,6 +2071,10 @@
     "description": "Scripting language used by Critical Mass Modula-3",
     "include": false,
     "url": "https://github.com/modula3/cm3/blob/master/docs/help/cm3/quake.html"
+  },
+  "QuickBASIC": {
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/QuickBASIC"
   },
   "R": {
     "include": true
@@ -2478,6 +2502,11 @@
     "include": false,
     "stackoverflowTag": "system-verilog"
   },
+  "Tact": {
+    "description": "Programming language for TON blockchain smart contracts",
+    "include": false,
+    "url": "https://github.com/tact-lang"
+  },
   "Talon": {
     "description": "Scripting language for Talon, a cross-platform hands-free input system",
     "include": false
@@ -2560,6 +2589,11 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/TOML"
   },
+  "TSPLIB data": {
+    "description": "Travelling Salemen Problem data files",
+    "include": false,
+    "url": "http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp95.pdf"
+  },
   "TSQL": {
     "description": "Microsoft/Sybase-flavoured SQL",
     "include": false,
@@ -2597,6 +2631,11 @@
   },
   "TypeScript": {
     "include": true
+  },
+  "TypeSpec": {
+    "description": "Language for defining cloud service APIs and shapes",
+    "include": false,
+    "url": "https://github.com/microsoft/typespec"
   },
   "Typst": {
     "description": "Markup-based typesetting system that is designed to be as powerful as LaTeX while being much easier to learn and use",
