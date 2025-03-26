@@ -1143,11 +1143,6 @@
   "J": {
     "include": true
   },
-  "Jai": {
-    "description": "TODO: include once compiler is released? Not-yet-released programming language designed for game development",
-    "include": false,
-    "url": "https://en.wikipedia.org/wiki/Jonathan_Blow#2017%E2%80%93present:_Jai_programming_language,_untitled_Sokoban_game,_and_Braid,_Anniversary_Edition"
-  },
   "Janet": {
     "include": true,
     "url": "https://github.com/janet-lang/janet"
