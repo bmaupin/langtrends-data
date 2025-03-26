@@ -1,7 +1,6 @@
 'use strict';
 
 import { readFile, writeFile } from 'fs/promises';
-import fetch from 'node-fetch';
 
 import { oldestDate } from './consts';
 import GitHub from './GitHub';

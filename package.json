@@ -1,7 +1,8 @@
 {
   "name": "langtrends-data",
-  "version": "0.0.1",
-  "description": "[![forthebadge](http://forthebadge.com/images/badges/as-seen-on-tv.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/built-by-neckbeards.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/contains-technical-debt.svg)](http://forthebadge.com)",
+  "engines": {
+    "node": ">=22"
+  },
   "main": "app.ts",
   "scripts": {
     "dev": "nodemon",
@@ -10,19 +11,9 @@
     "update-data": "ts-node update-data.ts",
     "validate-languages": "ts-node validate-languages.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bmaupin/langtrends-data.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bmaupin/langtrends-data/issues"
-  },
   "homepage": "https://github.com/bmaupin/langtrends-data#readme",
   "dependencies": {
     "jsdom": "^17.0.0",
-    "node-fetch": "^2.6.5",
     "node-static": "^0.7.11",
     "nodemon": "^2.0.14",
     "ts-node": "^10.2.1",
@@ -31,7 +22,6 @@
   "devDependencies": {
     "@types/jest": "^27.0.2",
     "@types/jsdom": "^16.2.13",
-    "@types/node-fetch": "^2.6.2",
     "@types/node-static": "^0.7.7",
     "dotenv": "^10.0.0",
     "jest": "^27.2.4",
