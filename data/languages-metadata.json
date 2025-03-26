@@ -66,6 +66,11 @@
   "AngelScript": {
     "include": false
   },
+  "Answer Set Programming": {
+    "description": "Logic programming paradigm",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Answer_set_programming"
+  },
   "Ant Build System": {
     "include": false,
     "stackoverflowTag": "ant"
@@ -181,6 +186,12 @@
     "url": "https://github.com/berry-lang/berry"
   },
   "BibTeX": {
+    "description": "BibText (.bib, .bibtex) files",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/BibTeX"
+  },
+  "BibTeX Style": {
+    "description": "BibText style (.bst) files",
     "include": false,
     "url": "https://en.wikipedia.org/wiki/BibTeX"
   },
@@ -1124,8 +1135,18 @@
     "include": false,
     "url": "https://isabelle.in.tum.de/doc/system.pdf"
   },
+  "ISPC": {
+    "description": "Intel Implicit SPMD Program Compiler (.ispc, .isph), a C-based language with extensions for SIMD programming",
+    "include": false,
+    "url": "https://github.com/ispc/ispc"
+  },
   "J": {
     "include": true
+  },
+  "Jai": {
+    "description": "TODO: include once compiler is released? Not-yet-released programming language designed for game development",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Jonathan_Blow#2017%E2%80%93present:_Jai_programming_language,_untitled_Sokoban_game,_and_Braid,_Anniversary_Edition"
   },
   "Janet": {
     "include": true,
@@ -1240,6 +1261,11 @@
     "include": false,
     "url": "https://github.com/mawww/kakoune"
   },
+  "KDL": {
+    "description": "Document language with XML-like node semantics",
+    "include": false,
+    "url": "https://github.com/kdl-org/kdl"
+  },
   "KerboScript": {
     "description": "Scripting language used for the Kerbal Space Program video game",
     "include": false
@@ -1325,6 +1351,11 @@
     "include": false,
     "type": "domain-specific language",
     "url": "http://limbo.cat-v.org/"
+  },
+  "Linear Programming": {
+    "description": "Mathematical models of linearly related variables",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Linear_programming"
   },
   "Linker Script": {
     "include": false
@@ -1757,12 +1788,12 @@
   "Omgrofl": {
     "include": false
   },
-  "omnetpp-msg": {
+  "OMNeT++ MSG": {
     "description": "DSL for the OMNeT++ network simulator",
     "include": false,
     "url": "https://omnetpp.org/"
   },
-  "omnetpp-ned": {
+  "OMNeT++ NED": {
     "description": "DSL for the OMNeT++ network simulator",
     "include": false,
     "url": "https://omnetpp.org/"
