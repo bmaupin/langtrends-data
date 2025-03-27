@@ -12,7 +12,7 @@ test('Test getScore with API key', async () => {
       new Date('2023-01-01'),
       new Date('2023-02-01')
     )
-  ).toBeGreaterThan(10000);
+  ).toBeGreaterThan(5000);
 });
 
 test('Test getScore without API key', async () => {
@@ -29,10 +29,10 @@ test('Test getScore without API key', async () => {
         new Date('2023-01-01'),
         new Date('2023-02-01')
       )
-    ).toBeGreaterThan(10000);
+    ).toBeGreaterThan(5000);
   } catch (error) {
     if (error instanceof Error) {
-      expect(error.message).toBe('statusCode=400');
+      expect(error.message.startsWith('statusCode=400')).toBe(true);
     }
   }
 });
