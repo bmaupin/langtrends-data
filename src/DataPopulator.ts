@@ -1,7 +1,6 @@
 'use strict';
 
 import { readFile, writeFile } from 'fs/promises';
-import fetch from 'node-fetch';
 
 import { oldestDate } from './consts';
 import GitHub from './GitHub';
@@ -153,7 +152,7 @@ export default class DataPopulator {
     this.scores = await DataPopulator.readDataFile(scoresFile);
 
     const oldScoreCount = this.scores.length;
-    // Make a copy of this.firstDayOfMonth so we don't overwrite it
+    // Make a copy of the date so we don't overwrite it
     let currentDate = new Date(this.oldestDate);
     // Useful for debugging; only populate scores for the most recent month
     // currentDate = this.firstDayOfMonth;
@@ -419,7 +418,15 @@ export default class DataPopulator {
 
     for (const languageName of this.languagesFromGithub) {
       if (!languagesMetadata[languageName]) {
-        languagesInGitHubNotInMetadata.push(languageName);
+        const score = await this.getPointsFromApi(
+          { name: languageName } as Language,
+          this.oldestDate,
+          this.firstDayOfMonth
+        );
+        // Don't even bother worrying about a language until it starts approaching the minimum score
+        if (score > settings.minimumScore * 0.75) {
+          languagesInGitHubNotInMetadata.push(languageName);
+        }
       }
     }
     if (languagesInGitHubNotInMetadata.length !== 0) {
