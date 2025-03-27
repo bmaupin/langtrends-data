@@ -93,6 +93,10 @@ export default class StackOverflow {
             console.warn(
               'Warning: Stackoverflow API daily limit exceeded or API key incorrect'
             );
+          } else if (response.statusCode === 403) {
+            console.warn(
+              'Warning: Stackoverflow API returned 403; please set the user agent'
+            );
           } else if (response.statusCode === 503) {
             // Stackoverflow might throw a 503 if it feels there are too many requests
             console.warn(
