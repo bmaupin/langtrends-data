@@ -60,3 +60,18 @@ test('Test getScore with same from/to date', async () => {
     )
   ).toBe(0);
 });
+
+test('Test StackOverflow API with no user agent', async () => {
+  // Suppress warnings logged by this test (https://stackoverflow.com/a/58717352/399105)
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+  const stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY!);
+  const url = (stackoverflow as any).buildUrl(
+    'JavaScript',
+    new Date('2023-01-01'),
+    new Date('2023-02-01')
+  );
+  await expect((stackoverflow as any).httpsRequest({}, url)).rejects.toThrow(
+    'statusCode=403'
+  );
+});
