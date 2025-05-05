@@ -430,9 +430,6 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Cool_(programming_language)"
   },
-  "Coq": {
-    "include": true
-  },
   "Cpp-ObjDump": {
     "include": false
   },
@@ -2222,6 +2219,11 @@
     "description": "Functional language, direct descendant of Elm",
     "include": true,
     "url": "https://github.com/roc-lang/roc"
+  },
+  "Rocq Prover": {
+    "description": "Language to write mathematical definitions, executable algorithms and theorems",
+    "include": false,
+    "url": "https://github.com/rocq-prover/rocq"
   },
   "Roff": {
     "include": false

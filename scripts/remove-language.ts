@@ -1,4 +1,6 @@
-'use strict';
+// ⚠️ This script has not been fully implemented; it's trivial to remove a language manually, it's removing the scores that takes a lot of work and there's already a script for that.
+//
+// To run this: npx tsx scripts/remove-language.ts
 
 import { readFile, writeFile } from 'fs/promises';
 import { Language, Score } from './src/DataPopulator';
@@ -24,6 +26,10 @@ const main = async () => {
   console.log('languages.length=', languages.length);
   console.log('filteredLanguages.length=', filteredLanguages.length);
   console.log('languageToRemove=', languageToRemove);
+
+  console.log(
+    "Warning: This script has not been fully implemented and doesn't do anything; see README.md to remove a language"
+  );
 };
 
 main();
