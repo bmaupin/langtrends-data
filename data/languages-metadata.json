@@ -431,7 +431,9 @@
     "url": "https://en.wikipedia.org/wiki/Cool_(programming_language)"
   },
   "Coq": {
-    "include": true
+    "description": "Language to write mathematical definitions, executable algorithms and theorems",
+    "include": false,
+    "url": "https://github.com/rocq-prover/rocq"
   },
   "Cpp-ObjDump": {
     "include": false

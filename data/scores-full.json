@@ -176,11 +176,6 @@
   },
   {
     "date": "2008-02-01",
-    "languageId": 36,
-    "points": 0
-  },
-  {
-    "date": "2008-02-01",
     "languageId": 37,
     "points": 0
   },
@@ -927,11 +922,6 @@
   {
     "date": "2008-03-01",
     "languageId": 35,
-    "points": 0
-  },
-  {
-    "date": "2008-03-01",
-    "languageId": 36,
     "points": 0
   },
   {
@@ -1686,11 +1676,6 @@
   },
   {
     "date": "2008-04-01",
-    "languageId": 36,
-    "points": 0
-  },
-  {
-    "date": "2008-04-01",
     "languageId": 37,
     "points": 0
   },
@@ -2437,11 +2422,6 @@
   {
     "date": "2008-05-01",
     "languageId": 35,
-    "points": 0
-  },
-  {
-    "date": "2008-05-01",
-    "languageId": 36,
     "points": 0
   },
   {
@@ -3196,11 +3176,6 @@
   },
   {
     "date": "2008-06-01",
-    "languageId": 36,
-    "points": 0
-  },
-  {
-    "date": "2008-06-01",
     "languageId": 37,
     "points": 0
   },
@@ -3947,11 +3922,6 @@
   {
     "date": "2008-07-01",
     "languageId": 35,
-    "points": 0
-  },
-  {
-    "date": "2008-07-01",
-    "languageId": 36,
     "points": 0
   },
   {
@@ -4706,11 +4676,6 @@
   },
   {
     "date": "2008-08-01",
-    "languageId": 36,
-    "points": 0
-  },
-  {
-    "date": "2008-08-01",
     "languageId": 37,
     "points": 0
   },
@@ -5457,11 +5422,6 @@
   {
     "date": "2008-09-01",
     "languageId": 35,
-    "points": 0
-  },
-  {
-    "date": "2008-09-01",
-    "languageId": 36,
     "points": 0
   },
   {
@@ -6216,11 +6176,6 @@
   },
   {
     "date": "2008-10-01",
-    "languageId": 36,
-    "points": 0
-  },
-  {
-    "date": "2008-10-01",
     "languageId": 37,
     "points": 0
   },
@@ -6967,11 +6922,6 @@
   {
     "date": "2008-11-01",
     "languageId": 35,
-    "points": 0
-  },
-  {
-    "date": "2008-11-01",
-    "languageId": 36,
     "points": 0
   },
   {
@@ -7726,11 +7676,6 @@
   },
   {
     "date": "2008-12-01",
-    "languageId": 36,
-    "points": 1
-  },
-  {
-    "date": "2008-12-01",
     "languageId": 37,
     "points": 0
   },
@@ -8478,11 +8423,6 @@
     "date": "2009-01-01",
     "languageId": 35,
     "points": 0
-  },
-  {
-    "date": "2009-01-01",
-    "languageId": 36,
-    "points": 1
   },
   {
     "date": "2009-01-01",
@@ -9236,11 +9176,6 @@
   },
   {
     "date": "2009-02-01",
-    "languageId": 36,
-    "points": 1
-  },
-  {
-    "date": "2009-02-01",
     "languageId": 37,
     "points": 1
   },
@@ -9988,11 +9923,6 @@
     "date": "2009-03-01",
     "languageId": 35,
     "points": 0
-  },
-  {
-    "date": "2009-03-01",
-    "languageId": 36,
-    "points": 1
   },
   {
     "date": "2009-03-01",
@@ -10746,11 +10676,6 @@
   },
   {
     "date": "2009-04-01",
-    "languageId": 36,
-    "points": 1
-  },
-  {
-    "date": "2009-04-01",
     "languageId": 37,
     "points": 1
   },
@@ -11498,11 +11423,6 @@
     "date": "2009-05-01",
     "languageId": 35,
     "points": 0
-  },
-  {
-    "date": "2009-05-01",
-    "languageId": 36,
-    "points": 3
   },
   {
     "date": "2009-05-01",
@@ -12256,11 +12176,6 @@
   },
   {
     "date": "2009-06-01",
-    "languageId": 36,
-    "points": 5
-  },
-  {
-    "date": "2009-06-01",
     "languageId": 37,
     "points": 1
   },
@@ -13008,11 +12923,6 @@
     "date": "2009-07-01",
     "languageId": 35,
     "points": 0
-  },
-  {
-    "date": "2009-07-01",
-    "languageId": 36,
-    "points": 5
   },
   {
     "date": "2009-07-01",
@@ -13766,11 +13676,6 @@
   },
   {
     "date": "2009-08-01",
-    "languageId": 36,
-    "points": 5
-  },
-  {
-    "date": "2009-08-01",
     "languageId": 37,
     "points": 1
   },
@@ -14518,11 +14423,6 @@
     "date": "2009-09-01",
     "languageId": 35,
     "points": 0
-  },
-  {
-    "date": "2009-09-01",
-    "languageId": 36,
-    "points": 5
   },
   {
     "date": "2009-09-01",
@@ -15276,11 +15176,6 @@
   },
   {
     "date": "2009-10-01",
-    "languageId": 36,
-    "points": 5
-  },
-  {
-    "date": "2009-10-01",
     "languageId": 37,
     "points": 1
   },
@@ -16028,11 +15923,6 @@
     "date": "2009-11-01",
     "languageId": 35,
     "points": 0
-  },
-  {
-    "date": "2009-11-01",
-    "languageId": 36,
-    "points": 6
   },
   {
     "date": "2009-11-01",
@@ -16786,11 +16676,6 @@
   },
   {
     "date": "2009-12-01",
-    "languageId": 36,
-    "points": 7
-  },
-  {
-    "date": "2009-12-01",
     "languageId": 37,
     "points": 1
   },
@@ -17538,11 +17423,6 @@
     "date": "2010-01-01",
     "languageId": 35,
     "points": 0
-  },
-  {
-    "date": "2010-01-01",
-    "languageId": 36,
-    "points": 7
   },
   {
     "date": "2010-01-01",
@@ -18296,11 +18176,6 @@
   },
   {
     "date": "2010-02-01",
-    "languageId": 36,
-    "points": 7
-  },
-  {
-    "date": "2010-02-01",
     "languageId": 37,
     "points": 1
   },
@@ -19048,11 +18923,6 @@
     "date": "2010-03-01",
     "languageId": 35,
     "points": 1
-  },
-  {
-    "date": "2010-03-01",
-    "languageId": 36,
-    "points": 7
   },
   {
     "date": "2010-03-01",
@@ -19806,11 +19676,6 @@
   },
   {
     "date": "2010-04-01",
-    "languageId": 36,
-    "points": 8
-  },
-  {
-    "date": "2010-04-01",
     "languageId": 37,
     "points": 1
   },
@@ -20558,11 +20423,6 @@
     "date": "2010-05-01",
     "languageId": 35,
     "points": 3
-  },
-  {
-    "date": "2010-05-01",
-    "languageId": 36,
-    "points": 9
   },
   {
     "date": "2010-05-01",
@@ -21316,11 +21176,6 @@
   },
   {
     "date": "2010-06-01",
-    "languageId": 36,
-    "points": 10
-  },
-  {
-    "date": "2010-06-01",
     "languageId": 37,
     "points": 1
   },
@@ -22068,11 +21923,6 @@
     "date": "2010-07-01",
     "languageId": 35,
     "points": 3
-  },
-  {
-    "date": "2010-07-01",
-    "languageId": 36,
-    "points": 11
   },
   {
     "date": "2010-07-01",
@@ -22826,11 +22676,6 @@
   },
   {
     "date": "2010-08-01",
-    "languageId": 36,
-    "points": 13
-  },
-  {
-    "date": "2010-08-01",
     "languageId": 37,
     "points": 1
   },
@@ -23578,11 +23423,6 @@
     "date": "2010-09-01",
     "languageId": 35,
     "points": 4
-  },
-  {
-    "date": "2010-09-01",
-    "languageId": 36,
-    "points": 14
   },
   {
     "date": "2010-09-01",
@@ -24336,11 +24176,6 @@
   },
   {
     "date": "2010-10-01",
-    "languageId": 36,
-    "points": 16
-  },
-  {
-    "date": "2010-10-01",
     "languageId": 37,
     "points": 1
   },
@@ -25088,11 +24923,6 @@
     "date": "2010-11-01",
     "languageId": 35,
     "points": 4
-  },
-  {
-    "date": "2010-11-01",
-    "languageId": 36,
-    "points": 18
   },
   {
     "date": "2010-11-01",
@@ -25846,11 +25676,6 @@
   },
   {
     "date": "2010-12-01",
-    "languageId": 36,
-    "points": 18
-  },
-  {
-    "date": "2010-12-01",
     "languageId": 37,
     "points": 1
   },
@@ -26598,11 +26423,6 @@
     "date": "2011-01-01",
     "languageId": 35,
     "points": 7
-  },
-  {
-    "date": "2011-01-01",
-    "languageId": 36,
-    "points": 22
   },
   {
     "date": "2011-01-01",
@@ -27356,11 +27176,6 @@
   },
   {
     "date": "2011-02-01",
-    "languageId": 36,
-    "points": 24
-  },
-  {
-    "date": "2011-02-01",
     "languageId": 37,
     "points": 1
   },
@@ -28108,11 +27923,6 @@
     "date": "2011-03-01",
     "languageId": 35,
     "points": 12
-  },
-  {
-    "date": "2011-03-01",
-    "languageId": 36,
-    "points": 25
   },
   {
     "date": "2011-03-01",
@@ -28866,11 +28676,6 @@
   },
   {
     "date": "2011-04-01",
-    "languageId": 36,
-    "points": 28
-  },
-  {
-    "date": "2011-04-01",
     "languageId": 37,
     "points": 1
   },
@@ -29618,11 +29423,6 @@
     "date": "2011-05-01",
     "languageId": 35,
     "points": 12
-  },
-  {
-    "date": "2011-05-01",
-    "languageId": 36,
-    "points": 30
   },
   {
     "date": "2011-05-01",
@@ -30376,11 +30176,6 @@
   },
   {
     "date": "2011-06-01",
-    "languageId": 36,
-    "points": 34
-  },
-  {
-    "date": "2011-06-01",
     "languageId": 37,
     "points": 1
   },
@@ -31128,11 +30923,6 @@
     "date": "2011-07-01",
     "languageId": 35,
     "points": 14
-  },
-  {
-    "date": "2011-07-01",
-    "languageId": 36,
-    "points": 37
   },
   {
     "date": "2011-07-01",
@@ -31886,11 +31676,6 @@
   },
   {
     "date": "2011-08-01",
-    "languageId": 36,
-    "points": 42
-  },
-  {
-    "date": "2011-08-01",
     "languageId": 37,
     "points": 1
   },
@@ -32638,11 +32423,6 @@
     "date": "2011-09-01",
     "languageId": 35,
     "points": 18
-  },
-  {
-    "date": "2011-09-01",
-    "languageId": 36,
-    "points": 44
   },
   {
     "date": "2011-09-01",
@@ -33396,11 +33176,6 @@
   },
   {
     "date": "2011-10-01",
-    "languageId": 36,
-    "points": 47
-  },
-  {
-    "date": "2011-10-01",
     "languageId": 37,
     "points": 1
   },
@@ -34148,11 +33923,6 @@
     "date": "2011-11-01",
     "languageId": 35,
     "points": 25
-  },
-  {
-    "date": "2011-11-01",
-    "languageId": 36,
-    "points": 49
   },
   {
     "date": "2011-11-01",
@@ -34906,11 +34676,6 @@
   },
   {
     "date": "2011-12-01",
-    "languageId": 36,
-    "points": 59
-  },
-  {
-    "date": "2011-12-01",
     "languageId": 37,
     "points": 1
   },
@@ -35658,11 +35423,6 @@
     "date": "2012-01-01",
     "languageId": 35,
     "points": 35
-  },
-  {
-    "date": "2012-01-01",
-    "languageId": 36,
-    "points": 63
   },
   {
     "date": "2012-01-01",
@@ -36416,11 +36176,6 @@
   },
   {
     "date": "2012-02-01",
-    "languageId": 36,
-    "points": 69
-  },
-  {
-    "date": "2012-02-01",
     "languageId": 37,
     "points": 1
   },
@@ -37168,11 +36923,6 @@
     "date": "2012-03-01",
     "languageId": 35,
     "points": 48
-  },
-  {
-    "date": "2012-03-01",
-    "languageId": 36,
-    "points": 70
   },
   {
     "date": "2012-03-01",
@@ -37926,11 +37676,6 @@
   },
   {
     "date": "2012-04-01",
-    "languageId": 36,
-    "points": 80
-  },
-  {
-    "date": "2012-04-01",
     "languageId": 37,
     "points": 2
   },
@@ -38678,11 +38423,6 @@
     "date": "2012-05-01",
     "languageId": 35,
     "points": 60
-  },
-  {
-    "date": "2012-05-01",
-    "languageId": 36,
-    "points": 92
   },
   {
     "date": "2012-05-01",
@@ -39436,11 +39176,6 @@
   },
   {
     "date": "2012-06-01",
-    "languageId": 36,
-    "points": 110
-  },
-  {
-    "date": "2012-06-01",
     "languageId": 37,
     "points": 4
   },
@@ -40188,11 +39923,6 @@
     "date": "2012-07-01",
     "languageId": 35,
     "points": 77
-  },
-  {
-    "date": "2012-07-01",
-    "languageId": 36,
-    "points": 124
   },
   {
     "date": "2012-07-01",
@@ -40946,11 +40676,6 @@
   },
   {
     "date": "2012-08-01",
-    "languageId": 36,
-    "points": 144
-  },
-  {
-    "date": "2012-08-01",
     "languageId": 37,
     "points": 4
   },
@@ -41698,11 +41423,6 @@
     "date": "2012-09-01",
     "languageId": 35,
     "points": 100
-  },
-  {
-    "date": "2012-09-01",
-    "languageId": 36,
-    "points": 157
   },
   {
     "date": "2012-09-01",
@@ -42456,11 +42176,6 @@
   },
   {
     "date": "2012-10-01",
-    "languageId": 36,
-    "points": 178
-  },
-  {
-    "date": "2012-10-01",
     "languageId": 37,
     "points": 4
   },
@@ -43208,11 +42923,6 @@
     "date": "2012-11-01",
     "languageId": 35,
     "points": 165
-  },
-  {
-    "date": "2012-11-01",
-    "languageId": 36,
-    "points": 194
   },
   {
     "date": "2012-11-01",
@@ -43966,11 +43676,6 @@
   },
   {
     "date": "2012-12-01",
-    "languageId": 36,
-    "points": 217
-  },
-  {
-    "date": "2012-12-01",
     "languageId": 37,
     "points": 5
   },
@@ -44718,11 +44423,6 @@
     "date": "2013-01-01",
     "languageId": 35,
     "points": 300
-  },
-  {
-    "date": "2013-01-01",
-    "languageId": 36,
-    "points": 242
   },
   {
     "date": "2013-01-01",
@@ -45476,11 +45176,6 @@
   },
   {
     "date": "2013-02-01",
-    "languageId": 36,
-    "points": 264
-  },
-  {
-    "date": "2013-02-01",
     "languageId": 37,
     "points": 5
   },
@@ -46228,11 +45923,6 @@
     "date": "2013-03-01",
     "languageId": 35,
     "points": 434
-  },
-  {
-    "date": "2013-03-01",
-    "languageId": 36,
-    "points": 288
   },
   {
     "date": "2013-03-01",
@@ -46986,11 +46676,6 @@
   },
   {
     "date": "2013-04-01",
-    "languageId": 36,
-    "points": 323
-  },
-  {
-    "date": "2013-04-01",
     "languageId": 37,
     "points": 5
   },
@@ -47738,11 +47423,6 @@
     "date": "2013-05-01",
     "languageId": 35,
     "points": 563
-  },
-  {
-    "date": "2013-05-01",
-    "languageId": 36,
-    "points": 351
   },
   {
     "date": "2013-05-01",
@@ -48496,11 +48176,6 @@
   },
   {
     "date": "2013-06-01",
-    "languageId": 36,
-    "points": 376
-  },
-  {
-    "date": "2013-06-01",
     "languageId": 37,
     "points": 6
   },
@@ -49248,11 +48923,6 @@
     "date": "2013-07-01",
     "languageId": 35,
     "points": 726
-  },
-  {
-    "date": "2013-07-01",
-    "languageId": 36,
-    "points": 406
   },
   {
     "date": "2013-07-01",
@@ -50006,11 +49676,6 @@
   },
   {
     "date": "2013-08-01",
-    "languageId": 36,
-    "points": 417
-  },
-  {
-    "date": "2013-08-01",
     "languageId": 37,
     "points": 6
   },
@@ -50758,11 +50423,6 @@
     "date": "2013-09-01",
     "languageId": 35,
     "points": 863
-  },
-  {
-    "date": "2013-09-01",
-    "languageId": 36,
-    "points": 431
   },
   {
     "date": "2013-09-01",
@@ -51516,11 +51176,6 @@
   },
   {
     "date": "2013-10-01",
-    "languageId": 36,
-    "points": 452
-  },
-  {
-    "date": "2013-10-01",
     "languageId": 37,
     "points": 6
   },
@@ -52268,11 +51923,6 @@
     "date": "2013-11-01",
     "languageId": 35,
     "points": 898
-  },
-  {
-    "date": "2013-11-01",
-    "languageId": 36,
-    "points": 488
   },
   {
     "date": "2013-11-01",
@@ -53026,11 +52676,6 @@
   },
   {
     "date": "2013-12-01",
-    "languageId": 36,
-    "points": 515
-  },
-  {
-    "date": "2013-12-01",
     "languageId": 37,
     "points": 6
   },
@@ -53778,11 +53423,6 @@
     "date": "2014-01-01",
     "languageId": 35,
     "points": 903
-  },
-  {
-    "date": "2014-01-01",
-    "languageId": 36,
-    "points": 532
   },
   {
     "date": "2014-01-01",
@@ -54536,11 +54176,6 @@
   },
   {
     "date": "2014-02-01",
-    "languageId": 36,
-    "points": 555
-  },
-  {
-    "date": "2014-02-01",
     "languageId": 37,
     "points": 8
   },
@@ -55288,11 +54923,6 @@
     "date": "2014-03-01",
     "languageId": 35,
     "points": 904
-  },
-  {
-    "date": "2014-03-01",
-    "languageId": 36,
-    "points": 582
   },
   {
     "date": "2014-03-01",
@@ -56046,11 +55676,6 @@
   },
   {
     "date": "2014-04-01",
-    "languageId": 36,
-    "points": 611
-  },
-  {
-    "date": "2014-04-01",
     "languageId": 37,
     "points": 9
   },
@@ -56798,11 +56423,6 @@
     "date": "2014-05-01",
     "languageId": 35,
     "points": 906
-  },
-  {
-    "date": "2014-05-01",
-    "languageId": 36,
-    "points": 662
   },
   {
     "date": "2014-05-01",
@@ -57556,11 +57176,6 @@
   },
   {
     "date": "2014-06-01",
-    "languageId": 36,
-    "points": 708
-  },
-  {
-    "date": "2014-06-01",
     "languageId": 37,
     "points": 12
   },
@@ -58308,11 +57923,6 @@
     "date": "2014-07-01",
     "languageId": 35,
     "points": 910
-  },
-  {
-    "date": "2014-07-01",
-    "languageId": 36,
-    "points": 753
   },
   {
     "date": "2014-07-01",
@@ -59066,11 +58676,6 @@
   },
   {
     "date": "2014-08-01",
-    "languageId": 36,
-    "points": 784
-  },
-  {
-    "date": "2014-08-01",
     "languageId": 37,
     "points": 19
   },
@@ -59818,11 +59423,6 @@
     "date": "2014-09-01",
     "languageId": 35,
     "points": 914
-  },
-  {
-    "date": "2014-09-01",
-    "languageId": 36,
-    "points": 815
   },
   {
     "date": "2014-09-01",
@@ -60576,11 +60176,6 @@
   },
   {
     "date": "2014-10-01",
-    "languageId": 36,
-    "points": 854
-  },
-  {
-    "date": "2014-10-01",
     "languageId": 37,
     "points": 25
   },
@@ -61328,11 +60923,6 @@
     "date": "2014-11-01",
     "languageId": 35,
     "points": 935
-  },
-  {
-    "date": "2014-11-01",
-    "languageId": 36,
-    "points": 899
   },
   {
     "date": "2014-11-01",
@@ -62086,11 +61676,6 @@
   },
   {
     "date": "2014-12-01",
-    "languageId": 36,
-    "points": 958
-  },
-  {
-    "date": "2014-12-01",
     "languageId": 37,
     "points": 34
   },
@@ -62838,11 +62423,6 @@
     "date": "2015-01-01",
     "languageId": 35,
     "points": 940
-  },
-  {
-    "date": "2015-01-01",
-    "languageId": 36,
-    "points": 997
   },
   {
     "date": "2015-01-01",
@@ -63596,11 +63176,6 @@
   },
   {
     "date": "2015-02-01",
-    "languageId": 36,
-    "points": 1057
-  },
-  {
-    "date": "2015-02-01",
     "languageId": 37,
     "points": 45
   },
@@ -64348,11 +63923,6 @@
     "date": "2015-03-01",
     "languageId": 35,
     "points": 945
-  },
-  {
-    "date": "2015-03-01",
-    "languageId": 36,
-    "points": 1102
   },
   {
     "date": "2015-03-01",
@@ -65106,11 +64676,6 @@
   },
   {
     "date": "2015-04-01",
-    "languageId": 36,
-    "points": 1152
-  },
-  {
-    "date": "2015-04-01",
     "languageId": 37,
     "points": 68
   },
@@ -65858,11 +65423,6 @@
     "date": "2015-05-01",
     "languageId": 35,
     "points": 951
-  },
-  {
-    "date": "2015-05-01",
-    "languageId": 36,
-    "points": 1215
   },
   {
     "date": "2015-05-01",
@@ -66616,11 +66176,6 @@
   },
   {
     "date": "2015-06-01",
-    "languageId": 36,
-    "points": 1282
-  },
-  {
-    "date": "2015-06-01",
     "languageId": 37,
     "points": 114
   },
@@ -67368,11 +66923,6 @@
     "date": "2015-07-01",
     "languageId": 35,
     "points": 955
-  },
-  {
-    "date": "2015-07-01",
-    "languageId": 36,
-    "points": 1326
   },
   {
     "date": "2015-07-01",
@@ -68126,11 +67676,6 @@
   },
   {
     "date": "2015-08-01",
-    "languageId": 36,
-    "points": 1375
-  },
-  {
-    "date": "2015-08-01",
     "languageId": 37,
     "points": 211
   },
@@ -68878,11 +68423,6 @@
     "date": "2015-09-01",
     "languageId": 35,
     "points": 965
-  },
-  {
-    "date": "2015-09-01",
-    "languageId": 36,
-    "points": 1412
   },
   {
     "date": "2015-09-01",
@@ -69636,11 +69176,6 @@
   },
   {
     "date": "2015-10-01",
-    "languageId": 36,
-    "points": 1466
-  },
-  {
-    "date": "2015-10-01",
     "languageId": 37,
     "points": 325
   },
@@ -70388,11 +69923,6 @@
     "date": "2015-11-01",
     "languageId": 35,
     "points": 968
-  },
-  {
-    "date": "2015-11-01",
-    "languageId": 36,
-    "points": 1515
   },
   {
     "date": "2015-11-01",
@@ -71146,11 +70676,6 @@
   },
   {
     "date": "2015-12-01",
-    "languageId": 36,
-    "points": 1554
-  },
-  {
-    "date": "2015-12-01",
     "languageId": 37,
     "points": 417
   },
@@ -71898,11 +71423,6 @@
     "date": "2016-01-01",
     "languageId": 35,
     "points": 970
-  },
-  {
-    "date": "2016-01-01",
-    "languageId": 36,
-    "points": 1624
   },
   {
     "date": "2016-01-01",
@@ -72656,11 +72176,6 @@
   },
   {
     "date": "2016-02-01",
-    "languageId": 36,
-    "points": 1669
-  },
-  {
-    "date": "2016-02-01",
     "languageId": 37,
     "points": 510
   },
@@ -73408,11 +72923,6 @@
     "date": "2016-03-01",
     "languageId": 35,
     "points": 976
-  },
-  {
-    "date": "2016-03-01",
-    "languageId": 36,
-    "points": 1726
   },
   {
     "date": "2016-03-01",
@@ -74166,11 +73676,6 @@
   },
   {
     "date": "2016-04-01",
-    "languageId": 36,
-    "points": 1788
-  },
-  {
-    "date": "2016-04-01",
     "languageId": 37,
     "points": 653
   },
@@ -74918,11 +74423,6 @@
     "date": "2016-05-01",
     "languageId": 35,
     "points": 978
-  },
-  {
-    "date": "2016-05-01",
-    "languageId": 36,
-    "points": 1992
   },
   {
     "date": "2016-05-01",
@@ -75676,11 +75176,6 @@
   },
   {
     "date": "2016-06-01",
-    "languageId": 36,
-    "points": 2055
-  },
-  {
-    "date": "2016-06-01",
     "languageId": 37,
     "points": 764
   },
@@ -76428,11 +75923,6 @@
     "date": "2016-07-01",
     "languageId": 35,
     "points": 982
-  },
-  {
-    "date": "2016-07-01",
-    "languageId": 36,
-    "points": 2105
   },
   {
     "date": "2016-07-01",
@@ -77186,11 +76676,6 @@
   },
   {
     "date": "2016-08-01",
-    "languageId": 36,
-    "points": 2145
-  },
-  {
-    "date": "2016-08-01",
     "languageId": 37,
     "points": 921
   },
@@ -77938,11 +77423,6 @@
     "date": "2016-09-01",
     "languageId": 35,
     "points": 987
-  },
-  {
-    "date": "2016-09-01",
-    "languageId": 36,
-    "points": 2187
   },
   {
     "date": "2016-09-01",
@@ -78696,11 +78176,6 @@
   },
   {
     "date": "2016-10-01",
-    "languageId": 36,
-    "points": 2238
-  },
-  {
-    "date": "2016-10-01",
     "languageId": 37,
     "points": 1078
   },
@@ -79448,11 +78923,6 @@
     "date": "2016-11-01",
     "languageId": 35,
     "points": 989
-  },
-  {
-    "date": "2016-11-01",
-    "languageId": 36,
-    "points": 2314
   },
   {
     "date": "2016-11-01",
@@ -80206,11 +79676,6 @@
   },
   {
     "date": "2016-12-01",
-    "languageId": 36,
-    "points": 2392
-  },
-  {
-    "date": "2016-12-01",
     "languageId": 37,
     "points": 1278
   },
@@ -80958,11 +80423,6 @@
     "date": "2017-01-01",
     "languageId": 35,
     "points": 994
-  },
-  {
-    "date": "2017-01-01",
-    "languageId": 36,
-    "points": 2445
   },
   {
     "date": "2017-01-01",
@@ -81716,11 +81176,6 @@
   },
   {
     "date": "2017-02-01",
-    "languageId": 36,
-    "points": 2503
-  },
-  {
-    "date": "2017-02-01",
     "languageId": 37,
     "points": 1509
   },
@@ -82468,11 +81923,6 @@
     "date": "2017-03-01",
     "languageId": 35,
     "points": 1002
-  },
-  {
-    "date": "2017-03-01",
-    "languageId": 36,
-    "points": 2564
   },
   {
     "date": "2017-03-01",
@@ -83226,11 +82676,6 @@
   },
   {
     "date": "2017-04-01",
-    "languageId": 36,
-    "points": 2652
-  },
-  {
-    "date": "2017-04-01",
     "languageId": 37,
     "points": 1703
   },
@@ -83978,11 +83423,6 @@
     "date": "2017-05-01",
     "languageId": 35,
     "points": 1007
-  },
-  {
-    "date": "2017-05-01",
-    "languageId": 36,
-    "points": 2726
   },
   {
     "date": "2017-05-01",
@@ -84736,11 +84176,6 @@
   },
   {
     "date": "2017-06-01",
-    "languageId": 36,
-    "points": 2811
-  },
-  {
-    "date": "2017-06-01",
     "languageId": 37,
     "points": 1920
   },
@@ -85488,11 +84923,6 @@
     "date": "2017-07-01",
     "languageId": 35,
     "points": 1014
-  },
-  {
-    "date": "2017-07-01",
-    "languageId": 36,
-    "points": 2878
   },
   {
     "date": "2017-07-01",
@@ -86246,11 +85676,6 @@
   },
   {
     "date": "2017-08-01",
-    "languageId": 36,
-    "points": 2953
-  },
-  {
-    "date": "2017-08-01",
     "languageId": 37,
     "points": 2141
   },
@@ -86998,11 +86423,6 @@
     "date": "2017-09-01",
     "languageId": 35,
     "points": 1022
-  },
-  {
-    "date": "2017-09-01",
-    "languageId": 36,
-    "points": 3012
   },
   {
     "date": "2017-09-01",
@@ -87756,11 +87176,6 @@
   },
   {
     "date": "2017-10-01",
-    "languageId": 36,
-    "points": 3084
-  },
-  {
-    "date": "2017-10-01",
     "languageId": 37,
     "points": 2355
   },
@@ -88508,11 +87923,6 @@
     "date": "2017-11-01",
     "languageId": 35,
     "points": 1027
-  },
-  {
-    "date": "2017-11-01",
-    "languageId": 36,
-    "points": 3171
   },
   {
     "date": "2017-11-01",
@@ -89266,11 +88676,6 @@
   },
   {
     "date": "2017-12-01",
-    "languageId": 36,
-    "points": 3253
-  },
-  {
-    "date": "2017-12-01",
     "languageId": 37,
     "points": 2647
   },
@@ -90018,11 +89423,6 @@
     "date": "2018-01-01",
     "languageId": 35,
     "points": 1038
-  },
-  {
-    "date": "2018-01-01",
-    "languageId": 36,
-    "points": 3343
   },
   {
     "date": "2018-01-01",
@@ -90776,11 +90176,6 @@
   },
   {
     "date": "2018-02-01",
-    "languageId": 36,
-    "points": 3437
-  },
-  {
-    "date": "2018-02-01",
     "languageId": 37,
     "points": 2897
   },
@@ -91528,11 +90923,6 @@
     "date": "2018-03-01",
     "languageId": 35,
     "points": 1043
-  },
-  {
-    "date": "2018-03-01",
-    "languageId": 36,
-    "points": 3531
   },
   {
     "date": "2018-03-01",
@@ -92286,11 +91676,6 @@
   },
   {
     "date": "2018-04-01",
-    "languageId": 36,
-    "points": 3607
-  },
-  {
-    "date": "2018-04-01",
     "languageId": 37,
     "points": 3159
   },
@@ -93038,11 +92423,6 @@
     "date": "2018-05-01",
     "languageId": 35,
     "points": 1052
-  },
-  {
-    "date": "2018-05-01",
-    "languageId": 36,
-    "points": 3695
   },
   {
     "date": "2018-05-01",
@@ -93796,11 +93176,6 @@
   },
   {
     "date": "2018-06-01",
-    "languageId": 36,
-    "points": 3766
-  },
-  {
-    "date": "2018-06-01",
     "languageId": 37,
     "points": 3416
   },
@@ -94548,11 +93923,6 @@
     "date": "2018-07-01",
     "languageId": 35,
     "points": 1061
-  },
-  {
-    "date": "2018-07-01",
-    "languageId": 36,
-    "points": 3856
   },
   {
     "date": "2018-07-01",
@@ -95306,11 +94676,6 @@
   },
   {
     "date": "2018-08-01",
-    "languageId": 36,
-    "points": 3933
-  },
-  {
-    "date": "2018-08-01",
     "languageId": 37,
     "points": 3718
   },
@@ -96058,11 +95423,6 @@
     "date": "2018-09-01",
     "languageId": 35,
     "points": 1065
-  },
-  {
-    "date": "2018-09-01",
-    "languageId": 36,
-    "points": 4003
   },
   {
     "date": "2018-09-01",
@@ -96816,11 +96176,6 @@
   },
   {
     "date": "2018-10-01",
-    "languageId": 36,
-    "points": 4090
-  },
-  {
-    "date": "2018-10-01",
     "languageId": 37,
     "points": 3967
   },
@@ -97568,11 +96923,6 @@
     "date": "2018-11-01",
     "languageId": 35,
     "points": 1071
-  },
-  {
-    "date": "2018-11-01",
-    "languageId": 36,
-    "points": 4191
   },
   {
     "date": "2018-11-01",
@@ -98326,11 +97676,6 @@
   },
   {
     "date": "2018-12-01",
-    "languageId": 36,
-    "points": 4279
-  },
-  {
-    "date": "2018-12-01",
     "languageId": 37,
     "points": 4227
   },
@@ -99078,11 +98423,6 @@
     "date": "2019-01-01",
     "languageId": 35,
     "points": 1073
-  },
-  {
-    "date": "2019-01-01",
-    "languageId": 36,
-    "points": 4354
   },
   {
     "date": "2019-01-01",
@@ -99836,11 +99176,6 @@
   },
   {
     "date": "2019-02-01",
-    "languageId": 36,
-    "points": 4427
-  },
-  {
-    "date": "2019-02-01",
     "languageId": 37,
     "points": 4450
   },
@@ -100588,11 +99923,6 @@
     "date": "2019-03-01",
     "languageId": 35,
     "points": 1080
-  },
-  {
-    "date": "2019-03-01",
-    "languageId": 36,
-    "points": 4515
   },
   {
     "date": "2019-03-01",
@@ -101346,11 +100676,6 @@
   },
   {
     "date": "2019-04-01",
-    "languageId": 36,
-    "points": 4618
-  },
-  {
-    "date": "2019-04-01",
     "languageId": 37,
     "points": 4631
   },
@@ -102098,11 +101423,6 @@
     "date": "2019-05-01",
     "languageId": 35,
     "points": 1086
-  },
-  {
-    "date": "2019-05-01",
-    "languageId": 36,
-    "points": 4739
   },
   {
     "date": "2019-05-01",
@@ -102856,11 +102176,6 @@
   },
   {
     "date": "2019-06-01",
-    "languageId": 36,
-    "points": 4847
-  },
-  {
-    "date": "2019-06-01",
     "languageId": 37,
     "points": 4858
   },
@@ -103608,11 +102923,6 @@
     "date": "2019-07-01",
     "languageId": 35,
     "points": 1094
-  },
-  {
-    "date": "2019-07-01",
-    "languageId": 36,
-    "points": 4947
   },
   {
     "date": "2019-07-01",
@@ -104366,11 +103676,6 @@
   },
   {
     "date": "2019-08-01",
-    "languageId": 36,
-    "points": 5026
-  },
-  {
-    "date": "2019-08-01",
     "languageId": 37,
     "points": 5044
   },
@@ -105118,11 +104423,6 @@
     "date": "2019-09-01",
     "languageId": 35,
     "points": 1105
-  },
-  {
-    "date": "2019-09-01",
-    "languageId": 36,
-    "points": 5095
   },
   {
     "date": "2019-09-01",
@@ -105876,11 +105176,6 @@
   },
   {
     "date": "2019-10-01",
-    "languageId": 36,
-    "points": 5190
-  },
-  {
-    "date": "2019-10-01",
     "languageId": 37,
     "points": 5253
   },
@@ -106628,11 +105923,6 @@
     "date": "2019-11-01",
     "languageId": 35,
     "points": 1113
-  },
-  {
-    "date": "2019-11-01",
-    "languageId": 36,
-    "points": 5294
   },
   {
     "date": "2019-11-01",
@@ -107386,11 +106676,6 @@
   },
   {
     "date": "2019-12-01",
-    "languageId": 36,
-    "points": 5403
-  },
-  {
-    "date": "2019-12-01",
     "languageId": 37,
     "points": 5465
   },
@@ -108138,11 +107423,6 @@
     "date": "2020-01-01",
     "languageId": 35,
     "points": 1126
-  },
-  {
-    "date": "2020-01-01",
-    "languageId": 36,
-    "points": 5489
   },
   {
     "date": "2020-01-01",
@@ -108896,11 +108176,6 @@
   },
   {
     "date": "2020-02-01",
-    "languageId": 36,
-    "points": 5582
-  },
-  {
-    "date": "2020-02-01",
     "languageId": 37,
     "points": 5709
   },
@@ -109648,11 +108923,6 @@
     "date": "2020-03-01",
     "languageId": 35,
     "points": 1133
-  },
-  {
-    "date": "2020-03-01",
-    "languageId": 36,
-    "points": 5669
   },
   {
     "date": "2020-03-01",
@@ -110406,11 +109676,6 @@
   },
   {
     "date": "2020-04-01",
-    "languageId": 36,
-    "points": 5787
-  },
-  {
-    "date": "2020-04-01",
     "languageId": 37,
     "points": 5901
   },
@@ -111158,11 +110423,6 @@
     "date": "2020-05-01",
     "languageId": 35,
     "points": 1146
-  },
-  {
-    "date": "2020-05-01",
-    "languageId": 36,
-    "points": 5889
   },
   {
     "date": "2020-05-01",
@@ -111916,11 +111176,6 @@
   },
   {
     "date": "2020-06-01",
-    "languageId": 36,
-    "points": 6013
-  },
-  {
-    "date": "2020-06-01",
     "languageId": 37,
     "points": 6191
   },
@@ -112668,11 +111923,6 @@
     "date": "2020-07-01",
     "languageId": 35,
     "points": 1147
-  },
-  {
-    "date": "2020-07-01",
-    "languageId": 36,
-    "points": 6125
   },
   {
     "date": "2020-07-01",
@@ -113426,11 +112676,6 @@
   },
   {
     "date": "2020-08-01",
-    "languageId": 36,
-    "points": 6232
-  },
-  {
-    "date": "2020-08-01",
     "languageId": 37,
     "points": 6383
   },
@@ -114178,11 +113423,6 @@
     "date": "2020-09-01",
     "languageId": 35,
     "points": 1166
-  },
-  {
-    "date": "2020-09-01",
-    "languageId": 36,
-    "points": 6358
   },
   {
     "date": "2020-09-01",
@@ -114936,11 +114176,6 @@
   },
   {
     "date": "2020-10-01",
-    "languageId": 36,
-    "points": 6440
-  },
-  {
-    "date": "2020-10-01",
     "languageId": 37,
     "points": 6566
   },
@@ -115688,11 +114923,6 @@
     "date": "2020-11-01",
     "languageId": 35,
     "points": 1176
-  },
-  {
-    "date": "2020-11-01",
-    "languageId": 36,
-    "points": 6531
   },
   {
     "date": "2020-11-01",
@@ -116446,11 +115676,6 @@
   },
   {
     "date": "2020-12-01",
-    "languageId": 36,
-    "points": 6569
-  },
-  {
-    "date": "2020-12-01",
     "languageId": 37,
     "points": 6710
   },
@@ -117198,11 +116423,6 @@
     "date": "2021-01-01",
     "languageId": 35,
     "points": 1184
-  },
-  {
-    "date": "2021-01-01",
-    "languageId": 36,
-    "points": 6672
   },
   {
     "date": "2021-01-01",
@@ -117956,11 +117176,6 @@
   },
   {
     "date": "2021-02-01",
-    "languageId": 36,
-    "points": 6741
-  },
-  {
-    "date": "2021-02-01",
     "languageId": 37,
     "points": 6868
   },
@@ -118708,11 +117923,6 @@
     "date": "2021-03-01",
     "languageId": 35,
     "points": 1195
-  },
-  {
-    "date": "2021-03-01",
-    "languageId": 36,
-    "points": 6803
   },
   {
     "date": "2021-03-01",
@@ -119466,11 +118676,6 @@
   },
   {
     "date": "2021-04-01",
-    "languageId": 36,
-    "points": 6884
-  },
-  {
-    "date": "2021-04-01",
     "languageId": 37,
     "points": 7043
   },
@@ -120218,11 +119423,6 @@
     "date": "2021-05-01",
     "languageId": 35,
     "points": 1211
-  },
-  {
-    "date": "2021-05-01",
-    "languageId": 36,
-    "points": 6966
   },
   {
     "date": "2021-05-01",
@@ -120976,11 +120176,6 @@
   },
   {
     "date": "2021-06-01",
-    "languageId": 36,
-    "points": 7029
-  },
-  {
-    "date": "2021-06-01",
     "languageId": 37,
     "points": 7264
   },
@@ -121728,11 +120923,6 @@
     "date": "2021-07-01",
     "languageId": 35,
     "points": 1223
-  },
-  {
-    "date": "2021-07-01",
-    "languageId": 36,
-    "points": 7109
   },
   {
     "date": "2021-07-01",
@@ -122486,11 +121676,6 @@
   },
   {
     "date": "2021-08-01",
-    "languageId": 36,
-    "points": 7157
-  },
-  {
-    "date": "2021-08-01",
     "languageId": 37,
     "points": 7415
   },
@@ -123238,11 +122423,6 @@
     "date": "2021-09-01",
     "languageId": 35,
     "points": 1225
-  },
-  {
-    "date": "2021-09-01",
-    "languageId": 36,
-    "points": 7195
   },
   {
     "date": "2021-09-01",
@@ -123996,11 +123176,6 @@
   },
   {
     "date": "2021-10-01",
-    "languageId": 36,
-    "points": 7266
-  },
-  {
-    "date": "2021-10-01",
     "languageId": 37,
     "points": 7550
   },
@@ -124748,11 +123923,6 @@
     "date": "2021-11-01",
     "languageId": 35,
     "points": 1236
-  },
-  {
-    "date": "2021-11-01",
-    "languageId": 36,
-    "points": 7340
   },
   {
     "date": "2021-11-01",
@@ -125506,11 +124676,6 @@
   },
   {
     "date": "2021-12-01",
-    "languageId": 36,
-    "points": 7425
-  },
-  {
-    "date": "2021-12-01",
     "languageId": 37,
     "points": 7684
   },
@@ -126258,11 +125423,6 @@
     "date": "2022-01-01",
     "languageId": 35,
     "points": 1240
-  },
-  {
-    "date": "2022-01-01",
-    "languageId": 36,
-    "points": 7488
   },
   {
     "date": "2022-01-01",
@@ -127016,11 +126176,6 @@
   },
   {
     "date": "2022-02-01",
-    "languageId": 36,
-    "points": 7551
-  },
-  {
-    "date": "2022-02-01",
     "languageId": 37,
     "points": 7844
   },
@@ -127768,11 +126923,6 @@
     "date": "2022-03-01",
     "languageId": 35,
     "points": 1234
-  },
-  {
-    "date": "2022-03-01",
-    "languageId": 36,
-    "points": 7550
   },
   {
     "date": "2022-03-01",
@@ -128526,11 +127676,6 @@
   },
   {
     "date": "2022-04-01",
-    "languageId": 36,
-    "points": 7634
-  },
-  {
-    "date": "2022-04-01",
     "languageId": 37,
     "points": 7751
   },
@@ -129278,11 +128423,6 @@
     "date": "2022-05-01",
     "languageId": 35,
     "points": 1238
-  },
-  {
-    "date": "2022-05-01",
-    "languageId": 36,
-    "points": 7701
   },
   {
     "date": "2022-05-01",
@@ -130036,11 +129176,6 @@
   },
   {
     "date": "2022-06-01",
-    "languageId": 36,
-    "points": 7769
-  },
-  {
-    "date": "2022-06-01",
     "languageId": 37,
     "points": 7891
   },
@@ -130788,11 +129923,6 @@
     "date": "2022-07-01",
     "languageId": 35,
     "points": 1245
-  },
-  {
-    "date": "2022-07-01",
-    "languageId": 36,
-    "points": 7830
   },
   {
     "date": "2022-07-01",
@@ -131546,11 +130676,6 @@
   },
   {
     "date": "2022-08-01",
-    "languageId": 36,
-    "points": 7897
-  },
-  {
-    "date": "2022-08-01",
     "languageId": 37,
     "points": 8023
   },
@@ -132298,11 +131423,6 @@
     "date": "2022-09-01",
     "languageId": 35,
     "points": 1251
-  },
-  {
-    "date": "2022-09-01",
-    "languageId": 36,
-    "points": 7940
   },
   {
     "date": "2022-09-01",
@@ -133056,11 +132176,6 @@
   },
   {
     "date": "2022-10-01",
-    "languageId": 36,
-    "points": 8002
-  },
-  {
-    "date": "2022-10-01",
     "languageId": 37,
     "points": 8159
   },
@@ -133808,11 +132923,6 @@
     "date": "2022-11-01",
     "languageId": 35,
     "points": 1258
-  },
-  {
-    "date": "2022-11-01",
-    "languageId": 36,
-    "points": 8063
   },
   {
     "date": "2022-11-01",
@@ -134566,11 +133676,6 @@
   },
   {
     "date": "2022-12-01",
-    "languageId": 36,
-    "points": 8127
-  },
-  {
-    "date": "2022-12-01",
     "languageId": 37,
     "points": 8286
   },
@@ -135318,11 +134423,6 @@
     "date": "2023-01-01",
     "languageId": 35,
     "points": 1267
-  },
-  {
-    "date": "2023-01-01",
-    "languageId": 36,
-    "points": 8190
   },
   {
     "date": "2023-01-01",
@@ -136076,11 +135176,6 @@
   },
   {
     "date": "2023-02-01",
-    "languageId": 36,
-    "points": 8251
-  },
-  {
-    "date": "2023-02-01",
     "languageId": 37,
     "points": 8449
   },
@@ -136828,11 +135923,6 @@
     "date": "2023-03-01",
     "languageId": 35,
     "points": 1277
-  },
-  {
-    "date": "2023-03-01",
-    "languageId": 36,
-    "points": 8316
   },
   {
     "date": "2023-03-01",
@@ -137586,11 +136676,6 @@
   },
   {
     "date": "2023-04-01",
-    "languageId": 36,
-    "points": 8394
-  },
-  {
-    "date": "2023-04-01",
     "languageId": 37,
     "points": 8619
   },
@@ -138338,11 +137423,6 @@
     "date": "2023-05-01",
     "languageId": 35,
     "points": 1280
-  },
-  {
-    "date": "2023-05-01",
-    "languageId": 36,
-    "points": 8451
   },
   {
     "date": "2023-05-01",
@@ -139096,11 +138176,6 @@
   },
   {
     "date": "2023-06-01",
-    "languageId": 36,
-    "points": 8505
-  },
-  {
-    "date": "2023-06-01",
     "languageId": 37,
     "points": 8746
   },
@@ -139848,11 +138923,6 @@
     "date": "2023-07-01",
     "languageId": 35,
     "points": 1290
-  },
-  {
-    "date": "2023-07-01",
-    "languageId": 36,
-    "points": 8563
   },
   {
     "date": "2023-07-01",
@@ -140606,11 +139676,6 @@
   },
   {
     "date": "2023-08-01",
-    "languageId": 36,
-    "points": 8618
-  },
-  {
-    "date": "2023-08-01",
     "languageId": 37,
     "points": 8864
   },
@@ -141358,11 +140423,6 @@
     "date": "2023-09-01",
     "languageId": 35,
     "points": 1292
-  },
-  {
-    "date": "2023-09-01",
-    "languageId": 36,
-    "points": 8664
   },
   {
     "date": "2023-09-01",
@@ -142116,11 +141176,6 @@
   },
   {
     "date": "2023-10-01",
-    "languageId": 36,
-    "points": 8720
-  },
-  {
-    "date": "2023-10-01",
     "languageId": 37,
     "points": 8962
   },
@@ -142868,11 +141923,6 @@
     "date": "2023-11-01",
     "languageId": 35,
     "points": 1452
-  },
-  {
-    "date": "2023-11-01",
-    "languageId": 36,
-    "points": 8780
   },
   {
     "date": "2023-11-01",
@@ -143626,11 +142676,6 @@
   },
   {
     "date": "2023-12-01",
-    "languageId": 36,
-    "points": 8862
-  },
-  {
-    "date": "2023-12-01",
     "languageId": 37,
     "points": 9035
   },
@@ -144378,11 +143423,6 @@
     "date": "2024-01-01",
     "languageId": 35,
     "points": 1460
-  },
-  {
-    "date": "2024-01-01",
-    "languageId": 36,
-    "points": 8887
   },
   {
     "date": "2024-01-01",
@@ -145136,11 +144176,6 @@
   },
   {
     "date": "2024-02-01",
-    "languageId": 36,
-    "points": 8939
-  },
-  {
-    "date": "2024-02-01",
     "languageId": 37,
     "points": 9126
   },
@@ -145888,11 +144923,6 @@
     "date": "2024-03-01",
     "languageId": 35,
     "points": 1479
-  },
-  {
-    "date": "2024-03-01",
-    "languageId": 36,
-    "points": 9001
   },
   {
     "date": "2024-03-01",
@@ -146646,11 +145676,6 @@
   },
   {
     "date": "2024-04-01",
-    "languageId": 36,
-    "points": 9055
-  },
-  {
-    "date": "2024-04-01",
     "languageId": 37,
     "points": 9208
   },
@@ -147398,11 +146423,6 @@
     "date": "2024-05-01",
     "languageId": 35,
     "points": 1485
-  },
-  {
-    "date": "2024-05-01",
-    "languageId": 36,
-    "points": 9133
   },
   {
     "date": "2024-05-01",
@@ -148156,11 +147176,6 @@
   },
   {
     "date": "2024-06-01",
-    "languageId": 36,
-    "points": 9186
-  },
-  {
-    "date": "2024-06-01",
     "languageId": 37,
     "points": 9309
   },
@@ -148908,11 +147923,6 @@
     "date": "2024-07-01",
     "languageId": 35,
     "points": 1498
-  },
-  {
-    "date": "2024-07-01",
-    "languageId": 36,
-    "points": 9260
   },
   {
     "date": "2024-07-01",
@@ -149666,11 +148676,6 @@
   },
   {
     "date": "2024-08-01",
-    "languageId": 36,
-    "points": 9321
-  },
-  {
-    "date": "2024-08-01",
     "languageId": 37,
     "points": 9405
   },
@@ -150418,11 +149423,6 @@
     "date": "2024-09-01",
     "languageId": 35,
     "points": 1502
-  },
-  {
-    "date": "2024-09-01",
-    "languageId": 36,
-    "points": 9361
   },
   {
     "date": "2024-09-01",
@@ -151176,11 +150176,6 @@
   },
   {
     "date": "2024-10-01",
-    "languageId": 36,
-    "points": 9413
-  },
-  {
-    "date": "2024-10-01",
     "languageId": 37,
     "points": 9469
   },
@@ -151928,11 +150923,6 @@
     "date": "2024-11-01",
     "languageId": 35,
     "points": 1509
-  },
-  {
-    "date": "2024-11-01",
-    "languageId": 36,
-    "points": 9458
   },
   {
     "date": "2024-11-01",
@@ -152686,11 +151676,6 @@
   },
   {
     "date": "2024-12-01",
-    "languageId": 36,
-    "points": 9540
-  },
-  {
-    "date": "2024-12-01",
     "languageId": 37,
     "points": 9546
   },
@@ -153438,11 +152423,6 @@
     "date": "2025-01-01",
     "languageId": 35,
     "points": 1517
-  },
-  {
-    "date": "2025-01-01",
-    "languageId": 36,
-    "points": 9609
   },
   {
     "date": "2025-01-01",
@@ -154196,11 +153176,6 @@
   },
   {
     "date": "2025-02-01",
-    "languageId": 36,
-    "points": 9633
-  },
-  {
-    "date": "2025-02-01",
     "languageId": 37,
     "points": 9624
   },
@@ -154951,11 +153926,6 @@
   },
   {
     "date": "2025-03-01",
-    "languageId": 36,
-    "points": 9696
-  },
-  {
-    "date": "2025-03-01",
     "languageId": 37,
     "points": 9643
   },
@@ -155703,11 +154673,6 @@
     "date": "2025-04-01",
     "languageId": 35,
     "points": 1506
-  },
-  {
-    "date": "2025-04-01",
-    "languageId": 36,
-    "points": 9754
   },
   {
     "date": "2025-04-01",
