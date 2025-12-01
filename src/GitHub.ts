@@ -56,7 +56,9 @@ export default class GitHub {
   ): Promise<number> {
     // By default, toDate is inclusive; subtract a day to make it exclusive so that it
     // matches the StackOverflow API. Plus this behaviour should be easier to
-    // conceptualise
+    // conceptualise.
+    //
+    // Docs: https://docs.github.com/en/search-github/getting-started-with-searching-on-github/understanding-the-search-syntax#query-for-dates
     const postData = this.buildPostData(
       languageName,
       fromDate,
