@@ -389,11 +389,10 @@ export default class DataPopulator {
   }
 
   // TODO: jsdoc
-  public async validateLanguages(languagesFile: string) {
+  public async validateLanguages() {
     const validationErrors = [
       await this.checkForLanguagesInGitHubNotInMetadata(),
       await this.checkForLanguagesInMetadataNotInGitHub(),
-      await this.checkForMissingStackOverflowTags(languagesFile),
     ];
 
     const filteredErrors = validationErrors.filter(
@@ -456,6 +455,9 @@ export default class DataPopulator {
     }
   }
 
+  /**
+   * @deprecated
+   */
   private async checkForMissingStackOverflowTags(
     languagesFile: string
   ): Promise<string | undefined> {

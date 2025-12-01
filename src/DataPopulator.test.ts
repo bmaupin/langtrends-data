@@ -115,7 +115,7 @@ describe('Tests with hard-coded languages file', () => {
 
   test('Test validateLanguages', async () => {
     try {
-      await dataPopulator.validateLanguages(LANGUAGES_FILE);
+      await dataPopulator.validateLanguages();
     } catch (error) {
       console.log(error);
     }
