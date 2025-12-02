@@ -24,18 +24,22 @@ let dataPopulator: DataPopulator;
 
 beforeAll(async () => {
   // Clean up any test files left over from previous tests; "force: true" will ignore errors
+  await rm(CONDENSED_SCORES_FILE, { force: true });
   await rm(LANGUAGES_FILE, { force: true });
   await rm(SCORES_FILE, { force: true });
-  await rm(CONDENSED_SCORES_FILE, { force: true });
 });
 
 describe('Tests with generated languages file', () => {
   beforeAll(() => {
-    dataPopulator = new DataPopulator(OLDEST_DATE);
+    dataPopulator = new DataPopulator({
+      languagesFile: LANGUAGES_FILE,
+      oldestDate: OLDEST_DATE,
+      scoresFile: SCORES_FILE,
+    });
   });
 
   test('Test populateLanguages', async () => {
-    await dataPopulator.populateLanguages(LANGUAGES_FILE, NUM_LANGUAGES);
+    await dataPopulator.populateLanguages(NUM_LANGUAGES);
     const languages = JSON.parse(
       await readFile(LANGUAGES_FILE, 'utf8')
     ) as Language[];
@@ -45,7 +49,7 @@ describe('Tests with generated languages file', () => {
   test(
     'Test populateAllScores',
     async () => {
-      await dataPopulator.populateAllScores(SCORES_FILE, NUM_SCORES);
+      await dataPopulator.populateAllScores(NUM_SCORES);
       const scores = JSON.parse(await readFile(SCORES_FILE, 'utf8')) as Score[];
       expect(scores.length).toEqual(NUM_SCORES);
       expect(scores[0].points).toBeGreaterThan(1000);
@@ -73,13 +77,16 @@ describe('Tests with generated languages file', () => {
 describe('Tests with hard-coded languages file', () => {
   beforeAll(
     async () => {
-      // Set the oldest date based on number of scores and languages to make sure we get enough scores
-      dataPopulator = new DataPopulator(
-        subtractMonthsUTC(
+      dataPopulator = new DataPopulator({
+        condensedScoresFile: CONDENSED_SCORES_FILE,
+        languagesFile: LANGUAGES_FILE,
+        // Set the oldest date based on number of scores and languages to make sure we get enough scores
+        oldestDate: subtractMonthsUTC(
           getFirstDayOfMonthUTC(),
           NUM_SCORES / NUM_LANGUAGES - 1
-        )
-      );
+        ),
+        scoresFile: SCORES_FILE,
+      });
 
       await writeFile(
         LANGUAGES_FILE,
@@ -92,17 +99,17 @@ describe('Tests with hard-coded languages file', () => {
         ])
       );
       // This is still needed to populate the languages from the file in the object
-      await dataPopulator.populateLanguages(LANGUAGES_FILE, NUM_LANGUAGES);
+      await dataPopulator.populateLanguages(NUM_LANGUAGES);
 
       // Re-create the scores file
-      await dataPopulator.populateAllScores(SCORES_FILE, NUM_SCORES);
+      await dataPopulator.populateAllScores(NUM_SCORES);
     },
     // Adjust test timeout based on number of scores we're getting
     TIME_TO_GET_ONE_SCORE * NUM_SCORES
   );
 
   test('Test populateCondensedScores', async () => {
-    await dataPopulator.populateCondensedScores(CONDENSED_SCORES_FILE);
+    await dataPopulator.populateCondensedScores();
     const scores = JSON.parse(
       await readFile(CONDENSED_SCORES_FILE, 'utf8')
     ) as Score[];
@@ -132,7 +139,7 @@ describe('Tests with hard-coded languages file', () => {
       await rm(SCORES_FILE);
 
       // Populate two months of data so we can manipulate the second to most recent one
-      await dataPopulator.populateAllScores(SCORES_FILE, NUM_LANGUAGES * 2);
+      await dataPopulator.populateAllScores(NUM_LANGUAGES * 2);
 
       // Set a high score for CoffeeScript
       const scores = JSON.parse(await readFile(SCORES_FILE, 'utf8')) as Score[];
@@ -145,17 +152,17 @@ describe('Tests with hard-coded languages file', () => {
       await writeFile(SCORES_FILE, JSON.stringify(scores));
 
       // An error should be thrown because of the significant decrease in points
-      await expect(
-        dataPopulator.populateAllScores(SCORES_FILE, NUM_SCORES)
-      ).rejects.toThrow('decreased');
+      await expect(dataPopulator.populateAllScores(NUM_SCORES)).rejects.toThrow(
+        'decreased'
+      );
     },
     // Adjust test timeout based on number of scores we're getting
     TIME_TO_GET_ONE_SCORE * NUM_SCORES * 2
   );
 
   afterAll(async () => {
+    await rm(CONDENSED_SCORES_FILE);
     await rm(LANGUAGES_FILE);
     await rm(SCORES_FILE);
-    await rm(CONDENSED_SCORES_FILE);
   });
 });

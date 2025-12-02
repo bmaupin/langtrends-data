@@ -4,7 +4,7 @@
 // 1. Adjust the language, date, and number of scores
 // 2. npx ts-node scripts/get-scores.ts
 
-import { oldestDate } from '../src/consts';
+import { defaultOldestDate } from '../src/consts';
 import { Language } from '../src/DataPopulator';
 import GitHub from '../src/GitHub';
 import StackOverflow from '../src/StackOverflow';
@@ -42,11 +42,15 @@ const main = async () => {
     console.log('Combined score=', githubScore + stackoverflowScore);
     console.log();
 
-    githubScore = await getGitHubScoreFromApi(language, oldestDate, date);
+    githubScore = await getGitHubScoreFromApi(
+      language,
+      defaultOldestDate,
+      date
+    );
     console.log('GitHub total score=', githubScore);
     stackoverflowScore = await getStackOverflowScoreFromApi(
       language,
-      oldestDate,
+      defaultOldestDate,
       date
     );
     console.log('Stack Overflow total score=', stackoverflowScore);

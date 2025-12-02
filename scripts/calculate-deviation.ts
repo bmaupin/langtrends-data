@@ -4,7 +4,7 @@
 
 import 'dotenv/config';
 
-import { oldestDate } from '../src/consts';
+import { defaultOldestDate } from '../src/consts';
 import GitHub from '../src/GitHub';
 import settings from '../src/settings.json';
 import StackOverflow from '../src/StackOverflow';
@@ -79,10 +79,14 @@ const getScoreFromApi = async (
   const github = new GitHub(process.env.GITHUB_API_KEY!);
   const stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY!);
 
-  const githubScore = await github.getScore(language.name, oldestDate, date);
+  const githubScore = await github.getScore(
+    language.name,
+    defaultOldestDate,
+    date
+  );
   const stackoverflowScore = await stackoverflow.getScore(
     language.stackoverflowTag || language.name,
-    oldestDate,
+    defaultOldestDate,
     date
   );
 
