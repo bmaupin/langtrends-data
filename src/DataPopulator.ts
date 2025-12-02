@@ -26,6 +26,8 @@ interface DataPopulatorOptions {
   condensedScoresFile?: string;
   // Path to the languages data file
   languagesFile?: string;
+  // List of languages from GitHub
+  languagesFromGithub?: string[];
   // Oldest date to use for populating languages
   oldestDate?: Date;
   // Path to the scores data file
@@ -82,6 +84,7 @@ export default class DataPopulator {
     this.github = new GitHub(process.env.GITHUB_API_KEY);
     this.languages = [];
     this.languagesFile = options?.languagesFile ?? defaultLanguagesFile;
+    this.languagesFromGithub = options?.languagesFromGithub;
     this.oldestDate = options?.oldestDate ?? defaultOldestDate;
     this.scores = [];
     this.scoresFile = options?.scoresFile ?? defaultScoresFile;
@@ -99,8 +102,11 @@ export default class DataPopulator {
     )) as Language[];
     const oldLanguageCount = this.languages.length;
 
-    // Store languagesFromGithub in a class field because we'll need it later when populating scores
-    this.languagesFromGithub = await GitHub.getLanguageNames();
+    // Check first to see if it isn't set; we allow overriding it for tests
+    if (!this.languagesFromGithub) {
+      // Store languagesFromGithub in a class field because we'll need it later when populating scores
+      this.languagesFromGithub = await GitHub.getLanguageNames();
+    }
 
     for (const languageName of this.languagesFromGithub) {
       if (numLanguages && this.languages.length >= numLanguages) {

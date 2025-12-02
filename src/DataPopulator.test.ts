@@ -2,12 +2,17 @@
 
 import { readFile, rm, writeFile } from 'fs/promises';
 
-import DataPopulator, { Language, Score } from './DataPopulator';
+import DataPopulator, {
+  Language,
+  LanguagesMetadata,
+  Score,
+} from './DataPopulator';
 import {
   addMonthsUTC,
   getFirstDayOfMonthUTC,
   subtractMonthsUTC,
 } from './utils';
+import _languagesMetadata from '../data/languages-metadata.json';
 
 const CONDENSED_SCORES_FILE = 'scores-condensed-test.json';
 const LANGUAGES_FILE = 'languages-test.json';
@@ -19,6 +24,8 @@ const OLDEST_DATE = new Date('2023-01-01');
 const SCORES_FILE = 'scores-test.json';
 // Adjust this as needed to allow for enough time for the tests to pass
 const TIME_TO_GET_ONE_SCORE = 2000;
+
+const languagesMetadata = _languagesMetadata as LanguagesMetadata;
 
 let dataPopulator: DataPopulator;
 
@@ -77,9 +84,18 @@ describe('Tests with generated languages file', () => {
 describe('Tests with hard-coded languages file', () => {
   beforeAll(
     async () => {
+      // Override languages from GitHub by making it match the languages in the metadata;
+      // otherwise validateLanguages can either fail or take a long time now that we're
+      // no longer adding every single language from GitHub to metadata
+      const languagesFromGithub = [];
+      for (const language in languagesMetadata) {
+        languagesFromGithub.push(language);
+      }
+
       dataPopulator = new DataPopulator({
         condensedScoresFile: CONDENSED_SCORES_FILE,
         languagesFile: LANGUAGES_FILE,
+        languagesFromGithub,
         // Set the oldest date based on number of scores and languages to make sure we get enough scores
         oldestDate: subtractMonthsUTC(
           getFirstDayOfMonthUTC(),
