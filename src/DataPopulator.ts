@@ -2,7 +2,12 @@
 
 import { readFile, writeFile } from 'fs/promises';
 
-import { oldestDate } from './consts';
+import {
+  defaultCondensedScoresFile,
+  defaultLanguagesFile,
+  defaultOldestDate,
+  defaultScoresFile,
+} from './consts';
 import GitHub from './GitHub';
 import _languagesMetadata from '../data/languages-metadata.json';
 import settings from './settings.json';
@@ -16,7 +21,20 @@ import {
 
 import 'dotenv/config';
 
-interface LanguagesMetadata {
+interface DataPopulatorOptions {
+  // Path to the condensed scores data file
+  condensedScoresFile?: string;
+  // Path to the languages data file
+  languagesFile?: string;
+  // List of languages from GitHub
+  languagesFromGithub?: string[];
+  // Oldest date to use for populating languages
+  oldestDate?: Date;
+  // Path to the scores data file
+  scoresFile?: string;
+}
+
+export interface LanguagesMetadata {
   [key: string]: {
     description?: string;
     extension?: string;
@@ -41,42 +59,54 @@ export interface Score {
 const languagesMetadata = _languagesMetadata as LanguagesMetadata;
 
 export default class DataPopulator {
+  private condensedScoresFile: string;
   private firstDayOfMonth: Date;
   private github: GitHub;
   private languages: Language[];
+  private languagesFile: string;
   private languagesFromGithub?: string[];
   private oldestDate: Date;
   private scores: Score[];
+  private scoresFile: string;
   private stackoverflow: StackOverflow;
 
   /**
-   * @param oldestDateOverride - Oldest date to use for populating languages (used for testing)
+   * @param options Options mostly used for overriding default values for testing
    */
-  constructor(oldestDateOverride?: Date) {
+  constructor(options?: DataPopulatorOptions) {
     if (!process.env.GITHUB_API_KEY) {
       throw new Error('GITHUB_API_KEY must be set');
     }
 
+    this.condensedScoresFile =
+      options?.condensedScoresFile ?? defaultCondensedScoresFile;
     this.firstDayOfMonth = getFirstDayOfMonthUTC();
     this.github = new GitHub(process.env.GITHUB_API_KEY);
     this.languages = [];
-    this.oldestDate = oldestDateOverride ?? oldestDate;
+    this.languagesFile = options?.languagesFile ?? defaultLanguagesFile;
+    this.languagesFromGithub = options?.languagesFromGithub;
+    this.oldestDate = options?.oldestDate ?? defaultOldestDate;
     this.scores = [];
+    this.scoresFile = options?.scoresFile ?? defaultScoresFile;
     this.stackoverflow = new StackOverflow(process.env.STACKOVERFLOW_API_KEY);
   }
 
   /**
    * Populate languages in the data file
-   * @param languagesFile - Path to the languages data file
    * @param numLanguages - Number of languages to populate (used for testing)
    * @returns - Whether or not there are any language discrepancies in the data files
    */
-  public async populateLanguages(languagesFile: string, numLanguages?: number) {
-    this.languages = await DataPopulator.readDataFile(languagesFile);
+  public async populateLanguages(numLanguages?: number) {
+    this.languages = (await DataPopulator.readDataFile(
+      this.languagesFile
+    )) as Language[];
     const oldLanguageCount = this.languages.length;
 
-    // Store languagesFromGithub in a class field because we'll need it later when populating scores
-    this.languagesFromGithub = await GitHub.getLanguageNames();
+    // Check first to see if it isn't set; we allow overriding it for tests
+    if (!this.languagesFromGithub) {
+      // Store languagesFromGithub in a class field because we'll need it later when populating scores
+      this.languagesFromGithub = await GitHub.getLanguageNames();
+    }
 
     for (const languageName of this.languagesFromGithub) {
       if (numLanguages && this.languages.length >= numLanguages) {
@@ -91,7 +121,9 @@ export default class DataPopulator {
           );
         }
       } else {
-        console.info(`Language from GitHub not found in data: ${languageName}`);
+        console.info(
+          `Language from GitHub not found in metadata: ${languageName}`
+        );
       }
     }
 
@@ -101,7 +133,7 @@ export default class DataPopulator {
       } languages`
     );
 
-    await writeFile(languagesFile, JSON.stringify(this.languages));
+    await writeFile(this.languagesFile, JSON.stringify(this.languages));
   }
 
   /**
@@ -145,11 +177,12 @@ export default class DataPopulator {
 
   /**
    * Populate all scores in the data file
-   * @param scoresFile - Path to the scores data file
    * @param numScores - Number of scores to populate (used for testing)
    */
-  public async populateAllScores(scoresFile: string, numScores?: number) {
-    this.scores = await DataPopulator.readDataFile(scoresFile);
+  public async populateAllScores(numScores?: number) {
+    this.scores = (await DataPopulator.readDataFile(
+      this.scoresFile
+    )) as Score[];
 
     const oldScoreCount = this.scores.length;
     // Make a copy of the date so we don't overwrite it
@@ -180,7 +213,7 @@ export default class DataPopulator {
 
     this.sortScores();
 
-    await writeFile(scoresFile, JSON.stringify(this.scores, null, 2));
+    await writeFile(this.scoresFile, JSON.stringify(this.scores, null, 2));
   }
 
   private async populateScoresForDate(date: Date, numScores?: number) {
@@ -330,9 +363,8 @@ export default class DataPopulator {
 
   /**
    * Populate a condensed list of scores designed to be consumed by the frontend
-   * @param condensedScoresFile - Path to the condensed scores data file
    */
-  public async populateCondensedScores(condensedScoresFile: string) {
+  public async populateCondensedScores() {
     // Get settings from the frontend
     const response = await fetch(
       'https://raw.githubusercontent.com/bmaupin/langtrends/main/src/settings.json'
@@ -355,7 +387,7 @@ export default class DataPopulator {
     }
 
     // Always overwrite the condensed scores file to clean out old dates
-    await writeFile(condensedScoresFile, JSON.stringify(condensedScores));
+    await writeFile(this.condensedScoresFile, JSON.stringify(condensedScores));
   }
 
   /**
@@ -389,11 +421,10 @@ export default class DataPopulator {
   }
 
   // TODO: jsdoc
-  public async validateLanguages(languagesFile: string) {
+  public async validateLanguages() {
     const validationErrors = [
       await this.checkForLanguagesInGitHubNotInMetadata(),
       await this.checkForLanguagesInMetadataNotInGitHub(),
-      await this.checkForMissingStackOverflowTags(languagesFile),
     ];
 
     const filteredErrors = validationErrors.filter(
@@ -430,7 +461,7 @@ export default class DataPopulator {
       }
     }
     if (languagesInGitHubNotInMetadata.length !== 0) {
-      return `Languages from GitHub not found in data: ${languagesInGitHubNotInMetadata.join(
+      return `Languages from GitHub not found in metadata: ${languagesInGitHubNotInMetadata.join(
         ', '
       )}`;
     }
@@ -456,13 +487,19 @@ export default class DataPopulator {
     }
   }
 
-  private async checkForMissingStackOverflowTags(
-    languagesFile: string
-  ): Promise<string | undefined> {
+  /**
+   * @deprecated
+   */
+  /* istanbul ignore next */
+  private async _checkForMissingStackOverflowTags(): Promise<
+    string | undefined
+  > {
     const languagesWithMissingTags = [];
 
     if (this.languages.length === 0) {
-      this.languages = await DataPopulator.readDataFile(languagesFile);
+      this.languages = (await DataPopulator.readDataFile(
+        this.languagesFile
+      )) as Language[];
     }
 
     for (const language of this.languages) {

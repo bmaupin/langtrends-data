@@ -48,7 +48,34 @@ Try updating just one score to isolate the problem
 
    (See the instructions in the file)
 
-#### Call StackOverflow API directly for troubleshooting
+## Call APIs directly for troubleshooting
+
+#### GitHub
+
+⚠️ GitHub's GraphQL Explorer is no longer available
+
+1. Get your GitHub API key and have it available
+
+1. Format the GraphQL API request
+
+   e.g. To get a repository count for a particular date range (both dates are inclusive):
+
+   ```
+   {"query": "{ search(query: \"language:JavaScript created:2023-01-01..2023-01-31\", type: REPOSITORY) { repositoryCount } rateLimit { remaining }}"}
+   ```
+
+1. Send the API call
+
+   ```
+   curl -H "Authorization: bearer API_KEY" \
+      -H "Content-Type: application/json" \
+      --data '{"query": "{ search(query: \"language:JavaScript created:2023-01-01..2023-01-31\", type: REPOSITORY) { repositoryCount } rateLimit { remaining }}"}' \
+      https://api.github.com/graphql
+   ```
+
+   (Replace `API_KEY` with your API key)
+
+#### StackOverflow
 
 1. Generate the unix epoch formatted dates using JavaScript
 
