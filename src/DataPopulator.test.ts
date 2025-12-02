@@ -182,3 +182,45 @@ describe('Tests with hard-coded languages file', () => {
     await rm(SCORES_FILE);
   });
 });
+
+test('Test validateLanguages detects extra language in metadata', async () => {
+  const languagesFromGithub = [];
+  for (const language in languagesMetadata) {
+    languagesFromGithub.push(language);
+  }
+
+  // Remove the last language from GitHub
+  languagesFromGithub.pop();
+
+  dataPopulator = new DataPopulator({
+    languagesFromGithub,
+  });
+
+  await expect(dataPopulator.validateLanguages()).rejects.toThrow(
+    'Languages in metadata not found in GitHub'
+  );
+});
+
+test('Test validateLanguages detects missing language in metadata', async () => {
+  const languagesFromGithub = [];
+  for (const language in languagesMetadata) {
+    languagesFromGithub.push(language);
+  }
+
+  // This is a hack! We shouldn't be modifying languagesMetadata. Probably should add a
+  // factory method to DataPopulator that allows us to instantiate it from a different
+  // metadata file, e.g. DataPopulator.fromMetadata()
+  const languagesMetadataBackup = structuredClone(languagesMetadata.C);
+  delete languagesMetadata.C;
+
+  dataPopulator = new DataPopulator({
+    languagesFromGithub,
+  });
+
+  await expect(dataPopulator.validateLanguages()).rejects.toThrow(
+    'Languages from GitHub not found in metadata'
+  );
+
+  // Restore languagesMetadata.C so we don't break other tests
+  languagesMetadata.C = languagesMetadataBackup;
+});

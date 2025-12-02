@@ -121,7 +121,9 @@ export default class DataPopulator {
           );
         }
       } else {
-        console.info(`Language from GitHub not found in data: ${languageName}`);
+        console.info(
+          `Language from GitHub not found in metadata: ${languageName}`
+        );
       }
     }
 
@@ -459,7 +461,7 @@ export default class DataPopulator {
       }
     }
     if (languagesInGitHubNotInMetadata.length !== 0) {
-      return `Languages from GitHub not found in data: ${languagesInGitHubNotInMetadata.join(
+      return `Languages from GitHub not found in metadata: ${languagesInGitHubNotInMetadata.join(
         ', '
       )}`;
     }
