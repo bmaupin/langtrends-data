@@ -44,37 +44,35 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
    ```
 
 1. Identify the language
-
    1. Start with the language samples on [github/linguist](https://github.com/github/linguist/tree/master/samples)
-
       - The git commit logs will often have helpful references
       - If that isn't helpful, the file extensions and language syntax will help identify the language if there's ambiguity when following the next steps
 
    1. (As needed) Look up the language using a web search
-
       - Use a search term including the words `programming language` often returns the best results, e.g. `4D programming language`
       - Wikipedia is often a good reference but may not have entries for newer/more obscure languages
 
    1. (As needed) Look up the language on GitHub
-
       - Go to [https://github.com/search/advanced](https://github.com/search/advanced) and select the language
       - This can sometimes help in identifying a langauge, particurly if it is obscure and/or open-source
       - This can be also useful to determine if a language is general-purpose, abandoned, etc. for deciding if it should be included
 
 1. Decide whether or not to include the language
-
    - As a rule of thumb, any language that can be used to build a cross-platform application should be included
    - Commercial/proprietary languages are fine as long as they adhere to the above rule, e.g. ASP.NET and ColdFusion can be used to write web applications which can be accessed on any platform (in theory)
    - Don't include: DSLs, markup languages, abandoned/superceded languages (e.g. CSS, HTML, SQL)
 
 1. Add the language to `languages-metadata.json`
-
    - The name should exactly match the output from `validate-languages` (including the case)
    - `include` is the only required attribute
 
      > ⚠ If `include` is set to `true`, check [StackOverflow tags](https://stackoverflow.com/tags) to see if `stackoverflowTag` needs to be set
 
-   - Adding a `url` is preferred especially if there's ambiguity
+   - Adding a `description` and `url` is preferred especially if there's ambiguity; use this order of preference when adding URLs:
+     1. Prefer a github.com URL when available, e.g. `https://github.com/tree-sitter/tree-sitter`
+     1. Next, you can use a wikipedia URL if available, e.g. `https://en.wikipedia.org/wiki/Tree-sitter_(parser_generator)`
+        - This tends to be more reliable than official websites, which may change or go offline
+     1. As a last resort, if there's an official website, use that, e.g. `https://tree-sitter.github.io/tree-sitter/`
    - Add a `description` and/or `type` in cases where it may not be clear why a language was/wasn't included
 
 1. Update language and score data
