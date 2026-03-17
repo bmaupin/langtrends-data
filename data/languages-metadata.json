@@ -433,6 +433,11 @@
   "Cpp-ObjDump": {
     "include": false
   },
+  "CQL": {
+    "description": "Cassandra Query Language, an SQL-like language for Apache Cassandra",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Apache_Cassandra#Cassandra_Query_Language"
+  },
   "Creole": {
     "include": false
   },
@@ -866,6 +871,11 @@
     "include": false,
     "url": "https://git-scm.com/docs/gitattributes"
   },
+  "Git Commit": {
+    "description": "Git commit message files",
+    "include": false,
+    "url": "https://git-scm.com/docs/git-commit"
+  },
   "Git Config": {
     "include": false,
     "url": "https://git-scm.com/docs/git-config"
@@ -922,6 +932,11 @@
   "Go Module": {
     "include": false,
     "url": "https://golang.org/ref/mod#go-mod-file"
+  },
+  "Go Template": {
+    "description": "Template files using Go's text/template or html/template syntax",
+    "include": false,
+    "url": "https://pkg.go.dev/text/template"
   },
   "Go Workspace": {
     "include": false,
@@ -1444,11 +1459,6 @@
   "Mask": {
     "include": false,
     "url": "https://github.com/atmajs/MaskJS"
-  },
-  "Mathematica": {
-    "include": false,
-    "stackoverflowTag": "wolfram-mathematica",
-    "type": "domain-specific language"
   },
   "MATLAB": {
     "include": false
@@ -2617,6 +2627,11 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/TOML"
   },
+  "Tree-sitter Query": {
+    "description": "Query language used by tree-sitter grammars for highlighting, injections, and tags",
+    "include": false,
+    "url": "https://github.com/tree-sitter/tree-sitter"
+  },
   "TSPLIB data": {
     "description": "Travelling Salemen Problem data files",
     "include": false,
@@ -2833,6 +2848,12 @@
   "Witcher Script": {
     "description": "Scripting language for Witcher video games",
     "include": false
+  },
+  "Wolfram Language": {
+    "include": false,
+    "stackoverflowTag": "wolfram-mathematica",
+    "type": "domain-specific language",
+    "url": "https://www.wolfram.com/language/"
   },
   "Wollok": {
     "description": "A programming language and environment for teaching OOP.",
