@@ -820,6 +820,11 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/Godot_(game_engine)"
   },
+  "GDShader": {
+    "description": "Shader language used by the Godot game engine",
+    "include": false,
+    "url": "https://docs.godotengine.org/en/stable/tutorials/shaders/shader_reference/shading_language.html"
+  },
   "GEDCOM": {
     "include": false,
     "url": "https://en.wikipedia.org/wiki/GEDCOM"
@@ -1154,6 +1159,12 @@
   },
   "J": {
     "include": true
+  },
+  "Jai": {
+    "_comment": "NOTE: Reconsider Jai once it's publicly available, depending if it's a general-purpose language",
+    "description": "Programming language designed for game development",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Jai_(programming_language)"
   },
   "Janet": {
     "include": true,
