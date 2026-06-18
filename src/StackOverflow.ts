@@ -26,7 +26,7 @@ export default class StackOverflow {
   public async getScore(
     languageName: string,
     fromDate: Date,
-    toDate: Date
+    toDate: Date,
   ): Promise<number> {
     let url = this.buildUrl(languageName, fromDate, toDate);
     let body = await this.callApi(url);
@@ -41,7 +41,7 @@ export default class StackOverflow {
       API_URL,
       StackOverflow.encodeDate(fromDate),
       StackOverflow.encodeDate(toDate),
-      StackOverflow.encodeLanguageName(languageName)
+      StackOverflow.encodeLanguageName(languageName),
     );
     url = this.addApiKey(url);
 
@@ -81,7 +81,7 @@ export default class StackOverflow {
   // Based on https://stackoverflow.com/a/38543075/399105
   private httpsRequest(
     options: https.RequestOptions,
-    url: string
+    url: string,
   ): Promise<string> {
     return new Promise((resolve, reject) => {
       const request = https.request(url, options, async (response) => {
@@ -89,27 +89,38 @@ export default class StackOverflow {
           response.statusCode &&
           (response.statusCode < 200 || response.statusCode >= 300)
         ) {
+          // See error codes here: https://api.stackexchange.com/docs/error-handling
           if (response.statusCode === 400) {
             console.warn(
-              'Warning: Stackoverflow API daily limit exceeded or API key incorrect'
+              'Warning: Stackoverflow API daily limit exceeded or API key incorrect',
             );
           } else if (response.statusCode === 403) {
             console.warn(
-              'Warning: Stackoverflow API returned 403; please set the user agent'
+              'Warning: Stackoverflow API returned 403; please set the user agent',
+            );
+          }
+
+          // TODO: It would be really nice to have retry logic, but unlike GitHub, Stack
+          //       Overflow doesn't ever seem to send the backoff field, so we'd have to
+          //       increase the time between retries as well as limit them ourselves.
+          else if (response.statusCode === 502) {
+            // "An application has violated part of the rate limiting contract, so the request was terminated."
+            console.warn(
+              'Warning: Stackoverflow API returned 502; wait a bit and try again',
             );
           } else if (response.statusCode === 503) {
             // Stackoverflow might throw a 503 if it feels there are too many requests
             console.warn(
-              'Warning: Stackoverflow API returned 503; wait a bit and try again'
+              'Warning: Stackoverflow API returned 503; wait a bit and try again',
             );
           }
           reject(
             new Error(
               `statusCode=${response.statusCode}, URL=${url.replace(
                 this.apiKey || '',
-                'REDACTED'
-              )}`
-            )
+                'REDACTED',
+              )}`,
+            ),
           );
         }
 
@@ -132,8 +143,8 @@ export default class StackOverflow {
               // If we get here it's likely due to another issue, normally a 503 error due to too many requests
               reject(
                 new Error(
-                  `Incorrect content encoding: ${response.headers['content-encoding']}`
-                )
+                  `Incorrect content encoding: ${response.headers['content-encoding']}`,
+                ),
               );
               break;
           }
@@ -145,7 +156,7 @@ export default class StackOverflow {
         // feels there are too many requests
         if (err.code === 'ECONNRESET') {
           console.warn(
-            'Warning: Stack Overflow API closed connection; wait a bit and try again'
+            'Warning: Stack Overflow API closed connection; wait a bit and try again',
           );
         }
         // Use the original message and code but our stack trace since the original stack trace won't point back to
@@ -165,7 +176,7 @@ export default class StackOverflow {
     // The backoff field never seems to be sent, but throw if it happens so we can add logic for it (https://stackapps.com/a/3057/41977)
     if (body.backoff) {
       throw new Error(
-        `Stack Overflow API backoff field not handled: ${body.backoff}`
+        `Stack Overflow API backoff field not handled: ${body.backoff}`,
       );
     }
   }
