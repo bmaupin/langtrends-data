@@ -2022,6 +2022,11 @@
     "include": false,
     "url": "https://www.prisma.io/"
   },
+  "Pro*C": {
+    "description": "Embedded SQL extension for C/C++ used with Oracle databases",
+    "include": false,
+    "url": "https://en.wikipedia.org/wiki/Pro*C"
+  },
   "Processing": {
     "include": false
   },
@@ -2231,10 +2236,6 @@
   },
   "RobotFramework": {
     "include": false
-  },
-  "robots.txt": {
-    "include": false,
-    "url": "https://en.wikipedia.org/wiki/Robots_exclusion_standard"
   },
   "Roc": {
     "description": "Functional language, direct descendant of Elm",
