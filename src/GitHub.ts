@@ -14,7 +14,7 @@ interface GitHubData {
   errors?: [
     {
       message: string;
-    }
+    },
   ];
 }
 
@@ -52,7 +52,7 @@ export default class GitHub {
   public async getScore(
     languageName: string,
     fromDate: Date,
-    toDate: Date
+    toDate: Date,
   ): Promise<number> {
     // By default, toDate is inclusive; subtract a day to make it exclusive so that it
     // matches the StackOverflow API. Plus this behaviour should be easier to
@@ -62,11 +62,11 @@ export default class GitHub {
     const postData = this.buildPostData(
       languageName,
       fromDate,
-      GitHub.subtractDayUTC(toDate)
+      GitHub.subtractDayUTC(toDate),
     );
     const body = await this.callApi(API_URL, postData);
 
-    GitHub.handleApiLimits(body);
+    GitHub.handlePotentialApiErrors(body);
 
     return body.data.search.repositoryCount;
   }
@@ -81,14 +81,14 @@ export default class GitHub {
   private buildPostData(
     languageName: string,
     fromDate: Date,
-    toDate: Date
+    toDate: Date,
   ): string {
     const postData =
       `{"query": "{ search(query: \\"language:${GitHub.encodeLanguageName(
-        languageName
+        languageName,
       )} ` +
       `created:${GitHub.encodeDate(fromDate)}..${GitHub.encodeDate(
-        toDate
+        toDate,
       )}\\", type: REPOSITORY) { repositoryCount } rateLimit { remaining }}"}`;
 
     return postData;
@@ -124,7 +124,7 @@ export default class GitHub {
   // Based on https://stackoverflow.com/a/38543075/399105
   private httpsRequest(
     options: https.RequestOptions,
-    postData: string
+    postData: string,
   ): Promise<string> {
     return new Promise((resolve, reject) => {
       const request = https.request(options, async (response) => {
@@ -138,8 +138,8 @@ export default class GitHub {
               response.statusCode,
               Number(response.headers['retry-after']),
               options,
-              postData
-            )
+              postData,
+            ),
           );
         } else if (
           response.statusCode &&
@@ -174,10 +174,10 @@ export default class GitHub {
     errorCode: number,
     secondsToWait: number,
     options: https.RequestOptions,
-    postData: string
+    postData: string,
   ) {
     console.warn(
-      `Warning: ${options.hostname} returned error code ${errorCode}; retrying in ${secondsToWait} seconds`
+      `Warning: ${options.hostname} returned error code ${errorCode}; retrying in ${secondsToWait} seconds`,
     );
     await GitHub.waitSeconds(secondsToWait);
     return await this.httpsRequest(options, postData);
@@ -190,8 +190,18 @@ export default class GitHub {
     });
   }
 
-  private static handleApiLimits(body: GitHubData) {
+  private static handlePotentialApiErrors(body: GitHubData) {
     if (!body.data && body.errors) {
+      // If this happens, there's probably nothing we can do about it. We could
+      // potentially retry but the last time this was observed was at the beginning of a
+      // job and not in the middle so the API may have been down altogether. GitHub
+      // already has the ability to tell us to retry so if they're not doing that it seems
+      // best to just abort.
+      //
+      // We could maybe retry after a long wait but then we would probably run into issues
+      // with the job timing out. It might be better to have that kind of retry logic in
+      // the CI job but GitHub Actions doesn't have a built-in retry mechanism like GitLab
+      // CI/CD does. But this seems to occur very rarely so let's keep it simple.
       throw new Error(`Github API error (${body.errors[0].message})`);
     }
 
