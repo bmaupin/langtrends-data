@@ -258,6 +258,11 @@
     "include": false,
     "url": "https://github.com/browserslist/browserslist"
   },
+  "Bru": {
+    "description": "Bruno API client request and collection files",
+    "include": false,
+    "url": "https://github.com/usebruno/bruno"
+  },
   "C": {
     "include": true
   },
@@ -2295,14 +2300,21 @@
     "include": false,
     "url": "https://en.wikipedia.org/wiki/SageMath"
   },
-  "SaltStack": {
+  "Salt": {
+    "description": "Salt state files for infrastructure and configuration automation",
     "extension": ".sls",
     "include": false,
     "stackoverflowTag": "salt-stack",
-    "type": "domain-specific language"
+    "type": "domain-specific language",
+    "url": "https://github.com/saltstack/salt"
   },
   "SAS": {
     "include": false
+  },
+  "SIP": {
+    "description": "Bindings-definition language used by SIP, the tool used to generate Python bindings for C and C++ libraries such as PyQt",
+    "include": false,
+    "url": "https://github.com/Python-SIP/sip"
   },
   "Sass": {
     "include": false
@@ -2762,9 +2774,11 @@
   "Vim Help File": {
     "include": false
   },
-  "Vim Script": {
+  "Vim script": {
+    "description": "Scripting language built into the Vim text editor",
     "include": false,
-    "stackoverflowTag": "vim"
+    "stackoverflowTag": "vim",
+    "url": "https://en.wikipedia.org/wiki/Vim_(text_editor)#Vim_script"
   },
   "Vim Snippet": {
     "include": false
