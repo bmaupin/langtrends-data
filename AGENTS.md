@@ -1,4 +1,5 @@
-- Do not make any changes to any files except `languages-metadata.json`. For all other changes, merely provide guidance. I wish to make the changes myself.
+- Communicate concisely
+- Only provide guidance and do not write to any files except `languages-metadata.json` unless requested
 - Use British English spelling
 
 ## Tasks

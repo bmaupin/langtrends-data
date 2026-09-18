@@ -45,8 +45,8 @@ Data for [https://github.com/bmaupin/langtrends](https://github.com/bmaupin/lang
 
 1. Identify the language
    1. Start with the language samples on [github/linguist](https://github.com/github/linguist/tree/master/samples)
-      - The git commit logs will often have helpful references
-      - If that isn't helpful, the file extensions and language syntax will help identify the language if there's ambiguity when following the next steps
+      - Match the language to the directory name in the language samples and look at its commit history to find a pull request with more information to identify the language
+      - The file extensions and language syntax can help identify the language if there's ambiguity when following the next steps
 
    1. (As needed) Look up the language using a web search
       - Use a search term including the words `programming language` often returns the best results, e.g. `4D programming language`
